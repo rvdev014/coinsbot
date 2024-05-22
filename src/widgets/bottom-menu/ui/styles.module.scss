@@ -1,0 +1,45 @@
+.wrapper {
+  position: sticky;
+  bottom: 15px;
+  right: 15px;
+  padding: 7px;
+  width: calc(100% - 30px);
+  margin: 20px auto 0 auto;
+  background-color: #272a2f;
+  border-radius: 25px;
+  border-top: 3px solid #1a1c1f;
+
+  max-width: 500px;
+}
+
+.btnGroup {
+  height: 100%;
+}
+
+.btn {
+  display: block;
+  padding: 7px 0;
+  font-weight: 400;
+  font-size: 12px;
+  flex: 1;
+  color: #fff;
+  background-color: #272a2f;
+  height: 100%;
+  border-radius: 20px;
+
+  .btnDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+    width: 30px;
+    margin-bottom: 2px;
+  }
+
+  &.active {
+    background-color: #1a1c1f;
+  }
+}

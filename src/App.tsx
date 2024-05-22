@@ -1,12 +1,13 @@
 import React from 'react'
-import './App.css'
 import Routing from "./app/routing.tsx";
+import { ChakraProvider } from '@chakra-ui/react'
+import './App.css'
 
 function App() {
     return (
-        <>
+        <ChakraProvider>
             <Routing/>
-        </>
+        </ChakraProvider>
     )
 }
 

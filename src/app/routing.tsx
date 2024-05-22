@@ -4,6 +4,8 @@ import {CustomRouter} from "./router/custom-router.tsx";
 import {MainLayout} from "../widgets/main-layout";
 import {history} from "./router/router-history.ts";
 import {HomePage} from "../pages/home";
+import {EarnPage} from "../pages/earn";
+import {FriendsPage} from "../pages/friends";
 
 const Routing = () => {
     return (
@@ -11,6 +13,8 @@ const Routing = () => {
             <Routes>
                 <Route element={<MainLayout/>}>
                     <Route path="/" element={<HomePage/>}/>
+                    <Route path="/friends" element={<FriendsPage/>}/>
+                    <Route path="/earn" element={<EarnPage/>}/>
                 </Route>
             </Routes>
         </CustomRouter>

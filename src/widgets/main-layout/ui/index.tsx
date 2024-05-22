@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
-import {Navbar} from "../../navbar";
 import {Outlet} from "react-router-dom";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {UI_COLOR} from "../../../shared/consts.ts";
 import {Spinner} from "@chakra-ui/react";
+import {BottomMenu} from "../../bottom-menu";
 
 export const MainLayout = () => {
 
@@ -25,10 +25,8 @@ export const MainLayout = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Navbar/>
-            <div className={styles.content}>
-                <Outlet/>
-            </div>
+            <Outlet/>
+            <BottomMenu/>
         </div>
     );
 };

@@ -1,11 +1,8 @@
 .wrapper {
-  height: 100%;
-}
+  color: #fff;
+  min-height: 100%;
 
-.content {
-  height: calc(100% - 70px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
 }
