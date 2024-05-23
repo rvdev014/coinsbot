@@ -12,7 +12,8 @@ export const useAppStore = create<IAppStore>((set, get) => {
         ...initialStore,
         initTelegram: async () => {
             set({isAppLoading: true});
-            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             const tg = window.Telegram.WebApp;
             tg.ready();
 

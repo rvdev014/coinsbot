@@ -25,7 +25,9 @@ export const MainLayout = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Outlet/>
+            <div className={styles.content}>
+                <Outlet/>
+            </div>
             <BottomMenu/>
         </div>
     );

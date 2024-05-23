@@ -52,7 +52,12 @@
 }
 
 .tapper {
+  position: relative;
   margin-top: 20px;
+
+  &:active{
+
+  }
 
   .tapperArea {
     border-radius: 50%;
@@ -64,4 +69,18 @@
     }
   }
 }
+
+
+.energyBlock {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  .energyInfo {
+    img {
+      width: 35px;
+    }
+  }
+}
+
 // #1c1f24
