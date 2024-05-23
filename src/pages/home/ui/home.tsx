@@ -25,6 +25,8 @@ export const HomePage = () => {
         return () => reset()
     }, [initExchange, reset])
 
+    console.log('render HomePage');
+
     function tapper(event: React.MouseEvent<HTMLDivElement>) {
         event.preventDefault();
         if (!tapperRef.current || useExchangeStore.getState().currentEnergy < amountPerTap) return;
@@ -38,10 +40,11 @@ export const HomePage = () => {
         plusOne.style.position = 'absolute';
         plusOne.style.left = x + 'px';
         plusOne.style.top = y + 'px';
-        plusOne.style.fontSize = '30px';
+        plusOne.style.fontSize = '28px';
         plusOne.style.fontWeight = 'bold';
-        plusOne.style.color = 'white';
-        plusOne.style.transition = 'all 1s';
+        plusOne.style.textShadow = '0 0 2px #000';
+        plusOne.style.color = '#ffce33';
+        plusOne.style.transition = 'all 1.5s';
         plusOne.style.transform = 'translate(-50%, -50%)';
         plusOne.style.zIndex = '1000';
         tapperRef.current.appendChild(plusOne);
@@ -49,19 +52,13 @@ export const HomePage = () => {
         onTap();
 
         setTimeout(() => {
-            plusOne.style.top = y - 100 + 'px';
+            plusOne.style.top = y - 150 + 'px';
             plusOne.style.opacity = '0';
         }, 20);
 
         setTimeout(() => {
             tapperRef.current?.removeChild(plusOne);
         }, 1000);
-    }
-
-    console.log('render HomePage');
-
-    function amountToLevelUp(): number {
-        return nextLevel.minAmount - balance;
     }
 
     function formatNumber(amount: number): string {
@@ -100,7 +97,7 @@ export const HomePage = () => {
                         <Text color='#7072b3' className={styles.infoCard_text}>To level up</Text>
                         <div className={styles.infoCard_bottom}>
                             <img src="/img/coin.png" alt="Coin"/>
-                            <span>+{amountToLevelUp()}</span>
+                            <span>+{nextLevel.minAmount - balance}</span>
                         </div>
                     </div>
                     <div className={styles.infoCard}>
@@ -115,7 +112,7 @@ export const HomePage = () => {
                 <div className={styles.balance}>
                     <Flex alignItems='center'>
                         <img src="/img/coin.png" alt="Coin"/>
-                        <Text fontSize='40px' fontWeight='bold'>{formatNumber(balance)}</Text>
+                        <Text fontSize='36px' fontWeight='bold'>{formatNumber(balance)}</Text>
                     </Flex>
                 </div>
 
@@ -129,7 +126,7 @@ export const HomePage = () => {
 
                 <div className={styles.tapper} ref={tapperRef} onClick={tapper}>
                     <div className={styles.tapperArea}>
-                        <img src="/img/tapper.jpg" alt="Tapper"/>
+                        <img draggable={false} src="/img/tapper.jpg" alt="Tapper"/>
                     </div>
                 </div>
 

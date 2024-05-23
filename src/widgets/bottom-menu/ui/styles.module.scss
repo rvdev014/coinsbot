@@ -1,12 +1,13 @@
 .wrapper {
   position: sticky;
-  bottom: 15px;
+  bottom: 0;
   right: 15px;
-  padding: 7px;
+  padding: 5px 5px 0 5px;
   width: calc(100% - 30px);
-  margin: 20px auto 0 auto;
+  margin: 15px auto 0 auto;
   background-color: #272a2f;
-  border-radius: 25px;
+  border-radius: 25px 25px 0 0;
+  //border-radius: 25px;
   border-top: 3px solid #1a1c1f;
 
   max-width: 500px;
@@ -18,14 +19,14 @@
 
 .btn {
   display: block;
-  padding: 7px 0;
+  padding: 5px 0;
   font-weight: 400;
   font-size: 12px;
   flex: 1;
   color: #fff;
   background-color: #272a2f;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
 
   .btnDiv {
     display: flex;
