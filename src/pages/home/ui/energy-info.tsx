@@ -6,15 +6,15 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 
 const EnergyInfo = () => {
 
+    const level = useUserStore(state => state.level);
     const currentEnergy = useUserStore(state => state.energy)
-    const energyLimit = useUserStore(state => state.limit);
 
     return (
         <div className={styles.energyBlock}>
             <Flex className={styles.energyInfo} alignItems='center' justifyContent='space-between'>
                 <img src="/img/energy.png" alt="Energy"/>
                 <Text fontSize='18px' fontWeight='bold'>{currentEnergy}</Text>/
-                <Text fontSize='18px' fontWeight='bold'>{energyLimit}</Text>
+                <Text fontSize='18px' fontWeight='bold'>{level?.energy_limit}</Text>
             </Flex>
         </div>
     );

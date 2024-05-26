@@ -8,9 +8,3 @@ export interface IExchangeStore {
     initExchange(): void;
     reset(): void;
 }
-
-export interface ILevel {
-    number: number;
-    name: string;
-    minAmount: number;
-}

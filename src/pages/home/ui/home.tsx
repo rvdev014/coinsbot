@@ -5,6 +5,8 @@ import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
 import EnergyInfo from "./energy-info.tsx";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {Levels} from "../../../features/levels";
+import {Link} from "react-router-dom";
 
 export const HomePage = () => {
 
@@ -14,21 +16,24 @@ export const HomePage = () => {
     const initExchange = useExchangeStore(state => state.initExchange);
 
     const level = useUserStore(state => state.level);
-    const nextLevel = useUserStore(state => state.nextLevel);
+    const nextLevel = useUserStore(state => state.next_level);
+    const last_level = useUserStore(state => state.last_level);
     const coins = useUserStore(state => state.coins);
-    const coinsPerHour = useUserStore(state => state.coins_per_hour);
-    const coinsPerTap = useUserStore(state => state.multi_tap);
 
     useEffect(() => {
         initExchange();
     }, [initExchange]);
 
+    console.log('render HomePage');
+
     function tapper(event: React.MouseEvent<HTMLDivElement>) {
         event.preventDefault();
-        if (!tapperRef.current || !coinsPerHour || useUserStore.getState().energy < coinsPerHour) return;
+        if (!tapperRef.current || !level?.coins_per_hour || useUserStore.getState().energy < level?.coins_per_tap) return;
+
+        console.log('level?.coins_per_tap', level?.coins_per_tap)
 
         const plusOne = document.createElement('span')
-        plusOne.innerHTML = `+${coinsPerTap}`;
+        plusOne.innerHTML = `+${level?.coins_per_tap}`;
 
         const x = event.clientX - tapperRef.current.getBoundingClientRect().left;
         const y = event.clientY - tapperRef.current.getBoundingClientRect().top;
@@ -92,7 +97,7 @@ export const HomePage = () => {
                         <Text color='#ff7300' className={styles.infoCard_text}>Per tap</Text>
                         <div className={styles.infoCard_bottom}>
                             <img src="/img/coin.png" alt="Coin"/>
-                            <span>+{coinsPerTap}</span>
+                            <span>+{level?.coins_per_tap}</span>
                         </div>
                     </div>
                     <div className={styles.infoCard}>
@@ -106,7 +111,7 @@ export const HomePage = () => {
                         <Text color='#95ca99' className={styles.infoCard_text}>Per hour</Text>
                         <div className={styles.infoCard_bottom}>
                             <img src="/img/coin.png" alt="Coin"/>
-                            <span>+{coinsPerHour}</span>
+                            <span>+{level?.coins_per_hour}</span>
                         </div>
                     </div>
                 </Flex>
@@ -118,12 +123,13 @@ export const HomePage = () => {
                     </Flex>
                 </div>
 
-                <div className={styles.progress}>
+                <Link to='/levels' className={styles.progress}>
                     <Flex justifyContent='space-between'>
-                        <Text fontWeight='400'>{level?.name}</Text>
+                        <Text fontWeight='400'>{level?.title_ru}</Text>
+                        <Text fontWeight='400' ml={2}>Level {level?.step}/{last_level?.step}</Text>
                     </Flex>
                     <Progress color='yellow' hasStripe value={getProgress()}/>
-                </div>
+                </Link>
 
                 <div className={styles.tapper} ref={tapperRef} onClick={tapper}>
                     <div className={styles.tapperArea}>

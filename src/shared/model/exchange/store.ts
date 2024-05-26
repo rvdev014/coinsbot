@@ -17,9 +17,10 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             if (!get().energyTimeout) {
                 set({
                     energyTimeout: setInterval(() => {
-                        let energy = useUserStore.getState().energy + 3;
-                        if (energy > useUserStore.getState().limit) {
-                            energy = useUserStore.getState().limit;
+                        const userState = useUserStore.getState();
+                        let energy = userState.energy + userState.level.coins_per_tap;
+                        if (energy > userState.level.energy_limit) {
+                            energy = userState.level.energy_limit;
                         }
                         useUserStore.setState({energy});
                     }, 1000)
@@ -30,16 +31,17 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
         onTap: () => {
 
             const userState = useUserStore.getState();
+            const coinsPerTap = userState.level.coins_per_tap;
 
-            let coins = userState.coins + userState.multi_tap;
-            let energy = userState.energy - userState.multi_tap;
+            let coins = userState.coins + coinsPerTap;
+            let energy = userState.energy - coinsPerTap;
             if (energy < 0) {
                 energy = 0;
                 coins = userState.coins;
             }
 
             useUserStore.setState({coins, energy});
-            set({tappedCoins: get().tappedCoins + userState.multi_tap});
+            set({tappedCoins: get().tappedCoins + coinsPerTap});
 
             get().onTapEnd();
         },
@@ -48,7 +50,9 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             try {
                 const tappedCoins = get().tappedCoins;
                 set({tappedCoins: 0});
-                await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
+                if (tappedCoins > 0) {
+                    await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
+                }
             } catch (e) {
                 console.log('e', e)
             }

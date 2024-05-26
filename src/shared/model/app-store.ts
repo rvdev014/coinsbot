@@ -1,7 +1,5 @@
 import {create} from "zustand";
-import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
-import {apiInstance} from "../api/axios.ts";
-import {MainApi} from "../api/main-api.ts";
+import {IAppStore} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
 
 const initialStore = {
@@ -28,7 +26,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
             }*/
 
             try {
-                useUserStore.getState().init(355919981);
+                await useUserStore.getState().init(355919981);
             } catch (e) {
                 console.log('e', e)
             } finally {

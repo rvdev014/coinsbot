@@ -5,6 +5,7 @@ import {useAppStore} from "../../../shared/model/app-store.ts";
 import {UI_COLOR} from "../../../shared/consts.ts";
 import {Spinner} from "@chakra-ui/react";
 import {BottomMenu} from "../../bottom-menu";
+import {Loader} from "../../../shared/ui/loader/loader.tsx";
 
 export const MainLayout = () => {
 
@@ -16,11 +17,7 @@ export const MainLayout = () => {
     }, [])
 
     if (isAppLoading) {
-        return (
-            <div className='AppLoader'>
-                <Spinner color={UI_COLOR} size='xl'/>
-            </div>
-        )
+        return <Loader withText={true}/>
     }
 
     return (

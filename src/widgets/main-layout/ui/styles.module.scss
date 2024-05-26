@@ -1,12 +1,12 @@
 .wrapper {
   color: #fff;
   min-height: 100%;
-
+  padding: 10px 15px 0 15px;
   position: relative;
   max-width: 500px;
   margin: 0 auto;
 }
 
 .content {
-  min-height: calc(100vh - 83px);
+  min-height: calc(100vh - 93px);
 }
