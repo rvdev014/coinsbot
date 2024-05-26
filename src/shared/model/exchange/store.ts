@@ -26,6 +26,18 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                     }, 1000)
                 });
             }
+
+            if (!get().coinsTimeout) {
+                let coinsPerSecond = useUserStore.getState().level.coins_per_hour / 3600;
+                const intervalSeconds = Math.floor(1 / coinsPerSecond) * 1000;
+                set({
+                    coinsTimeout: setInterval(() => {
+                        const userState = useUserStore.getState();
+                        let coins = userState.coins + 1;
+                        useUserStore.setState({coins});
+                    }, intervalSeconds)
+                });
+            }
         },
 
         onTap: () => {
