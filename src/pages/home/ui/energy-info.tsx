@@ -2,11 +2,12 @@ import React from 'react';
 import styles from "./styles.module.scss";
 import {Flex, Text} from "@chakra-ui/react";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
+import {useUserStore} from "../../../shared/model/user/store.ts";
 
 const EnergyInfo = () => {
 
-    const currentEnergy = useExchangeStore(state => state.currentEnergy);
-    const energyLimit = useExchangeStore(state => state.energyLimit);
+    const currentEnergy = useUserStore(state => state.energy)
+    const energyLimit = useUserStore(state => state.limit);
 
     return (
         <div className={styles.energyBlock}>

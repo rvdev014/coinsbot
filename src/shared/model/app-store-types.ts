@@ -1,20 +1,3 @@
-export interface IUserData {
-    id: number;
-    user_id: string;
-    username: string;
-    name: string;
-    language?: any;
-    referral?: any;
-    gender?: any;
-    active: boolean;
-    age?: any;
-    socket_id?: any;
-    last_name: string;
-    language_code: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
 export interface ITgUser {
     id: number;
     first_name: string;
@@ -33,11 +16,6 @@ export interface ITgDataUnsafe {
 }
 
 export interface IAppStore {
-    me: IUserData | null;
     isAppLoading: boolean;
-    // isTelegramWebApp: boolean;
-
-    setMe: (me: IUserData) => void;
-    fetchMe: () => void;
     initTelegram: () => void;
 }

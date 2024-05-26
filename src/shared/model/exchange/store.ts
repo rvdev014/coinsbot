@@ -1,70 +1,59 @@
 import {create} from "zustand";
-import {IExchangeStore, ILevel} from "./store-types.ts";
+import {IExchangeStore} from "./store-types.ts";
+import {useUserStore} from "../user/store.ts";
+import {debounce} from "../../utils/debounce.ts";
+import {CoinsApi} from "../../api/coins-api.ts";
 
 const initialStore = {
-    balance: 0,
-    amountPerTap: 1,
-    amountPerHour: 1,
-    level: {} as ILevel,
-    nextLevel: {} as ILevel,
+    tappedCoins: 0,
+    energyTimeout: null,
 } as IExchangeStore;
-
-let energyTimeout: number | null = null;
 
 export const useExchangeStore = create<IExchangeStore>((set, get) => {
     return {
         ...initialStore,
+
+        initExchange() {
+            if (!get().energyTimeout) {
+                set({
+                    energyTimeout: setInterval(() => {
+                        let energy = useUserStore.getState().energy + 3;
+                        if (energy > useUserStore.getState().limit) {
+                            energy = useUserStore.getState().limit;
+                        }
+                        useUserStore.setState({energy});
+                    }, 1000)
+                });
+            }
+        },
+
         onTap: () => {
 
-            let balance = get().balance + get().amountPerTap;
-            let currentEnergy = get().currentEnergy - get().amountPerTap;
-            if (currentEnergy < 0) {
-                currentEnergy = 0;
-                balance = get().balance;
+            const userState = useUserStore.getState();
+
+            let coins = userState.coins + userState.multi_tap;
+            let energy = userState.energy - userState.multi_tap;
+            if (energy < 0) {
+                energy = 0;
+                coins = userState.coins;
             }
 
-            set({
-                balance,
-                currentEnergy
-            })
+            useUserStore.setState({coins, energy});
+            set({tappedCoins: get().tappedCoins + userState.multi_tap});
+
+            get().onTapEnd();
         },
-        initExchange() {
+
+        onTapEnd: debounce(async () => {
             try {
-                const level = {
-                    number: 1,
-                    name: 'Silver',
-                    minAmount: 1000
-                };
-                const nextLevel = {
-                    number: 2,
-                    name: 'Gold',
-                    minAmount: 2000
-                };
-                set({
-                    balance: 100,
-                    amountPerTap: 2,
-                    amountPerHour: 50,
-                    level,
-                    nextLevel,
-                    maxLevelNumber: 9,
-
-                    currentEnergy: 1000,
-                    energyLimit: 2000,
-                });
-
-                if (!energyTimeout) {
-                    energyTimeout = setInterval(() => {
-                        let currentEnergy = get().currentEnergy + 3;
-                        if (currentEnergy > get().energyLimit) {
-                            currentEnergy = get().energyLimit;
-                        }
-                        set({currentEnergy});
-                    }, 1000);
-                }
+                const tappedCoins = get().tappedCoins;
+                set({tappedCoins: 0});
+                await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
             } catch (e) {
                 console.log('e', e)
             }
-        },
+        }, 500),
+
         reset: () => set(initialStore),
     }
 });

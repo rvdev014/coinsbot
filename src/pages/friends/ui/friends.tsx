@@ -48,16 +48,16 @@ export const FriendsPage = () => {
             <div className={styles.friendsList}>
                 <Text fontSize='18px' fontWeight='bold' className={styles.friendsList_title}>Friends</Text>
                 <Flex alignItems='center' className={styles.friendItem}>
-                    <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-                    <Text ml={2}>Dan Abrahmov</Text>
+                    <Avatar name='Dan Abramov' src='https://bit.ly/dan-abramov' />
+                    <Text ml={2}>Dan Abramov</Text>
                 </Flex>
                 <Flex alignItems='center' className={styles.friendItem}>
-                    <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-                    <Text ml={2}>Dan Abrahmov</Text>
+                    <Avatar name='Dan Abramov' src='https://bit.ly/dan-abramov' />
+                    <Text ml={2}>Dan Abramov</Text>
                 </Flex>
                 <Flex alignItems='center' className={styles.friendItem}>
-                    <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-                    <Text ml={2}>Dan Abrahmov</Text>
+                    <Avatar name='Dan Abramov' src='https://bit.ly/dan-abramov' />
+                    <Text ml={2}>Dan Abramov</Text>
                 </Flex>
             </div>
 

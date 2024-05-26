@@ -1,15 +1,10 @@
 export interface IExchangeStore {
-    balance: number,
-    amountPerTap: number,
-    amountPerHour: number,
-    level: ILevel,
-    nextLevel: ILevel,
-    maxLevelNumber: number,
+    tappedCoins: number;
+    energyTimeout: number | null;
 
-    currentEnergy: number,
-    energyLimit: number,
-
+    initExchange(): void;
     onTap(): void;
+    onTapEnd(): void;
     initExchange(): void;
     reset(): void;
 }
