@@ -14,8 +14,8 @@ const Routing = () => {
             <Routes>
                 <Route element={<MainLayout/>}>
                     <Route path="/" element={<HomePage/>}/>
+                    <Route path="/tasks" element={<EarnPage/>}/>
                     <Route path="/friends" element={<FriendsPage/>}/>
-                    <Route path="/earn" element={<EarnPage/>}/>
 
                     <Route path="/levels" element={<Levels/>}/>
                 </Route>

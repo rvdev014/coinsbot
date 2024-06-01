@@ -1,0 +1,56 @@
+.wrapper {
+  padding: 30px 0 10px 0;
+  height: 100%;
+}
+
+.levelBlock {
+  margin-bottom: 10px;
+
+  .switchLevel {
+    img {
+      width: 30px;
+    }
+  }
+
+  .level {
+
+
+    img {
+      margin-bottom: 20px;
+      width: 100px;
+    }
+  }
+}
+
+.users {
+  margin-top: 30px;
+}
+
+.userItem {
+  padding: 10px 20px 10px 15px;
+  background: #272a2f;
+  border-radius: 20px;
+  margin-bottom: 5px;
+
+  .userItem_avatar {
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 12px;
+  }
+
+  .userItem_info {
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.userItemCurrent {
+  position: sticky;
+  bottom: 70px;
+  z-index: 9;
+  margin-top: 20px;
+  border: 2px solid #f1c40f;
+}
