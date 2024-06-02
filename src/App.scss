@@ -8,6 +8,20 @@
     font-style: normal;
 }
 
+// styles scroll bars
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1C1C1D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 10px;
+}
+
 img {
     user-select: none;
 }
@@ -42,4 +56,11 @@ html, body {
 
 button:focus {
     outline: none;
+}
+
+
+.chakra-slide {
+    max-width: calc(500px - 28px)!important;
+    right: unset!important;
+    left: unset!important;
 }
