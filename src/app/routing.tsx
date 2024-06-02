@@ -7,7 +7,6 @@ import {HomePage} from "../pages/home";
 import {EarnPage} from "../pages/earn";
 import {FriendsPage} from "../pages/friends";
 import {Levels} from "../features/levels";
-import {QrCode} from "../pages/qrCode";
 
 const Routing = () => {
     return (

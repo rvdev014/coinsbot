@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss';
 import {AbsoluteCenter, Text} from "@chakra-ui/react";
+import {useTranslation} from "react-i18next";
 
 export const QrCode = () => {
+
+    const { t } = useTranslation();
 
     const [copySuccess, setCopySuccess] = useState('');
 
     const copyUrl = async () => {
         try {
             await navigator.clipboard.writeText(import.meta.env.VITE_QRCODE);
-            setCopySuccess('Copied ✅');
+            setCopySuccess(t('qr_copied'));
         } catch (e) {
-            setCopySuccess('Failed ❌');
+            setCopySuccess(t('qr_failed'));
         }
     }
 
@@ -19,12 +22,12 @@ export const QrCode = () => {
         <div className={styles.wrapper}>
             <AbsoluteCenter bg='' color='white' axis='both'>
                 <div className={styles.qrcode_block}>
-                    <Text>Play on your mobile</Text>
-                    <img className={styles.qrcode_img} src="/img/qrcode.png" alt="QR Code"/>
+                    <Text>{t('play_on_your_mobile')}</Text>
+                    <img className={styles.qrcode_img} src="/img/qrcode.png" alt={t('qr_code')}/>
 
                     <div className={styles.qrcode_info}>
                         <Text onClick={copyUrl} className={styles.qrcode_copy}>
-                            {copySuccess ? <span>{copySuccess}</span> : <span>Copy url</span>}
+                            {copySuccess ? <span>{copySuccess}</span> : <span>{t('qr_copy_url')}</span>}
                         </Text>
                     </div>
 
