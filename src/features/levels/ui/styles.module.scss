@@ -1,0 +1,125 @@
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.arrowLeft {
+  margin-right: 20px;
+}
+
+.arrowRight {
+  margin-left: 20px;
+}
+
+.levelImg {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 5px solid #3f3735;
+  background: radial-gradient(circle, rgb(116 116 116) 0%, rgb(0, 0, 0) 100%);
+
+  img {
+    border-radius: 50%;
+    border: 5px solid #1c1c1d;
+  }
+}
+
+
+.levelInfo {
+  margin-top: 20px;
+
+  .levelTitle {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .levelText {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.36px;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: #9F9F9F;
+
+  }
+}
+
+.usersWrapper {
+  margin-top: 36px;
+}
+
+.userItem {
+  padding: 16px 26px 16px 16px;
+  border-radius: 12px;
+  background: #262626;
+  height: 80px;
+  margin-bottom: 8px;
+}
+
+.userItem_left {
+
+  .userAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 13px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2C2C30;
+
+    p {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 29.04px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      color: #787880;
+    }
+  }
+}
+
+.userInfo {
+
+  .userName {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    letter-spacing: -0.03em;
+    text-align: left;
+  }
+
+  .userBalance {
+
+    span {
+      color: #7C7C7C;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 24.2px;
+      letter-spacing: -0.03em;
+      text-align: center;
+    }
+    img {
+      margin-right: 5px;
+    }
+  }
+}
+
+.userRank {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29.04px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  opacity: 0.3;
+}
