@@ -41,7 +41,7 @@ export const Levels = () => {
                                 </div>
                                 <div className={styles.userInfo}>
                                     <p className={styles.userName}>vtsss</p>
-                                    <Flex className={styles.userBalance}>
+                                    <Flex className={styles.userBalance} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
                                         <span>19 583 078</span>
                                     </Flex>
