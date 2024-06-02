@@ -12,6 +12,7 @@ export const useUserStore = create<IUserStore>((set, get) => {
         init: async (userId) => {
             try {
                 console.log('userId', userId)
+                if (!userId) return;
                 const user = await MainApi.userPerHour(userId);
                 if (!user) return;
 

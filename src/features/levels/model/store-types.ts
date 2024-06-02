@@ -1,23 +1,16 @@
-import {ILevel} from "../../../shared/model/user/store-types.ts";
+import {ILevel, IUserData} from "../../../shared/model/user/store-types.ts";
 
-export interface ILevelsStore {
-    level: ILevel
-    prev_level: ILevel
-    next_level: ILevel
-    users: ILevelsUser[]
-    rank: number;
-    loading: boolean;
-
-    init(): void;
-    onPrev(): void;
-    onNext(): void;
+export interface ILevelStore extends ILevelData {
+    init(userId: string | number, step: string | number): Promise<void>;
+    setStatisticData(data: ILevelData): void;
     reset(): void;
 }
 
-export interface ILevelsUser {
-    coins: number
-    username: string
-    first_name: string
-    last_name: string
-    logo?: string
+export interface ILevelData {
+    rank: number,
+    level: ILevel
+    next_level: ILevel
+    prev_level: ILevel
+    users: IUserData[],
+    loading: boolean,
 }

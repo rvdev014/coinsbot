@@ -1,33 +1,30 @@
 import {create} from "zustand";
-import {ILevelsStore, ILevelsUser} from "./store-types.ts";
-import {ILevel} from "../../../shared/model/user/store-types.ts";
+import {ILevelStore} from "./store-types.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 
 const initialStore = {
-    level: {} as ILevel,
-    users: [] as ILevelsUser[],
-    rank: 0,
     loading: false,
-} as ILevelsStore;
+} as ILevelStore;
 
-export const useLevelsStore = create<ILevelsStore>((set, get) => {
+export const useLevelStore = create<ILevelStore>((set, get) => {
     return {
         ...initialStore,
-        init: async () => {
+        init: async (userId, step) => {
             set({loading: true});
             try {
-                const userState = useUserStore.getState();
-                const data = await CoinsApi.getLevelsStats(userState.user_id, userState.level.step);
-                console.log('data', data)
-                set({...data});
+                console.log('step, userId', step, userId)
+                const statistics = await CoinsApi.getLevelsStats(userId, step);
+
+                if (!statistics) return;
+
+                set({...statistics});
             } catch (e) {
-                console.error(e);
+                console.log('e', e)
             } finally {
                 set({loading: false});
             }
         },
-
         onNext: async () => {
             set({loading: true});
             try {
@@ -42,7 +39,6 @@ export const useLevelsStore = create<ILevelsStore>((set, get) => {
                 set({loading: false});
             }
         },
-
         onPrev: async () => {
             set({loading: true});
             try {

@@ -15,7 +15,7 @@ export const formatNumber = (num: any) => {
             num =  (num / 1000000000).toFixed(0) + ' B+'
             break
         default:
-            num.toString()
+            num?.toString()
     }
 
     return num

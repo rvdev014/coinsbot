@@ -6,5 +6,7 @@
   "qr_failed": "Failed ❌",
   "coins_per_hour": "Profit per 1.5 hours",
   "coins_for_level_up": "Coins for level up",
-  "from": "From"
+  "from": "From",
+  "loading": "Loading",
+  "be_first": "Be the first to reach this ranking and inspire others to achieve new heights."
 }
