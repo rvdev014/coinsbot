@@ -3,15 +3,16 @@ import styles from './styles.module.scss';
 import {Flex, Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {t} from "i18next";
 
 export const HomePage = () => {
     const user = useUserStore(state => state);
     const coins = useUserStore(state => state?.coins);
 
     useEffect(() => {
+
         const interval = setInterval(() => {
             useUserStore.setState({coins: coins + user?.coins_per_second});
-            
         }, 1000);
 
         return () => clearInterval(interval);
@@ -31,14 +32,14 @@ export const HomePage = () => {
                 </div>
 
                 <div className={styles.headerInfo_block}>
-                    <span className={styles.headerInfo_text}>Coins for level up</span>
+                    <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
                     <Flex className={styles.headerInfo_info}>
                         <Text>{user?.next_level?.coins ?? 'max'}</Text>
                     </Flex>
                 </div>
 
                 <div className={styles.headerInfo_block}>
-                    <span className={styles.headerInfo_text}>Profit per 1.5 hours</span>
+                    <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
                     <Flex className={styles.headerInfo_info}>
                         <Text>+{user?.coins_per_hour}</Text>
                     </Flex>
@@ -53,7 +54,7 @@ export const HomePage = () => {
                         <img src="/img/coin-icon-lg.png" alt="Coin"/>
                         <Text className={styles.balance_number}>{coins?.toFixed(2)}</Text>
                     </Flex>
-                    <Link to='/levels'>
+                    <Link to={`/levels/${user?.level?.step ?? 1}`}>
                         <Flex className={styles.level} alignItems='center'>
                             <Flex className={styles.level_info}>
                                 <Text>Puppy</Text>

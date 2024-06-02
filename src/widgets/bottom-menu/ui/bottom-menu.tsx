@@ -3,8 +3,6 @@ import styles from './styles.module.scss';
 import {Flex, Text} from "@chakra-ui/react";
 import {Link, useLocation} from "react-router-dom";
 
-import cl from 'classnames';
-
 export const BottomMenu = () => {
     const location = useLocation();
 

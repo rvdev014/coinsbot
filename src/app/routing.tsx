@@ -16,7 +16,7 @@ const Routing = () => {
                     <Route path="/" element={<HomePage/>}/>
                     <Route path="/tasks" element={<EarnPage/>}/>
                     <Route path="/friends" element={<FriendsPage/>}/>
-                    <Route path="/levels" element={<Levels/>}/>
+                    <Route path="/levels/:id" element={<Levels/>}/>
                 </Route>
             </Routes>
         </CustomRouter>
