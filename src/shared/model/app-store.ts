@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {IAppStore} from "./app-store-types.ts";
+import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
 
 const initialStore = {
@@ -16,22 +16,24 @@ export const useAppStore = create<IAppStore>((set, get) => {
             const tg = window.Telegram.WebApp;
             tg.ready();
 
-            /*const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
+            const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
+
             if (!tgDataUnsafe?.user) {
                 set({
                     // isTelegramWebApp: false,
                     isAppLoading: false
                 });
                 return;
-            }*/
+            }
 
-            /*try {
-                await useUserStore.getState().init(355919981);
+            try {
+                console.log(tgDataUnsafe?.user?.id, tgDataUnsafe?.user?.id ?? 355919981)
+                await useUserStore.getState().init(tgDataUnsafe?.user?.id ?? 355919981);
             } catch (e) {
                 console.log('e', e)
             } finally {
                 set({isAppLoading: false});
-            }*/
+            }
         },
     }
 })

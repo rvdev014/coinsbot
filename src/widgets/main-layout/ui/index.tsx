@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Outlet} from "react-router-dom";
 import {useAppStore} from "../../../shared/model/app-store.ts";
-import {UI_COLOR} from "../../../shared/consts.ts";
-import {Spinner} from "@chakra-ui/react";
 import {BottomMenu} from "../../bottom-menu";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 

@@ -7,6 +7,7 @@ import {HomePage} from "../pages/home";
 import {EarnPage} from "../pages/earn";
 import {FriendsPage} from "../pages/friends";
 import {Levels} from "../features/levels";
+import {QrCode} from "../pages/qrCode";
 
 const Routing = () => {
     return (
@@ -16,7 +17,6 @@ const Routing = () => {
                     <Route path="/" element={<HomePage/>}/>
                     <Route path="/tasks" element={<EarnPage/>}/>
                     <Route path="/friends" element={<FriendsPage/>}/>
-
                     <Route path="/levels" element={<Levels/>}/>
                 </Route>
             </Routes>
