@@ -1,0 +1,237 @@
+.wrapper {
+
+}
+
+.mainBlock {
+  padding: 24px 0;
+  border-radius: 24px;
+  background: #262626;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .divider {
+    border: 1px solid #323232;
+    width: 150px !important;
+    margin-top: 20px;
+  }
+
+  .text {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.36px;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: #9F9F9F;
+
+  }
+}
+
+.earnedBalance {
+  margin-top: 10px;
+
+  img {
+    margin-right: 8px;
+  }
+
+  span {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 50.82px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+}
+
+.friendsInfo {
+  margin-top: 10px;
+
+  img {
+    margin-right: 8px;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.36px;
+    letter-spacing: -0.03em;
+    text-align: center;
+
+    span {
+      color: #7C7C7C;
+    }
+  }
+}
+
+
+.infoBlocks {
+  margin-top: 8px;
+}
+
+.infoBlock {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 24px;
+  background: #262626;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .infoBlock_title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 18.15px;
+    letter-spacing: -0.03em;
+    text-align: center;
+  }
+
+  .infoBlock_text {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15.73px;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: #7C7C7C;
+  }
+
+  .earnedBalance {
+    margin-top: 8px;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    span {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 21.78px;
+      letter-spacing: -0.04em;
+      text-align: center;
+    }
+  }
+}
+
+
+
+.friendsWrapper {
+  margin-top: 26px;
+}
+
+.friendsTitleWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    margin-left: 8px;
+    padding: 5px 9px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #17D686 0%, #0C7046 100%);
+  }
+}
+
+
+
+.userItem {
+  padding: 16px 0;
+  height: 80px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #323232;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.userAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 13px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #2C2C30;
+
+  p {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29.04px;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: #787880;
+  }
+}
+
+.userInfo {
+
+  .userName {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    letter-spacing: -0.03em;
+    text-align: left;
+  }
+
+  .userBalance {
+
+    .userLevel {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16.94px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-right: 8px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16.94px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      color: #7C7C7C;
+    }
+    img {
+      margin-right: 5px;
+    }
+  }
+}
+
+.prize {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 29.04px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+
+.inviteFriendBtn {
+  position: fixed;
+  bottom: calc(64px + 20px);
+  max-width: calc(500px - 28px);
+  width: calc(100% - 28px);
+  height: 56px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #17D686 0%, #0C7046 100%);
+
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29.04px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}

@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import {useLevelsStore} from "../model/store.ts";
+import {useLevelsStore} from "../../model/store.ts";
 import {Flex, Progress, Text} from "@chakra-ui/react";
 
 import styles from './styles.module.scss';
-import {useUserStore} from "../../../shared/model/user/store.ts";
+import {useUserStore} from "../../../../shared/model/user/store.ts";
 import classNames from 'classnames';
-import {Loader} from "../../../shared/ui/loader/loader.tsx";
+import {Loader} from "../../../../shared/ui/loader/loader.tsx";
 import {Simulate} from "react-dom/test-utils";
 import load = Simulate.load;
 
