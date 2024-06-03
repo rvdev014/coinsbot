@@ -18,16 +18,15 @@ export const useAppStore = create<IAppStore>((set, get) => {
 
             const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
 
-            if (!tgDataUnsafe?.user) {
+            /*if (!tgDataUnsafe?.user) {
                 set({
                     // isTelegramWebApp: false,
                     isAppLoading: false
                 });
                 return;
-            }
+            }*/
 
             try {
-                console.log(tgDataUnsafe?.user?.id, tgDataUnsafe?.user?.id ?? 355919981)
                 await useUserStore.getState().init(tgDataUnsafe?.user?.id ?? 355919981);
             } catch (e) {
                 console.log('e', e)

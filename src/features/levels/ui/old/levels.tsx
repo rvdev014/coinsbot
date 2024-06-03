@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useLevelsStore} from "../../model/store.ts";
+import {useLevelStore} from "../../model/store.ts";
 import {Flex, Progress, Text} from "@chakra-ui/react";
 
 import styles from './styles.module.scss';
@@ -7,7 +7,7 @@ import {useUserStore} from "../../../../shared/model/user/store.ts";
 import classNames from 'classnames';
 import {Loader} from "../../../../shared/ui/loader/loader.tsx";
 import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
+
 
 export const Levels = () => {
 
@@ -16,17 +16,17 @@ export const Levels = () => {
     const currentUserName = useUserStore(state => state.username);
     const currentUserLevel = useUserStore(state => state.level);
 
-    const initLevels = useLevelsStore(state => state.init);
-    const loading = useLevelsStore(state => state.loading);
-    const level = useLevelsStore(state => state.level);
-    const nextLevel = useLevelsStore(state => state.next_level);
-    const users = useLevelsStore(state => state.users);
-    const currentUserRank = useLevelsStore(state => state.rank);
-    const onPrev = useLevelsStore(state => state.onPrev);
-    const onNext = useLevelsStore(state => state.onNext);
+    const initLevels = useLevelStore(state => state.init);
+    const loading = useLevelStore(state => state.loading);
+    const level = useLevelStore(state => state.level);
+    const nextLevel = useLevelStore(state => state.next_level);
+    const users = useLevelStore(state => state.users);
+    const currentUserRank = useLevelStore(state => state.rank);
+    // const onPrev = useLevelStore(state => state.onPrev);
+    // const onNext = useLevelStore(state => state.onNext);
 
     useEffect(() => {
-        initLevels();
+        // initLevels();
     }, []);
 
     function getProgress() {
@@ -45,10 +45,10 @@ export const Levels = () => {
     return (
         <div className={styles.wrapper}>
 
-        <Flex justifyContent='space-between' className={styles.levelBlock}>
+            <Flex justifyContent='space-between' className={styles.levelBlock}>
                 <button
                     className={styles.switchLevel}
-                    onClick={onPrev}
+                    // onClick={onPrev}
                 >
                     <img style={{transform: 'rotate(180deg)'}} src="/img/arrow.png" alt="Left"/>
                 </button>
@@ -65,7 +65,7 @@ export const Levels = () => {
                 </Flex>
                 <button
                     className={styles.switchLevel}
-                    onClick={onNext}
+                    // onClick={onNext}
                 >
                     <img src="/img/arrow.png" alt="Right"/>
                 </button>
