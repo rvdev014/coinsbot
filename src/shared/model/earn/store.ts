@@ -63,7 +63,8 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
                     if (userDayBonus && userBonusDate) {
                         const currentDate = new Date();
-                        const bonusDate = parseStr2Date(userBonusDate, false);
+                        const bonusDate = parseStr2Date(userBonusDate);
+                        console.log('bonusDate', bonusDate)
                         const isSameDay = currentDate.getDate() === bonusDate.getDate();
 
                         if (!isSameDay) {
