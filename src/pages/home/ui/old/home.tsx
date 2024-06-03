@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Avatar, Button, Flex, Progress, Text} from "@chakra-ui/react";
 import {useExchangeStore} from "../../../../shared/model/exchange/store.ts";
-import EnergyInfo from "./energy-info.tsx";
+import {EnergyInfoOld} from "./energy-info.tsx";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {Link} from "react-router-dom";
 
@@ -135,7 +135,7 @@ export const HomePage = () => {
                     </div>
                 </div>
 
-                <EnergyInfo/>
+                <EnergyInfoOld/>
 
             </div>
 

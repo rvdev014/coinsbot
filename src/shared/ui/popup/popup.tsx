@@ -16,7 +16,7 @@ export const Popup: FC<IProps> = ({isOpen, onClose, children}) => {
                 <DrawerOverlay />
                 <DrawerContent className={styles.wrapper}>
                     {children}
-                    <button className={styles.close}>
+                    <button className={styles.close} onClick={onClose}>
                         <img src="/img/close.png" alt="Close"/>
                     </button>
                 </DrawerContent>

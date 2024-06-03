@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 import {Flex, Text} from "@chakra-ui/react";
-import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
-import {useUserStore} from "../../../shared/model/user/store.ts";
+import {useExchangeStore} from "../../../../shared/model/exchange/store.ts";
+import {useUserStore} from "../../../../shared/model/user/store.ts";
 
-const EnergyInfo = () => {
+export const EnergyInfoOld = () => {
 
     const level = useUserStore(state => state.level);
     const currentEnergy = useUserStore(state => state.energy)
@@ -19,5 +19,3 @@ const EnergyInfo = () => {
         </div>
     );
 };
-
-export default EnergyInfo;

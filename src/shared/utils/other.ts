@@ -20,3 +20,8 @@ export const formatNumber = (num: any) => {
 
     return num
 };
+
+export function formatPrice(amount: number): string {
+    if (!amount) return '0';
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}

@@ -18,9 +18,9 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                 set({
                     energyTimeout: setInterval(() => {
                         const userState = useUserStore.getState();
-                        let energy = userState.energy + userState.level.coins_per_tap;
-                        if (energy > userState.level.energy_limit) {
-                            energy = userState.level.energy_limit;
+                        let energy = userState.energy + userState.coins_per_tap;
+                        if (energy > userState.energy_limit) {
+                            energy = userState.energy_limit;
                         }
                         useUserStore.setState({energy});
                     }, 1000)
@@ -28,14 +28,14 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             }
 
             if (!get().coinsTimeout) {
-                let coinsPerSecond = useUserStore.getState().level.coins_per_hour / 3600;
-                const intervalSeconds = Math.floor(1 / coinsPerSecond) * 1000;
+                let coinsPerSecond = 5400 / useUserStore.getState().coins_per_hour;
+                console.log('coinsPerSecond', coinsPerSecond)
                 set({
                     coinsTimeout: setInterval(() => {
                         const userState = useUserStore.getState();
-                        let coins = userState.coins + 1;
+                        let coins = Math.floor(userState.coins + coinsPerSecond);
                         useUserStore.setState({coins});
-                    }, intervalSeconds)
+                    }, 1000)
                 });
             }
         },
@@ -43,7 +43,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
         onTap: () => {
 
             const userState = useUserStore.getState();
-            const coinsPerTap = userState.level.coins_per_tap;
+            const coinsPerTap = userState.coins_per_tap;
 
             let coins = userState.coins + coinsPerTap;
             let energy = userState.energy - coinsPerTap;

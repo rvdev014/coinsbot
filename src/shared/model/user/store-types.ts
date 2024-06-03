@@ -1,3 +1,5 @@
+import {IBonus} from "../earn/store-types.ts";
+
 export interface IUserStore extends IUserData {
     init(userId: number): Promise<void>;
     setUserData(data: IUserData): void;
@@ -33,7 +35,7 @@ export interface IUserData {
     next_level: ILevel
     last_level: ILevel
     tasks: any[]
-    dayBonus: any
+    dayBonus: IBonus | null
 }
 
 export interface ILevel {

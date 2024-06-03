@@ -10,7 +10,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
     return {
         ...initialStore,
         initTelegram: async () => {
-            set({isAppLoading: false});
+            set({isAppLoading: true});
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
             const tg = window.Telegram.WebApp;

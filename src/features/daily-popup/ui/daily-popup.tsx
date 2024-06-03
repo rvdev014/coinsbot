@@ -3,6 +3,10 @@ import styles from "./styles.module.scss";
 import {Flex} from "@chakra-ui/react";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import cl from 'classnames';
+import {useEarnStore} from "../../../shared/model/earn/store.ts";
+import {formatPrice} from "../../../shared/utils/other.ts";
+import {useUserStore} from "../../../shared/model/user/store.ts";
+import {Loader} from "../../../shared/ui/loader/loader.tsx";
 
 interface IProps {
     isOpen: boolean;
@@ -10,86 +14,78 @@ interface IProps {
 }
 
 export const DailyPopup: FC<IProps> = ({isOpen, onClose}) => {
+
+    const userDayBonus = useUserStore(state => state.dayBonus);
+    const isLoading = useEarnStore(state => state.isLoading);
+    const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
+    const bonuses = useEarnStore(state => state.bonuses);
+    const activeDayBonus = useEarnStore(state => state.activeDayBonus);
+    const onClaimClick = useEarnStore(state => state.onClaimClick);
+    const isClaimLoading = useEarnStore(state => state.isClaimLoading);
+
     return (
         <Popup isOpen={isOpen} onClose={onClose}>
+
+
             <div className={styles.content}>
                 <h2 className={styles.title}>Daily reward</h2>
                 <p className={styles.text}>
-                    Pick up coins for logging into the game daily without skipping. The “Pick up” button must be pressed
+                    Pick up coins for logging into the game daily without skipping. The “Pick up” button must be
+                    pressed
                     daily, otherwise the day count will start again
                 </p>
 
-                <div className={styles.daysList}>
+                {(isLoading || isBonusesLoading)
+                    ? <Loader/>
+                    : (
+                        <div className={styles.daysList}>
+                            {bonuses.map((bonus, index) => {
 
-                    <div className={cl(styles.dayItem, styles.complete)}>
-                        <p className={styles.dayItem_text}>Day 1</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
+                                const isComplete = userDayBonus ? (userDayBonus.day >= bonus.day) : false;
+                                const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;
 
-                    <div className={cl(styles.dayItem, styles.complete)}>
-                        <p className={styles.dayItem_text}>Day 2</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
+                                return (
+                                    <div
+                                        key={bonus.id}
+                                        className={cl(
+                                            styles.dayItem,
+                                            isComplete ? styles.complete : '',
+                                            isActive ? styles.active : ''
+                                        )}
+                                    >
+                                        <p className={styles.dayItem_text}>Day {index + 1}</p>
+                                        <Flex className={styles.dayItem_info} alignItems='center'
+                                              justifyContent='center'>
+                                            <img
+                                                src={bonus.img}
+                                                alt="Coin"
+                                                onError={(e) => e.currentTarget.src = '/img/coin-icon.png'}
+                                            />
+                                            <span>{formatPrice(bonus.coins)}</span>
+                                        </Flex>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
 
-                    <div className={cl(styles.dayItem, styles.complete)}>
-                        <p className={styles.dayItem_text}>Day 3</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
 
-                    <div className={cl(styles.dayItem, styles.active)}>
-                        <p className={styles.dayItem_text}>Day 4</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
-
-                    <div className={styles.dayItem}>
-                        <p className={styles.dayItem_text}>Day 5</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
-
-                    <div className={styles.dayItem}>
-                        <p className={styles.dayItem_text}>Day 6</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
-
-                    <div className={styles.dayItem}>
-                        <p className={styles.dayItem_text}>Day 7</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
-
-                    <div className={styles.dayItem}>
-                        <p className={styles.dayItem_text}>Day 8</p>
-                        <Flex className={styles.dayItem_info} alignItems='center'>
-                            <img src="/img/coin-icon.png" alt="Coin"/>
-                            <span>+500</span>
-                        </Flex>
-                    </div>
-
-                </div>
-
-                <button className={styles.claimBtn}>Claim</button>
+                {!activeDayBonus
+                    ?
+                    <button
+                        className={styles.claimBtn}
+                        onClick={onClaimClick}
+                        disabled={true}
+                    >Not today.</button>
+                    :
+                    <button
+                        className={styles.claimBtn}
+                        onClick={onClaimClick}
+                        disabled={isLoading || isClaimLoading}
+                    >{isClaimLoading ? 'Claiming...' : 'Claim'}</button>}
 
             </div>
+
         </Popup>
     );
 };

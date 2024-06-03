@@ -6,6 +6,5 @@ export interface IExchangeStore {
     initExchange(): void;
     onTap(): void;
     onTapEnd(): void;
-    initExchange(): void;
     reset(): void;
 }
