@@ -2,8 +2,9 @@ export interface IEarnStore {
     tasks: ITask[];
     bonuses: IBonus[];
     selectedTask: ITask | null;
-    activeDayBonus: IBonus | null;
+    active_day_bonus: IBonus | null;
 
+    totalBonusCoins: number;
     isLoading: boolean;
     isTasksLoading: boolean;
     isBonusesLoading: boolean;
@@ -13,7 +14,7 @@ export interface IEarnStore {
 
     initEarn(): void;
     fetchTasks(): Promise<void>;
-    fetchBonuses(): Promise<void>;
+    fetchBonuses(withoutLoading: boolean | null): Promise<void>;
     onClaimClick(): void;
     onTaskClick(task: ITask): void;
     onDailyClick(): void;

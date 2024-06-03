@@ -7,19 +7,20 @@ import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
+import {IBonus} from "../../../shared/model/earn/store-types.ts";
 
 interface IProps {
     isOpen: boolean;
+    bonuses: IBonus[] | null;
     onClose: () => void;
 }
 
-export const DailyPopup: FC<IProps> = ({isOpen, onClose}) => {
+export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
 
-    const userDayBonus = useUserStore(state => state.dayBonus);
+    const userDayBonus = useUserStore(state => state.day_bonus);
     const isLoading = useEarnStore(state => state.isLoading);
     const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
-    const bonuses = useEarnStore(state => state.bonuses);
-    const activeDayBonus = useEarnStore(state => state.activeDayBonus);
+    const activeDayBonus = useEarnStore(state => state.active_day_bonus);
     const onClaimClick = useEarnStore(state => state.onClaimClick);
     const isClaimLoading = useEarnStore(state => state.isClaimLoading);
 
@@ -39,7 +40,7 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose}) => {
                     ? <Loader/>
                     : (
                         <div className={styles.daysList}>
-                            {bonuses.map((bonus, index) => {
+                            {bonuses?.map((bonus, index) => {
 
                                 const isComplete = userDayBonus ? (userDayBonus.day >= bonus.day) : false;
                                 const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;

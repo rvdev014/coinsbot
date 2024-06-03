@@ -12,8 +12,10 @@ export const EarnPage = () => {
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
 
     const tasks = useEarnStore(state => state.tasks);
+    const bonuses = useEarnStore(state => state.bonuses);
+    const totalBonusCoins = useEarnStore(state => state.totalBonusCoins);
     const selectedTask = useEarnStore(state => state.selectedTask);
-    const activeDayBonus = useEarnStore(state => state.activeDayBonus);
+    const activeDayBonus = useEarnStore(state => state.active_day_bonus);
     const onDailyClick = useEarnStore(state => state.onDailyClick);
     const onTaskClick = useEarnStore(state => state.onTaskClick);
     const onTaskClose = useEarnStore(state => state.onTaskClose);
@@ -33,7 +35,7 @@ export const EarnPage = () => {
                 <div className={styles.header}>
                     <img src="/img/coin-level.png" alt="Coin level"/>
                     <p className={styles.title}>Earn more coins</p>
-                    <p className={styles.bonusTitle}>+10 000 000</p>
+                    <p className={styles.bonusTitle}>+{totalBonusCoins}</p>
 
                     <button className={styles.dailyBtn} onClick={onDailyClick}>
                         <Flex className={styles.dailyBtn_left}>
@@ -92,6 +94,7 @@ export const EarnPage = () => {
 
             <DailyPopup
                 isOpen={isOpenDaily}
+                bonuses={bonuses}
                 onClose={() => useEarnStore.setState({isOpenDaily: false})}
             />
 

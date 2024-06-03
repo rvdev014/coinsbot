@@ -24,6 +24,7 @@ export interface IUserData {
     referral_levels: object,
     multi_tap: string,
     bonus_date: string,
+    bonus_day_ready: boolean,
     turbo: string,
     tap_at: string,
     energy_turbo_at: string,
@@ -35,7 +36,8 @@ export interface IUserData {
     next_level: ILevel
     last_level: ILevel
     tasks: any[]
-    dayBonus: IBonus | null
+    day_bonus: IBonus | null
+    active_day_bonus: IBonus | null
 }
 
 export interface ILevel {

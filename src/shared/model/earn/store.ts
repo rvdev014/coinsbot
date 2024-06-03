@@ -2,14 +2,13 @@ import {create} from "zustand";
 import {IBonus, IEarnStore, ITask} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {useUserStore} from "../user/store.ts";
-import {parseStr2Date} from "../../utils/date.ts";
 import {CoinsApi} from "../../api/coins-api.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
     bonuses: [] as IBonus[],
     selectedTask: null,
-    activeDayBonus: null,
+    active_day_bonus: null,
 
     isLoading: false,
     isTasksLoading: false,
@@ -24,7 +23,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
         ...initialStore,
 
         async onClaimClick() {
-            const activeDayBonus = get().activeDayBonus;
+            const activeDayBonus = get().active_day_bonus;
             if (!activeDayBonus) return;
 
             set({isClaimLoading: true});
@@ -32,7 +31,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 const user = await CoinsApi.updateBonus(useUserStore.getState().user_id, activeDayBonus.id);
                 if (user) {
                     useUserStore.setState({...user});
-                    await get().fetchBonuses();
+                    await get().fetchBonuses(true);
                 }
             } catch (e) {
                 console.error(e);
@@ -52,34 +51,27 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 });
         },
 
-        fetchBonuses() {
-            set({isBonusesLoading: true});
+        fetchBonuses(withoutLoading: boolean | null) {
+
+            if (!withoutLoading) {
+                set({isBonusesLoading: true});
+            }
+
             return MainApi.getBonuses()
                 .then((bonuses) => {
-                    const userDayBonus = useUserStore.getState().dayBonus;
-                    const userBonusDate = useUserStore.getState().bonus_date;
+                    const activeDayBonus = useUserStore.getState().active_day_bonus;
+                    const totalBonusCoins = bonuses.reduce((total, bonus) => {
+                        return total + bonus.coins;
+                    }, 0);
 
-                    let activeDayBonus: IBonus | null | undefined;
-
-                    if (userDayBonus && userBonusDate) {
-                        const currentDate = new Date();
-                        const bonusDate = parseStr2Date(userBonusDate);
-                        console.log('bonusDate', bonusDate)
-                        const isSameDay = currentDate.getDate() === bonusDate.getDate();
-
-                        if (!isSameDay) {
-                            activeDayBonus = bonuses.find(bonus => bonus.day > userDayBonus.day);
-                        } else {
-                            activeDayBonus = null;
-                        }
-                    } else {
-                        activeDayBonus = bonuses.find(bonus => bonus.day === 1);
-                    }
-
-                    set({bonuses, activeDayBonus});
+                    set({bonuses, active_day_bonus: activeDayBonus, totalBonusCoins });
                 })
                 .finally(() => {
-                    set({isBonusesLoading: false});
+
+                    if (!withoutLoading) {
+                        set({isBonusesLoading: false});
+                    }
+
                 });
         },
 
@@ -89,7 +81,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
                 const promises = [
                     get().fetchTasks(),
-                    get().fetchBonuses(),
+                    get().fetchBonuses(false),
                 ];
 
                 await Promise.allSettled(promises);
