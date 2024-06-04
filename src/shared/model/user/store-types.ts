@@ -13,6 +13,7 @@ export interface IUserData {
     username: string,
     first_name: string,
     last_name: string,
+    full_name: string,
     logo: string,
     language_code: string,
     coins: number,
