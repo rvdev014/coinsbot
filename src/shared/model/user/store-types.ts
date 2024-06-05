@@ -1,6 +1,7 @@
 import {IBonus} from "../earn/store-types.ts";
 
 export interface IUserStore extends IUserData {
+    setInitialStore(store: IUserData): void;
     init(userId: number): Promise<void>;
     setUserData(data: IUserData): void;
     reset(): void;

@@ -3,6 +3,8 @@ import {IExchangeStore} from "./store-types.ts";
 import {useUserStore} from "../user/store.ts";
 import {debounce} from "../../utils/debounce.ts";
 import {CoinsApi} from "../../api/coins-api.ts";
+import {showError} from "../../utils/other.ts";
+import {dateGreaterThan} from "../../utils/date.ts";
 
 const initialStore = {
     tappedCoins: 0,
@@ -18,7 +20,13 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                 set({
                     energyTimeout: setInterval(() => {
                         const userState = useUserStore.getState();
-                        let energy = userState.energy + userState.coins_per_tap;
+
+                        let updateEnergy = userState.coins_per_tap;
+                        if (dateGreaterThan(userState.multi_tap)) {
+                            updateEnergy *= 2;
+                        }
+
+                        let energy = userState.energy + updateEnergy;
                         if (energy > userState.energy_limit) {
                             energy = userState.energy_limit;
                         }
@@ -28,12 +36,11 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             }
 
             if (!get().coinsTimeout) {
-                let coinsPerSecond = 5400 / useUserStore.getState().coins_per_hour;
-                console.log('coinsPerSecond', coinsPerSecond)
                 set({
                     coinsTimeout: setInterval(() => {
                         const userState = useUserStore.getState();
-                        let coins = Math.floor(userState.coins + coinsPerSecond);
+                        const coinsPerSecond = userState.coins_per_hour / 5400;
+                        let coins = Math.ceil(userState.coins + coinsPerSecond);
                         useUserStore.setState({coins});
                     }, 1000)
                 });
@@ -66,7 +73,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                     await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
                 }
             } catch (e) {
-                console.log('e', e)
+                showError()
             }
         }, 500),
 

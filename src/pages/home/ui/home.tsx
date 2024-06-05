@@ -7,6 +7,7 @@ import {t} from "i18next";
 import {EnergyInfo} from "./energy-info.tsx";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
+import {UserCoins} from "../../../features/user-coins/ui/user-coins.tsx";
 
 export const HomePage = () => {
 
@@ -20,7 +21,6 @@ export const HomePage = () => {
     const lastLevel = useUserStore(state => state.last_level);
     const coinsPerTap = useUserStore(state => state.coins_per_tap);
     const coinsPerHour = useUserStore(state => state.coins_per_hour);
-    const coins = useUserStore(state => state.coins);
 
     useEffect(() => {
         initExchange();
@@ -60,13 +60,13 @@ export const HomePage = () => {
         }, 1000);
     }
 
-    function getRemainCoins() {
+    function getRemainCoins(coins: number) {
         if (!nextLevel) return 0;
-        return nextLevel?.coins - coins;
+        return formatPrice(nextLevel?.coins - coins);
     }
 
     function getProgress() {
-        return nextLevel?.coins === 0 ? 100 : (coins / nextLevel?.coins) * 100;
+        return nextLevel?.coins === 0 ? 100 : (useUserStore.getState().coins / nextLevel?.coins) * 100;
     }
 
     return (
@@ -85,14 +85,18 @@ export const HomePage = () => {
                 <div className={styles.headerInfo_block}>
                     <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
                     <Flex className={styles.headerInfo_info}>
-                        <Text>{getRemainCoins()}</Text>
+                        <UserCoins>
+                            {({coins}) => (
+                                <Text>{getRemainCoins(coins)}</Text>
+                            )}
+                        </UserCoins>
                     </Flex>
                 </div>
 
                 <div className={styles.headerInfo_block}>
                     <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
                     <Flex className={styles.headerInfo_info}>
-                        <Text>+{coinsPerHour}</Text>
+                        <Text>+{formatPrice(coinsPerHour)}</Text>
                     </Flex>
                 </div>
 
@@ -101,10 +105,14 @@ export const HomePage = () => {
             <div className={styles.mainContent}>
 
                 <div className={styles.levelWrapper}>
-                    <Flex className={styles.balance} alignItems='center'>
-                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                        <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
-                    </Flex>
+                    <UserCoins>
+                        {({coins}) => (
+                            <Flex className={styles.balance} alignItems='center'>
+                                <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                                <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
+                            </Flex>
+                        )}
+                    </UserCoins>
                     <Link to={`/levels/${level?.step ?? 1}`}>
                         <Flex className={styles.level} alignItems='center'>
                             <Flex className={styles.level_info}>

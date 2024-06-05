@@ -35,7 +35,7 @@ export const EarnPage = () => {
                 <div className={styles.header}>
                     <img src="/img/coin-level.png" alt="Coin level"/>
                     <p className={styles.title}>Earn more coins</p>
-                    <p className={styles.bonusTitle}>+{totalBonusCoins}</p>
+                    <p className={styles.bonusTitle}>+{totalBonusCoins ?? 0}</p>
 
                     <button className={styles.dailyBtn} onClick={onDailyClick}>
                         <Flex className={styles.dailyBtn_left}>
@@ -51,7 +51,7 @@ export const EarnPage = () => {
 
                 <div className={styles.tasksWrapper}>
 
-                    {(isLoading || isTasksLoading)
+                    {isTasksLoading
                         ? <Loader/>
                         :
                         <div className={styles.tasksList}>

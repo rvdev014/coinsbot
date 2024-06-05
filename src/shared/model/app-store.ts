@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
+import {showError} from "../utils/other.ts";
 
 const initialStore = {
     isAppLoading: true,
@@ -29,7 +30,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
             try {
                 await useUserStore.getState().init(tgDataUnsafe?.user?.id ?? 355919981);
             } catch (e) {
-                console.log('e', e)
+                showError()
             } finally {
                 set({isAppLoading: false});
             }

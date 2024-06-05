@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
 import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {showError} from "../../../shared/utils/other.ts";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
@@ -18,7 +19,7 @@ export const FriendsPage = () => {
                 await referrals.init(userId)
 
             } catch (e) {
-                console.error(e);
+                showError()
             }
         };
 

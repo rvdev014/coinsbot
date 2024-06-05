@@ -1,0 +1,1 @@
+export {FullEnergyPopup} from './ui/full-energy-popup.tsx';

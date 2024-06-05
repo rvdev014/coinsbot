@@ -36,7 +36,7 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
                     daily, otherwise the day count will start again
                 </p>
 
-                {(isLoading || isBonusesLoading)
+                {isBonusesLoading
                     ? <Loader/>
                     : (
                         <div className={styles.daysList}>

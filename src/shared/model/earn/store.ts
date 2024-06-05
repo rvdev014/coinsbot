@@ -3,6 +3,7 @@ import {IBonus, IEarnStore, ITask} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {useUserStore} from "../user/store.ts";
 import {CoinsApi} from "../../api/coins-api.ts";
+import {showError} from "../../utils/other.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
@@ -30,11 +31,11 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             try {
                 const user = await CoinsApi.updateBonus(useUserStore.getState().user_id, activeDayBonus.id);
                 if (user) {
-                    useUserStore.setState({...user});
+                    useUserStore.getState().setInitialStore({...user});
                     await get().fetchBonuses(true);
                 }
             } catch (e) {
-                console.error(e);
+                showError()
             } finally {
                 set({isClaimLoading: false});
             }
@@ -86,7 +87,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
                 await Promise.allSettled(promises);
             } catch (e) {
-                console.error(e);
+                showError()
             } finally {
                 set({isLoading: false});
             }

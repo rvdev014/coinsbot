@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { Flex } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatNumber } from "../../../shared/utils/other.ts";
+import {formatNumber, showError} from "../../../shared/utils/other.ts";
 import { t } from "i18next";
 import { useUserStore } from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
@@ -36,7 +36,7 @@ export const Levels = () => {
 
                 await levelStore.init(userId, step);
             } catch (e) {
-                console.error(e);
+                showError()
             }
         };
 

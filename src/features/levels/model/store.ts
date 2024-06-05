@@ -2,6 +2,7 @@ import {create} from "zustand";
 import {ILevelStore} from "./store-types.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {showError} from "../../../shared/utils/other.ts";
 
 const initialStore = {
     loading: false,
@@ -20,7 +21,7 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
 
                 set({...statistics});
             } catch (e) {
-                console.log('e', e)
+                showError()
             } finally {
                 set({loading: false});
             }
@@ -34,7 +35,7 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
                     set({...data});
                 }
             } catch (e) {
-                console.error(e);
+                showError()
             } finally {
                 set({loading: false});
             }
@@ -48,7 +49,7 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
                     set({...data});
                 }
             } catch (e) {
-                console.error(e);
+                showError()
             } finally {
                 set({loading: false});
             }
