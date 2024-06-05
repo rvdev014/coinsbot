@@ -3,7 +3,7 @@ import {IBonus, IEarnStore, ITask} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {useUserStore} from "../user/store.ts";
 import {CoinsApi} from "../../api/coins-api.ts";
-import {showError} from "../../utils/other.ts";
+import {showError, success} from "../../utils/other.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
@@ -95,6 +95,21 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
         onDailyClick() {
             set({isOpenDaily: true})
+        },
+
+        async onCompleteTask(task: ITask) {
+            try {
+                const userId = useUserStore.getState().user_id;
+                const user = await CoinsApi.taskComplete(userId, task.id);
+                if (user) {
+                    useUserStore.getState().setInitialStore({...user});
+                    set({selectedTask: null});
+                    await get().fetchTasks();
+                    success('Task completed successfully!')
+                }
+            } catch (e) {
+                showError('Checking failed! Task is not completed!');
+            }
         },
 
         onTaskClick(task: ITask) {

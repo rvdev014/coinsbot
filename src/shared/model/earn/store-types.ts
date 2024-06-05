@@ -17,6 +17,7 @@ export interface IEarnStore {
     fetchBonuses(withoutLoading: boolean | null): Promise<void>;
     onClaimClick(): void;
     onTaskClick(task: ITask): void;
+    onCompleteTask(task: ITask): void;
     onDailyClick(): void;
     onTaskClose(): void;
     reset(): void;

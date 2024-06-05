@@ -3,8 +3,12 @@ import {ILevelStore} from "../../features/levels/model/store-types.ts";
 import {IUserData} from "../model/user/store-types.ts";
 
 export const CoinsApi = {
+    async taskComplete(userId: string|number, taskId: string|number) {
+        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/task/${taskId}`);
+        return response.data?.data;
+    },
     async updateCoins(userId: string|number, coins: number) {
-        const response = await apiInstance.post(`/user/${userId}/taped`, {coins});
+        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/taped`, {coins});
         return response.data?.data;
     },
     async updateBonus(userId: string|number, dayBonusId: string|number) {

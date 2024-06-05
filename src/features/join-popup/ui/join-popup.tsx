@@ -4,13 +4,17 @@ import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {Flex} from "@chakra-ui/react";
 import {ITask} from "../../../shared/model/earn/store-types.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
+import {Link} from "react-router-dom";
 
 interface IProps {
     task: ITask | null;
     onClose: () => void;
+    onCompleteTask: (task: ITask) => void;
 }
 
-export const JoinPopup: FC<IProps> = ({task, onClose}) => {
+export const JoinPopup: FC<IProps> = ({task, onClose, onCompleteTask}) => {
+    const [openUrl, setOpenUrl] = React.useState(false);
+
     return (
         <Popup isOpen={task !== null} onClose={onClose}>
             {task && (
@@ -27,7 +31,19 @@ export const JoinPopup: FC<IProps> = ({task, onClose}) => {
                         <span>+{formatPrice(task.coins)}</span>
                     </Flex>
 
-                    <button className={styles.startBtn}>Start a task</button>
+                    {openUrl
+                        ?
+                        <button
+                            className={styles.startBtn}
+                            onClick={() => onCompleteTask(task)}
+                        >Start a task</button>
+                        :
+                        <a
+                            href={task.url}
+                            target='_blank'
+                            className={styles.startBtn}
+                            onClick={() => setOpenUrl(true)}
+                        >Subscribe</a>}
 
                 </div>
             )}
