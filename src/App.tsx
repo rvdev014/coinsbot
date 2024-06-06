@@ -11,10 +11,14 @@ import i18n from "./i18n";
 
 function App() {
 
-    // const userAgent = navigator.userAgent.toLowerCase();
-    // const isPhone = userAgent.includes("mobile") || userAgent.includes("android") || userAgent.includes("iphone");
-    //
-    // if (!isPhone) {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isPhone = userAgent.includes("mobile") || userAgent.includes("android") || userAgent.includes("iphone");
+
+    const tg = window.Telegram.WebApp;
+
+    alert(tg?.platform)
+
+    // if (!isPhone || tg?.platform === 'tdesktop') {
     //     return (
     //         <div className={styles.wrapper}>
     //             <div className={styles.content}>
