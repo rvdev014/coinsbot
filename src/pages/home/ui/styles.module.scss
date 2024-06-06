@@ -34,6 +34,11 @@
   letter-spacing: -0.02em;
   text-align: center;
   color: #737373;
+
+  display: block;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mainContent {
@@ -98,13 +103,14 @@
   margin-top: 30px;
 
   .tapper {
-    width: 248px;
-    height: 248px;
+    width: 97%;
+    height: 97%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     background: radial-gradient(circle, rgb(116 116 116) 0%, rgb(0, 0, 0) 100%);
+    //box-shadow: 10px 10px 80px 0px rgba(#1E51B4, 0.5);
   }
 }
 

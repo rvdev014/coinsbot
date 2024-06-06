@@ -21,11 +21,10 @@
   align-items: center;
   border-radius: 50%;
   border: 5px solid #3f3735;
-  background: radial-gradient(circle, rgb(116 116 116) 0%, rgb(0, 0, 0) 100%);
 
   img {
     border-radius: 50%;
-    border: 5px solid #1c1c1d;
+    //border: 5px solid #1c1c1d;
   }
 }
 
@@ -34,7 +33,7 @@
   margin-top: 20px;
 
   .levelTitle {
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 600;
     line-height: 36px;
     letter-spacing: -0.02em;

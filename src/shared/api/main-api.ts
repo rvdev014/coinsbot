@@ -4,6 +4,10 @@ import {IBonus, ITask} from "../model/earn/store-types.ts";
 import {IList} from "../model/friends/store-types.ts";
 
 export const MainApi = {
+    async updateLevel(userId: string | number, levelId: number) {
+        const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/level/${levelId}`);
+        return response.data?.data;
+    },
     async userPerHour(userId: string | number) {
         const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/per/hour`);
         return response.data?.data;

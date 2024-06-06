@@ -6,6 +6,7 @@ export interface IEarnStore {
 
     totalBonusCoins: number;
     isLoading: boolean;
+    isOpenedTaskUrl: boolean;
     isTasksLoading: boolean;
     isBonusesLoading: boolean;
     isClaimLoading: boolean;
@@ -26,6 +27,7 @@ export interface IEarnStore {
 
 export interface ITask {
     id: number
+    title: string
     title_ru: string
     title_en: string
     img: string

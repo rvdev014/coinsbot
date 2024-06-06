@@ -4,6 +4,8 @@ import {Flex} from "@chakra-ui/react";
 import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {showError} from "../../../shared/utils/other.ts";
+import cl from "classnames";
+import {t} from "i18next";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
@@ -32,10 +34,10 @@ export const FriendsPage = () => {
     return (
         <div className={styles.wrapper}>
 
-            <div className={styles.mainBlock}>
-                <h2 className={styles.title}>Invite Frens</h2>
+            <div className={cl(styles.mainBlock, 'gradientWrapper')}>
+                <h2 className={styles.title}>{t('invite_frens')}</h2>
                 <hr className={styles.divider}/>
-                <p className={styles.text}>You've earned from your friends</p>
+                <p className={styles.text}>{t('you_have_earned')}</p>
                 <Flex className={styles.earnedBalance} alignItems='center'>
                     <img src="/img/coin-icon-lg.png" alt="Coin"/>
                     <span>{referrals?.total_coins ?? 0}</span>
@@ -43,28 +45,38 @@ export const FriendsPage = () => {
 
                 <Flex className={styles.friendsInfo} alignItems='center'>
                     <img src="/img/friends-icon.png" alt="Friends"/>
-                    <p>{ referrals?.total_count ?? 0} <span>friends</span></p>
+                    <p>{referrals?.total_count ?? 0} <span>{t('friends')}</span></p>
                 </Flex>
+
+                <span
+                    className='gradient'
+                    style={{
+                        boxShadow: `rgba(201, 142, 29, 0.5) 0px 0px 100px 80px`,
+                        top: '-30px',
+                    }}
+                />
             </div>
 
-            {/*<Flex className={styles.infoBlocks} gap='8px'>*/}
-            {/*    <div className={styles.infoBlock}>*/}
-            {/*        <h3 className={styles.infoBlock_title}>Regular user</h3>*/}
-            {/*        <h3 className={styles.infoBlock_text}>for you and your friend</h3>*/}
-            {/*        <Flex className={styles.earnedBalance} alignItems='center'>*/}
-            {/*            <img src="/img/coin-icon-lg.png" alt="Coin"/>*/}
-            {/*            <span>+5 000</span>*/}
-            {/*        </Flex>*/}
-            {/*    </div>*/}
-            {/*    <div className={styles.infoBlock}>*/}
-            {/*        <h3 className={styles.infoBlock_title}>Telegram Premium</h3>*/}
-            {/*        <h3 className={styles.infoBlock_text}>for you and your friend</h3>*/}
-            {/*        <Flex className={styles.earnedBalance} alignItems='center'>*/}
-            {/*            <img src="/img/coin-icon-lg.png" alt="Coin"/>*/}
-            {/*            <span>+25 000</span>*/}
-            {/*        </Flex>*/}
-            {/*    </div>*/}
-            {/*</Flex>*/}
+            <Flex className={styles.infoBlocks} gap='8px'>
+                <div className={cl(styles.infoBlock, 'gradientWrapper')}>
+                    <h3 className={styles.infoBlock_title}>{t('regular_user')}</h3>
+                    <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
+                    <Flex className={styles.earnedBalance} alignItems='center'>
+                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                        <span>+5 000</span>
+                    </Flex>
+                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
+                </div>
+                <div className={cl(styles.infoBlock, 'gradientWrapper')}>
+                    <h3 className={styles.infoBlock_title}>Telegram Premium</h3>
+                    <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
+                    <Flex className={styles.earnedBalance} alignItems='center'>
+                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                        <span>+25 000</span>
+                    </Flex>
+                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(117, 70, 251, 0.5)`}}/>
+                </div>
+            </Flex>
 
 
             <div className={styles.friendsWrapper}>
@@ -72,7 +84,7 @@ export const FriendsPage = () => {
                     <span key={index}>
                         <Flex className={styles.friendsTitleWrapper} alignItems='center'>
                             <hr className={styles.divider}/>
-                            <h2>{list?.level} line</h2>
+                            <h2>{list?.level} {t('line')}</h2>
                             <span>+{list?.percent}%</span>
                             <hr className={styles.divider}/>
                         </Flex>
@@ -80,7 +92,8 @@ export const FriendsPage = () => {
                         <div className={styles.friendsList}>
 
                             {list?.users?.map((user, key) => (
-                                <Flex className={styles.userItem} justifyContent='space-between' alignItems='center' key={key}>
+                                <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'
+                                      key={key}>
 
                                     <Flex className={styles.userItem_left}>
                                         <div className={styles.userAvatar}>
@@ -121,7 +134,18 @@ export const FriendsPage = () => {
                 ))}
             </div>
 
-            <button className={styles.inviteFriendBtn}>Invite a fren</button>
+            <button className={styles.inviteFriendBtnWrapper}>
+                <div className={cl(styles.inviteFriendBtn, 'gradientWrapper')}>
+                    {t('invite_fren')}
+                    <span
+                        className='gradient'
+                        style={{
+                            boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                            bottom: '-30px'
+                        }}
+                    />
+                </div>
+            </button>
 
         </div>
     );

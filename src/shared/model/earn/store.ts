@@ -109,6 +109,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 }
             } catch (e) {
                 showError('Checking failed! Task is not completed!');
+                set({isOpenedTaskUrl: false})
             }
         },
 

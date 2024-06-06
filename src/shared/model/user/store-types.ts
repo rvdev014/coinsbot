@@ -4,6 +4,7 @@ export interface IUserStore extends IUserData {
     setInitialStore(store: IUserData): void;
     init(userId: number): Promise<void>;
     setUserData(data: IUserData): void;
+    updateLevel(): void;
     reset(): void;
 }
 
@@ -43,10 +44,12 @@ export interface IUserData {
 }
 
 export interface ILevel {
+    title: string
     title_ru: string
     title_en: string
     img: string
     step: number
+    color: string
     coins: number
     coins_per_hour: number
     energy_limit: number

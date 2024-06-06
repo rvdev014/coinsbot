@@ -7,6 +7,7 @@ import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {t} from "i18next";
 
 export const EarnPage = () => {
 
@@ -36,8 +37,8 @@ export const EarnPage = () => {
             <div className={styles.wrapper}>
 
                 <div className={styles.header}>
-                    <img src="/img/coin-level.png" alt="Coin level"/>
-                    <p className={styles.title}>Earn more coins</p>
+                    <img className={styles.headerCoinIcon} src="/img/coin-level.png" alt="Coin level"/>
+                    <p className={styles.title}>{t('earn_more_coins')}</p>
                     <p className={styles.bonusTitle}>+{formatPrice(totalBonusCoins ?? 0)}</p>
 
                     <button className={styles.dailyBtn} onClick={onDailyClick}>
@@ -46,7 +47,7 @@ export const EarnPage = () => {
                                 <img src="/img/coin-icon.png" alt="Coin"/>
                                 {activeDayBonus && <span></span>}
                             </div>
-                            <p>Daily reward</p>
+                            <p>{t('daily_reward')}</p>
                         </Flex>
                         <img src="/img/arrow.png" alt="Arrow"/>
                     </button>
@@ -75,7 +76,7 @@ export const EarnPage = () => {
                                                 <img src="/img/task-tg.png" alt="Task tg"/>
                                             </div>
                                             <div className={styles.taskInfo}>
-                                                <p className={styles.taskName}>{task.title_ru}</p>
+                                                <p className={styles.taskName}>{task.title}</p>
                                                 <Flex className={styles.taskPrice} alignItems='center'>
                                                     <img src="/img/coin-icon.png" alt="Coin"/>
                                                     <span>{formatPrice(task.coins)}</span>

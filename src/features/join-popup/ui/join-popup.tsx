@@ -4,7 +4,9 @@ import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {Flex} from "@chakra-ui/react";
 import {ITask} from "../../../shared/model/earn/store-types.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
-import {Link} from "react-router-dom";
+import cl from "classnames";
+import {t} from "i18next";
+import {useEarnStore} from "../../../shared/model/earn/store.ts";
 
 interface IProps {
     task: ITask | null;
@@ -13,17 +15,16 @@ interface IProps {
 }
 
 export const JoinPopup: FC<IProps> = ({task, onClose, onCompleteTask}) => {
-    const [openUrl, setOpenUrl] = React.useState(false);
+    const isOpenedTaskUrl = useEarnStore(state => state.isOpenedTaskUrl);
 
     return (
         <Popup isOpen={task !== null} onClose={onClose}>
             {task && (
                 <div className={styles.content}>
                     <img className={styles.taskIcon} src="/img/task-tg-lg.png" alt="Task tg"/>
-                    <h2 className={styles.title}>{task.title_ru}</h2>
+                    <h2 className={styles.title}>{task.title}</h2>
                     <p className={styles.text}>
-                        All major news about the project will be published there. Keep up to date
-                        with the latest information
+                        {t('channel_desc')}
                     </p>
 
                     <Flex className={styles.taskPrice} alignItems='center'>
@@ -31,22 +32,42 @@ export const JoinPopup: FC<IProps> = ({task, onClose, onCompleteTask}) => {
                         <span>+{formatPrice(task.coins)}</span>
                     </Flex>
 
-                    {openUrl
+                    {isOpenedTaskUrl
                         ?
                         <button
-                            className={styles.startBtn}
+                            className={cl(styles.startBtn, 'gradientWrapper')}
                             onClick={() => onCompleteTask(task)}
-                        >Start a task</button>
+                        >
+                            {t('complete_task')}
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                                    bottom: '-30px'
+                                }}
+                            />
+                        </button>
                         :
                         <a
                             href={task.url}
                             target='_blank'
-                            className={styles.startBtn}
-                            onClick={() => setOpenUrl(true)}
-                        >Subscribe</a>}
+                            className={cl(styles.startBtn, 'gradientWrapper')}
+                            onClick={() => useEarnStore.setState({isOpenedTaskUrl: true})}
+                        >
+                            {t('subscribe')}
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                                    bottom: '-30px'
+                                }}
+                            />
+                        </a>}
 
                 </div>
-            )}
+            )
+            }
         </Popup>
-    );
+    )
+        ;
 };

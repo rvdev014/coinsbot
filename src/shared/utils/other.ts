@@ -8,13 +8,13 @@ export const formatNumber = (num: any) => {
             num = 0
             break
         case num < 1000000:
-            num =  (num / 1000).toFixed(0) + ' K'
+            num =  (num / 1000).toFixed(0) + 'K'
             break
         case num >= 1000000 && num < 1000000000:
-            num =  (num / 1000000).toFixed(0) + ' M'
+            num =  (num / 1000000).toFixed(0) + 'M'
             break
         case num >= 1000000000:
-            num =  (num / 1000000000).toFixed(0) + ' B+'
+            num =  (num / 1000000000).toFixed(0) + 'B+'
             break
         default:
             num?.toString()
@@ -50,4 +50,10 @@ export function showError(message?: string) {
         duration: 9000,
         isClosable: true,
     })
+}
+
+export function hexToRgb(hex?: string, alpha: number = 1): string {
+    if (!hex) return 'rgba(0,0,0,0)';
+    const [r, g, b] = hex.match(/\w\w/g)!.map(x => parseInt(x, 16));
+    return `rgba(${r},${g},${b},${alpha})`;
 }

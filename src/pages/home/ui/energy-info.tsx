@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import {Flex, Text} from "@chakra-ui/react";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Link} from "react-router-dom";
+import {t} from "i18next";
 
 export const EnergyInfo = () => {
 
@@ -20,7 +21,7 @@ export const EnergyInfo = () => {
                 <Link to='/boost'>
                     <Flex className={styles.boost} alignItems='center'>
                         <img src="/img/boost-icon.png" alt="Boost"/>
-                        <Text>Boost</Text>
+                        <Text>{t('boost')}</Text>
                     </Flex>
                 </Link>
             </button>

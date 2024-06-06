@@ -6,8 +6,11 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {t} from "i18next";
 import {EnergyInfo} from "./energy-info.tsx";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
-import {formatPrice} from "../../../shared/utils/other.ts";
-import {UserCoins} from "../../../features/user-coins/ui/user-coins.tsx";
+import {formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
+import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
+
+import 'react-circular-progressbar/dist/styles.css';
+import cl from "classnames";
 
 export const HomePage = () => {
 
@@ -16,6 +19,7 @@ export const HomePage = () => {
     const onTap = useExchangeStore(state => state.onTap);
     const initExchange = useExchangeStore(state => state.initExchange);
 
+    const coins = useUserStore(state => state.coins);
     const level = useUserStore(state => state.level);
     const nextLevel = useUserStore(state => state.next_level);
     const lastLevel = useUserStore(state => state.last_level);
@@ -33,8 +37,8 @@ export const HomePage = () => {
         const plusOne = document.createElement('span')
         plusOne.innerHTML = `+${coinsPerTap}`;
 
-        const x = event.clientX;
-        const y = event.clientY;
+        const x = event.clientX - tapperRef.current.getBoundingClientRect().left;
+        const y = event.clientY - tapperRef.current.getBoundingClientRect().top;
 
         plusOne.style.position = 'absolute';
         plusOne.style.left = x + 'px';
@@ -42,7 +46,7 @@ export const HomePage = () => {
         plusOne.style.fontSize = '28px';
         plusOne.style.fontWeight = 'bold';
         plusOne.style.textShadow = '0 0 2px #000';
-        plusOne.style.color = '#ffce33';
+        plusOne.style.color = '#fff';
         plusOne.style.transition = 'all 1.5s';
         plusOne.style.transform = 'translate(-50%, -50%)';
         plusOne.style.zIndex = '1000';
@@ -51,13 +55,13 @@ export const HomePage = () => {
         onTap();
 
         setTimeout(() => {
-            plusOne.style.top = y - 150 + 'px';
+            plusOne.style.top = y - 130 + 'px';
             plusOne.style.opacity = '0';
         }, 20);
 
         setTimeout(() => {
             tapperRef.current?.removeChild(plusOne);
-        }, 1000);
+        }, 800);
     }
 
     function getRemainCoins(coins: number) {
@@ -66,7 +70,7 @@ export const HomePage = () => {
     }
 
     function getProgress() {
-        return nextLevel?.coins === 0 ? 100 : (useUserStore.getState().coins / nextLevel?.coins) * 100;
+        return nextLevel?.coins === 0 ? 100 : (coins / nextLevel?.coins) * 100;
     }
 
     return (
@@ -74,49 +78,44 @@ export const HomePage = () => {
 
             <Flex className={styles.header} justifyContent='space-between'>
 
-                <div className={styles.headerInfo_block}>
-                    <span className={styles.headerInfo_text}>Coins for tap</span>
+                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                    <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
                     <Flex className={styles.headerInfo_info}>
                         <img src="/img/coin-icon.png" alt="Coin"/>
                         <Text>+{coinsPerTap}</Text>
                     </Flex>
+                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
                 </div>
 
-                <div className={styles.headerInfo_block}>
+                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                     <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
                     <Flex className={styles.headerInfo_info}>
-                        <UserCoins>
-                            {({coins}) => (
-                                <Text>{getRemainCoins(coins)}</Text>
-                            )}
-                        </UserCoins>
+                        <Text>{getRemainCoins(coins)}</Text>
                     </Flex>
+                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
                 </div>
 
-                <div className={styles.headerInfo_block}>
+                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                     <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
                     <Flex className={styles.headerInfo_info}>
                         <Text>+{formatPrice(coinsPerHour)}</Text>
                     </Flex>
+                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
                 </div>
 
             </Flex>
 
             <div className={styles.mainContent}>
 
-                <div className={styles.levelWrapper}>
-                    <UserCoins>
-                        {({coins}) => (
-                            <Flex className={styles.balance} alignItems='center'>
-                                <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                                <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
-                            </Flex>
-                        )}
-                    </UserCoins>
+            <div className={styles.levelWrapper}>
+                    <Flex className={styles.balance} alignItems='center'>
+                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                        <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
+                    </Flex>
                     <Link to={`/levels/${level?.step ?? 1}`}>
                         <Flex className={styles.level} alignItems='center'>
                             <Flex className={styles.level_info}>
-                                <Text>Puppy</Text>
+                                <Text>{level?.title}</Text>
                                 <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
                             </Flex>
                             <div className={styles.level_btn}>
@@ -127,9 +126,31 @@ export const HomePage = () => {
                 </div>
 
                 <div className={styles.tapWrapper}>
-                    <div className={styles.tapper} ref={tapperRef} onClick={tapper}>
-                        <img draggable={false} src="/img/dog.png" alt="Tapper"/>
-                    </div>
+                    <CircularProgressbarWithChildren
+                        value={getProgress()}
+                        strokeWidth={2}
+                        styles={buildStyles({
+                            textColor: "transparent",
+                            pathColor: level?.color ?? '#B9B9B9',
+                            trailColor: "transparent"
+                        })}
+                    >
+                        <div
+                            className={styles.tapper}
+                            style={{
+                                background: `radial-gradient(circle, ${level?.color ?? '#B9B9B9'} -50%, #272727 100%)`,
+                                boxShadow: `0 0 40px 0 ${hexToRgb(level?.color ?? '#B9B9B9', 0.6)}`,
+                            }}
+                            ref={tapperRef}
+                            onClick={tapper}
+                        >
+                            <img
+                                draggable={false}
+                                src={level?.img ?? '/img/dog.png'}
+                                alt="Tapper"
+                            />
+                        </div>
+                    </CircularProgressbarWithChildren>
                 </div>
 
                 <EnergyInfo/>
