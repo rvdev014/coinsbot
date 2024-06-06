@@ -16,6 +16,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
             // @ts-expect-error
             const tg = window.Telegram.WebApp;
             tg.ready();
+            tg.expand();
 
             const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
 

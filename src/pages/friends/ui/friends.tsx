@@ -29,6 +29,18 @@ export const FriendsPage = () => {
 
     useEffect(() => {}, [referrals]);
 
+    const tg = window.Telegram.WebApp;
+
+    console.log(tg)
+    const copyUrl = async () => {
+        try {
+            tg.openTelegramLink('фывфыв');
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <div className={styles.wrapper}>
 
@@ -121,7 +133,7 @@ export const FriendsPage = () => {
                 ))}
             </div>
 
-            <button className={styles.inviteFriendBtn}>Invite a fren</button>
+            <button className={styles.inviteFriendBtn} onClick={copyUrl}>Invite a fren</button>
 
         </div>
     );
