@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { Flex } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {formatNumber, showError} from "../../../shared/utils/other.ts";
+import {formatNumber, hexToRgb, showError} from "../../../shared/utils/other.ts";
 import { t } from "i18next";
 import { useUserStore } from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
@@ -14,6 +14,7 @@ export const Levels = () => {
     const locationLevel = parseInt(location?.pathname?.replace('/levels/', ''));
     const userId = useUserStore(state => state.user_id);
     const levelStore = useLevelStore();
+    const rank = useLevelStore(state => state.rank);
 
     const [step, setStep] = useState(locationLevel ?? 1);
 
@@ -61,8 +62,18 @@ export const Levels = () => {
                     <img src="/img/arrow-left.png" alt="Left" />
                 </button>
 
-                <div className={styles.levelImg}>
-                    <img src={levelStore?.level?.img ?? '/img/dog.png'} alt="Tapper" />
+                <div
+                    className={styles.levelImg}
+                    style={{
+                        border: `5px solid ${levelStore?.level?.color}`,
+                        background: `radial-gradient(circle, ${levelStore?.level?.color} -50%, #272727 100%)`,
+                        boxShadow: `0 0 100px 0 ${hexToRgb(levelStore?.level?.color, 0.7)}`,
+                    }}
+                >
+                    <img
+                        src={levelStore?.level?.img ?? '/img/dog.png'}
+                        alt="Tapper"
+                    />
                 </div>
 
                 <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={() => changeLevel('next', step)}>
@@ -71,7 +82,7 @@ export const Levels = () => {
             </Flex>
 
             <div className={styles.levelInfo}>
-                <h2 className={styles.levelTitle}>{levelStore?.level?.title_en}</h2>
+                <h2 className={styles.levelTitle}>{levelStore?.level?.title}</h2>
                 <h2 className={styles.levelText}>{t('from')} {formatNumber(levelStore?.level?.coins)}</h2>
             </div>
 
@@ -99,7 +110,7 @@ export const Levels = () => {
                                 </div>
                             </Flex>
 
-                            <p className={styles.userRank}>{index}</p>
+                            <p className={styles.userRank}>{index + 1}</p>
                         </Flex>
                     ))}
                     {levelStore?.users?.length === 0 ?

@@ -5,6 +5,8 @@ import {Flex} from "@chakra-ui/react";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {generateTimeDiff} from "../../../shared/utils/date.ts";
+import cl from "classnames";
+import {t} from "i18next";
 
 interface IProps {
     open: boolean;
@@ -30,23 +32,35 @@ export const FullEnergyPopup: FC<IProps> = ({open, onClose, onUpgrade}) => {
         <Popup isOpen={open} onClose={onClose}>
             <div className={styles.content}>
                 <img className={styles.taskIcon} src="/img/paw-lg.png" alt="Paw"/>
-                <h2 className={styles.title}>Full energy</h2>
+                <h2 className={styles.title}>{t('full_energy')}</h2>
                 <p className={styles.text}>
-                    Fills the energy scale to maximum, without waiting
+                    {t('full_energy_desc')}
                 </p>
 
                 <div className={styles.priceWrapper}>
                     <Flex className={styles.price} alignItems='center'>
                         <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                        <span>Free</span>
+                        <span>{t('free')}</span>
                     </Flex>
                 </div>
 
                 <button
-                    className={styles.startBtn}
+                    className={cl(styles.startBtn, 'gradientWrapper')}
                     onClick={onUpgrade}
                     disabled={isDisabled}
-                >{isDisabled ? generateTimeDiff(restoreEnergyAt) : 'Upgrade'}</button>
+                >
+                    {isDisabled ?
+                        generateTimeDiff(restoreEnergyAt) :
+                        t('upgrade')}
+                    {!isDisabled &&
+                        <span
+                            className='gradient'
+                            style={{
+                                boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                                bottom: '-30px'
+                            }}
+                        />}
+                </button>
 
             </div>
         </Popup>

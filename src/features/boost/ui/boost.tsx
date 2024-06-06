@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
-import {useUserStore} from "../../../shared/model/user/store.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
 import {EnergyLimitPopup} from "../../energy-popup";
 import {useBoostStore} from "../model/store.ts";
 import {FullEnergyPopup} from "../../full-energy-popup";
-import {UserCoins} from "../../user-coins/ui/user-coins.tsx";
 import {TurboMiningPopup} from "../../turbo-mining-popup";
 import {MultitapPopup} from "../../multitap-popup";
 import {TurboEnergyPopup} from "../../turbo-energy-popup";
+import {UserCoins} from "../../user-coins";
+import cl from "classnames";
+import {t} from "i18next";
 
 export const Boost = () => {
 
@@ -36,8 +37,8 @@ export const Boost = () => {
         <>
             <div className={styles.wrapper}>
 
-                <div className={styles.mainCard}>
-                    <p className={styles.mainCard_title}>Your balance</p>
+                <div className={cl(styles.mainCard, 'gradientWrapper')}>
+                    <p className={styles.mainCard_title}>{t('your_balance')}</p>
                     <UserCoins>
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
@@ -48,12 +49,20 @@ export const Boost = () => {
                     </UserCoins>
                     <Flex className={styles.mainCard_info} alignItems='center'>
                         <img src="/img/question.png" alt="Question"/>
-                        <p className={styles.mainCard_info_text}>How does the boost work?</p>
+                        <p className={styles.mainCard_info_text}>{t('how_boost_works')}</p>
                     </Flex>
+
+                    <span
+                        className='gradient'
+                        style={{
+                            boxShadow: `rgba(0, 122, 255, 0.5) 0px 0px 90px 72px`,
+                            top: '-30px'
+                        }}
+                    />
                 </div>
 
                 <div className={styles.freeBoosters}>
-                    <p className={styles.title}>Free Boosters</p>
+                    <p className={styles.title}>{t('free_boosters')}</p>
                     <Flex className={styles.balance} justifyContent='space-between' gap={'11px'}>
 
                         <Flex
@@ -64,7 +73,7 @@ export const Boost = () => {
                         >
                             <img src="/img/energy-icon-lg.png" alt="Energy"/>
                             <div className={styles.cardInfo}>
-                                <p className={styles.cardInfo_title}>Full energy</p>
+                                <p className={styles.cardInfo_title}>{t('full_energy')}</p>
                                 {/*<p className={styles.cardInfo_text}>6/6 available</p>*/}
                             </div>
                         </Flex>
@@ -77,7 +86,7 @@ export const Boost = () => {
                         >
                             <img src="/img/boost-icon-lg.png" alt="Boost"/>
                             <div className={styles.cardInfo}>
-                                <p className={styles.cardInfo_title}>Turbo mining</p>
+                                <p className={styles.cardInfo_title}>{t('turbo_mining')}</p>
                                 {/*<p className={styles.cardInfo_text}>3/3 available</p>*/}
                             </div>
                         </Flex>
@@ -87,12 +96,12 @@ export const Boost = () => {
 
 
                 <div className={styles.boosters}>
-                    <p className={styles.title}>Boosters</p>
+                    <p className={styles.title}>{t('boosters')}</p>
 
                     <div className={styles.boostersList}>
 
                         <Flex
-                            className={styles.boosterItem}
+                            className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
                             onClick={() => onBoosterClick('multitap')}
@@ -102,7 +111,7 @@ export const Boost = () => {
                                     <img src="/img/multitap-icon.png" alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
-                                    <p className={styles.boosterName}>Multitap</p>
+                                    <p className={styles.boosterName}>{t('multitap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
                                         <span>500</span>
@@ -112,10 +121,19 @@ export const Boost = () => {
                             <div className={styles.boosterArrow}>
                                 <img src="/img/arrow.png" alt="Arrow"/>
                             </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 100px 60px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
                         </Flex>
 
                         <Flex
-                            className={styles.boosterItem}
+                            className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
                             onClick={() => onBoosterClick('mining')}
@@ -125,7 +143,7 @@ export const Boost = () => {
                                     <img src="/img/mining-icon.png" alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
-                                    <p className={styles.boosterName}>Mining</p>
+                                    <p className={styles.boosterName}>{t('mining')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
                                         <span>500</span>
@@ -135,10 +153,19 @@ export const Boost = () => {
                             <div className={styles.boosterArrow}>
                                 <img src="/img/arrow.png" alt="Arrow"/>
                             </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 100px 60px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
                         </Flex>
 
                         <Flex
-                            className={styles.boosterItem}
+                            className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
                             onClick={() => onBoosterClick('upgrade_energy')}
@@ -148,7 +175,7 @@ export const Boost = () => {
                                     <img src="/img/bone-icon.png" alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
-                                    <p className={styles.boosterName}>Energy limit</p>
+                                    <p className={styles.boosterName}>{t('energy_limit')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
                                         <span>500</span>
@@ -158,6 +185,15 @@ export const Boost = () => {
                             <div className={styles.boosterArrow}>
                                 <img src="/img/arrow.png" alt="Arrow"/>
                             </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 100px 60px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
                         </Flex>
 
                     </div>

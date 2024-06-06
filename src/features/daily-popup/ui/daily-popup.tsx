@@ -8,6 +8,7 @@ import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IBonus} from "../../../shared/model/earn/store-types.ts";
+import {t} from "i18next";
 
 interface IProps {
     isOpen: boolean;
@@ -29,11 +30,9 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
 
 
             <div className={styles.content}>
-                <h2 className={styles.title}>Daily reward</h2>
+                <h2 className={styles.title}>{t('daily_reward')}</h2>
                 <p className={styles.text}>
-                    Pick up coins for logging into the game daily without skipping. The “Pick up” button must be
-                    pressed
-                    daily, otherwise the day count will start again
+                    {t('daily_reward_desc')}
                 </p>
 
                 {isBonusesLoading
@@ -51,10 +50,11 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
                                         className={cl(
                                             styles.dayItem,
                                             isComplete ? styles.complete : '',
-                                            isActive ? styles.active : ''
+                                            isActive ? styles.active : '',
+                                            'gradientWrapper'
                                         )}
                                     >
-                                        <p className={styles.dayItem_text}>Day {index + 1}</p>
+                                        <p className={styles.dayItem_text}>{t('day')} {index + 1}</p>
                                         <Flex className={styles.dayItem_info} alignItems='center'
                                               justifyContent='center'>
                                             <img
@@ -64,6 +64,11 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
                                             />
                                             <span>{formatPrice(bonus.coins)}</span>
                                         </Flex>
+                                        {isComplete &&
+                                            <span
+                                                className='gradient'
+                                                style={{boxShadow: `0 0 30px 20px rgba(153, 214, 23, 0.5)`}}
+                                            />}
                                     </div>
                                 );
                             })}
@@ -77,13 +82,20 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
                         className={styles.claimBtn}
                         onClick={onClaimClick}
                         disabled={true}
-                    >Not today.</button>
+                    >{t('not_today')}</button>
                     :
                     <button
-                        className={styles.claimBtn}
+                        className={cl(styles.claimBtn, 'gradientWrapper')}
                         onClick={onClaimClick}
-                        disabled={isLoading || isClaimLoading}
-                    >{isClaimLoading ? 'Claiming...' : 'Claim'}</button>}
+                        disabled={isBonusesLoading || isClaimLoading}
+                    >
+                        {isClaimLoading ? '...' : t('claim')}
+                        {!isBonusesLoading && !isClaimLoading &&
+                            <span
+                                className='gradient'
+                                style={{boxShadow: `0 0 100px 50px rgba(153, 214, 23, 0.5)`}}
+                            />}
+                    </button>}
 
             </div>
 

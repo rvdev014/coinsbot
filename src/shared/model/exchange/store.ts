@@ -37,11 +37,15 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
 
             if (!get().coinsTimeout) {
                 set({
-                    coinsTimeout: setInterval(() => {
+                    coinsTimeout: setInterval(async () => {
                         const userState = useUserStore.getState();
                         const coinsPerSecond = userState.coins_per_hour / 5400;
                         let coins = Math.ceil(userState.coins + coinsPerSecond);
                         useUserStore.setState({coins});
+
+                        if (coins >= userState.next_level?.coins) {
+                            useUserStore.getState().updateLevel();
+                        }
                     }, 1000)
                 });
             }

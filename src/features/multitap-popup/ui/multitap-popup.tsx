@@ -4,6 +4,8 @@ import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {Flex} from "@chakra-ui/react";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {generateTimeDiff} from "../../../shared/utils/date.ts";
+import cl from "classnames";
+import {t} from "i18next";
 
 interface IProps {
     open: boolean;
@@ -26,11 +28,10 @@ export const MultitapPopup: FC<IProps> = ({open, onClose, onUpgrade}) => {
         <Popup isOpen={open} onClose={onClose}>
             <div className={styles.content}>
                 <img className={styles.taskIcon} src="/img/multitap-lg.png" alt="Paw"/>
-                <h2 className={styles.title}>Multitap</h2>
-                <p className={styles.text}>x2 for coins per tap</p>
+                <h2 className={styles.title}>{t('multitap')}</h2>
+                <p className={styles.text}>{t('multitap_desc')}</p>
 
                 <div className={styles.priceWrapper}>
-                    <p className={styles.text}>+1 coin per tap</p>
                     <Flex className={styles.price} alignItems='center'>
                         <img src="/img/coin-icon-lg.png" alt="Coin"/>
                         <span>500</span>
@@ -38,10 +39,20 @@ export const MultitapPopup: FC<IProps> = ({open, onClose, onUpgrade}) => {
                 </div>
 
                 <button
-                    className={styles.startBtn}
+                    className={cl(styles.startBtn, 'gradientWrapper')}
                     onClick={onUpgrade}
                     disabled={isDisabled}
-                >{isDisabled ? 'Multitap is active' : 'Upgrade'}</button>
+                >
+                    {isDisabled ? t('multitap_active') : t('upgrade')}
+                    {!isDisabled &&
+                        <span
+                            className='gradient'
+                            style={{
+                                boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                                bottom: '-30px'
+                            }}
+                        />}
+                </button>
 
             </div>
         </Popup>

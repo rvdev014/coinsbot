@@ -3,6 +3,7 @@ import {IUserStore} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {showError} from "../../utils/other.ts";
 import {dateGreaterThan} from "../../utils/date.ts";
+import i18next from "i18next";
 
 const initialStore = {
 
@@ -24,6 +25,8 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 coinsPerHour *= 2;
             }
 
+            i18next.changeLanguage(store.language_code);
+
             set({
                 ...store,
                 coins_per_tap: coinsPerTap,
@@ -43,6 +46,18 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 showError()
             }
         },
-        setUserData: (data) => set({...data})
+        setUserData: (data) => set({...data}),
+
+        updateLevel: async () => {
+            try {
+                const user = await MainApi.userPerHour(get().user_id);//get().next_level?.step);
+                // const user = await MainApi.updateLevel(get().user_id, 3);//get().next_level?.step);
+                if (user) {
+                    get().setInitialStore({...user});
+                }
+            } catch (e) {
+                showError('Error updating level')
+            }
+        }
     }
 })

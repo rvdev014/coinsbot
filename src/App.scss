@@ -64,3 +64,25 @@ a:focus, button:focus {
     right: unset!important;
     left: unset!important;
 }
+
+.CircularProgressbar-path {
+    //stroke: #B9B9B9!important;
+}
+
+.gradientWrapper {
+    position: relative;
+    overflow: hidden;
+
+    .gradient {
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - 1px);
+        z-index: 999;
+        display: block;
+        width: 1px;
+        height: 1px;
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: 0 0 30px 20px rgba(#FBBD46, 0.5);
+    }
+}
