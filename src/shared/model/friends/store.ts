@@ -17,6 +17,8 @@ export const useReferralStore = create<IFriendsStore>((set, get) => {
 
             if (!result) return;
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             set({...result});
         },
         reset: () => set(initialStore),

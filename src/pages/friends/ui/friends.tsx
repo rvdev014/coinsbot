@@ -31,12 +31,8 @@ export const FriendsPage = () => {
 
     useEffect(() => {}, [referrals]);
 
-    const tg = window.Telegram.WebApp;
-
-    console.log(tg)
     const copyUrl = async () => {
         try {
-            tg.openTelegramLink('фывфыв');
 
         } catch (e) {
             console.log(e)
@@ -69,26 +65,26 @@ export const FriendsPage = () => {
                 />
             </div>
 
-            <Flex className={styles.infoBlocks} gap='8px'>
-                <div className={cl(styles.infoBlock, 'gradientWrapper')}>
-                    <h3 className={styles.infoBlock_title}>{t('regular_user')}</h3>
-                    <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
-                    <Flex className={styles.earnedBalance} alignItems='center'>
-                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                        <span>+5 000</span>
-                    </Flex>
-                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
-                </div>
-                <div className={cl(styles.infoBlock, 'gradientWrapper')}>
-                    <h3 className={styles.infoBlock_title}>Telegram Premium</h3>
-                    <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
-                    <Flex className={styles.earnedBalance} alignItems='center'>
-                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                        <span>+25 000</span>
-                    </Flex>
-                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(117, 70, 251, 0.5)`}}/>
-                </div>
-            </Flex>
+            {/*<Flex className={styles.infoBlocks} gap='8px'>*/}
+            {/*    <div className={cl(styles.infoBlock, 'gradientWrapper')}>*/}
+            {/*        <h3 className={styles.infoBlock_title}>{t('regular_user')}</h3>*/}
+            {/*        <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>*/}
+            {/*        <Flex className={styles.earnedBalance} alignItems='center'>*/}
+            {/*            <img src="/img/coin-icon-lg.png" alt="Coin"/>*/}
+            {/*            <span>+5 000</span>*/}
+            {/*        </Flex>*/}
+            {/*        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>*/}
+            {/*    </div>*/}
+            {/*    <div className={cl(styles.infoBlock, 'gradientWrapper')}>*/}
+            {/*        <h3 className={styles.infoBlock_title}>Telegram Premium</h3>*/}
+            {/*        <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>*/}
+            {/*        <Flex className={styles.earnedBalance} alignItems='center'>*/}
+            {/*            <img src="/img/coin-icon-lg.png" alt="Coin"/>*/}
+            {/*            <span>+25 000</span>*/}
+            {/*        </Flex>*/}
+            {/*        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(117, 70, 251, 0.5)`}}/>*/}
+            {/*    </div>*/}
+            {/*</Flex>*/}
 
 
             <div className={styles.friendsWrapper}>
