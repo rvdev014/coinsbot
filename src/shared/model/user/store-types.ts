@@ -20,6 +20,7 @@ export interface IUserData {
     language_code: string,
     coins: number,
     energy: number,
+    profit: number,
     energy_limit: number,
     coins_per_hour: number,
     coins_per_second: number,
