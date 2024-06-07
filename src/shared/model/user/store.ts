@@ -25,6 +25,7 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 coinsPerHour *= 2;
             }
 
+            console.log('store', store)
             i18next.changeLanguage(store.language_code);
 
             set({

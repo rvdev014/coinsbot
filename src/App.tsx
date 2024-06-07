@@ -11,18 +11,24 @@ import i18n from "./i18n";
 
 function App() {
 
-    // const userAgent = navigator.userAgent.toLowerCase();
-    // const isPhone = userAgent.includes("mobile") || userAgent.includes("android") || userAgent.includes("iphone");
-    //
-    // if (!isPhone) {
-    //     return (
-    //         <div className={styles.wrapper}>
-    //             <div className={styles.content}>
-    //                 <QrCode/>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isPhone = userAgent.includes("mobile") || userAgent.includes("android") || userAgent.includes("iphone");
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const tg = window.Telegram.WebApp;
+
+    // alert(tg?.platform)
+
+    if (!isPhone || tg?.platform === 'tdesktop') {
+        return (
+            <div className={styles.wrapper}>
+                <div className={styles.content}>
+                    <QrCode/>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <I18nextProvider i18n={i18n}>

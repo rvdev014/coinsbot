@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {API_URL} from "../consts.ts";
-import {useUserStore} from "../model/user/store.ts";
+import i18next from "i18next";
 
 export const apiInstance = axios.create({
     baseURL: API_URL,
@@ -8,7 +8,8 @@ export const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
     (config) => {
-        config.headers['Accept-Language'] = useUserStore.getState().language_code ?? 'ru';
+        console.log('i18next', i18next?.language)
+        config.headers['Accept-Language'] = i18next?.language ?? 'en';
         return config;
     },
     (error) => {
