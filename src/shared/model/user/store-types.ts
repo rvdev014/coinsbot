@@ -1,4 +1,5 @@
 import {IBonus} from "../earn/store-types.ts";
+import {BoostType, IBoostInfo} from "../../../features/boost/model/store-types.ts";
 
 export interface IUserStore extends IUserData {
     setInitialStore(store: IUserData): void;
@@ -42,6 +43,9 @@ export interface IUserData {
     tasks: any[]
     day_bonus: IBonus | null
     active_day_bonus: IBonus | null
+    boost: {
+        [key in BoostType]: IBoostInfo
+    }
 }
 
 export interface ILevel {

@@ -12,10 +12,13 @@ import {TurboEnergyPopup} from "../../turbo-energy-popup";
 import {UserCoins} from "../../user-coins";
 import cl from "classnames";
 import {t} from "i18next";
+import {CoinsPerTapPopup} from "../../coins-per-tap-popup";
+import {useUserStore} from "../../../shared/model/user/store.ts";
 
 export const Boost = () => {
 
     // const coins = useUserStore(state => state.coins);
+    const boostData = useUserStore(state => state.boost);
     const initExchange = useExchangeStore(state => state.initExchange);
     const popupType = useBoostStore(state => state.popupType);
     const onBoosterClick = useBoostStore(state => state.onBoosterClick);
@@ -62,14 +65,14 @@ export const Boost = () => {
                 </div>
 
                 <div className={styles.freeBoosters}>
-                    <p className={styles.title}>{t('free_boosters')}</p>
+                    <p className={styles.title}>{t('boosters')}</p>
                     <Flex className={styles.balance} justifyContent='space-between' gap={'11px'}>
 
                         <Flex
                             className={styles.card}
                             alignItems='center'
                             flex={1}
-                            onClick={() => onBoosterClick('full_energy')}
+                            onClick={() => onBoosterClick('restore_energy')}
                         >
                             <img src="/img/energy-icon-lg.png" alt="Energy"/>
                             <div className={styles.cardInfo}>
@@ -82,7 +85,7 @@ export const Boost = () => {
                             className={styles.card}
                             alignItems='center'
                             flex={1}
-                            onClick={() => onBoosterClick('turbo_energy')}
+                            onClick={() => onBoosterClick('energy_turbo')}
                         >
                             <img src="/img/boost-icon-lg.png" alt="Boost"/>
                             <div className={styles.cardInfo}>
@@ -96,7 +99,6 @@ export const Boost = () => {
 
 
                 <div className={styles.boosters}>
-                    <p className={styles.title}>{t('boosters')}</p>
 
                     <div className={styles.boostersList}>
 
@@ -104,7 +106,39 @@ export const Boost = () => {
                             className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
-                            onClick={() => onBoosterClick('multitap')}
+                            onClick={() => onBoosterClick('coins_per_tap')}
+                        >
+                            <Flex className={styles.boosterItem_left}>
+                                <div className={styles.boosterItem_icon}>
+                                    <img src="/img/coin-level.png" alt="coins"/>
+                                </div>
+                                <div className={styles.boosterInfo}>
+                                    <p className={styles.boosterName}>{t('coins_per_tap')}</p>
+                                    <Flex className={styles.boosterPrice} alignItems='center'>
+                                        <img src="/img/coin-icon.png" alt="Coin"/>
+                                        <span>{boostData?.coins_per_tap?.coins}</span>
+                                    </Flex>
+                                </div>
+                            </Flex>
+                            <div className={styles.boosterArrow}>
+                                <img src="/img/arrow.png" alt="Arrow"/>
+                            </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 100px 60px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
+                        </Flex>
+
+                        <Flex
+                            className={cl(styles.boosterItem, 'gradientWrapper')}
+                            justifyContent='space-between'
+                            alignItems='center'
+                            onClick={() => onBoosterClick('multi_tap')}
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
@@ -114,7 +148,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('multitap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
-                                        <span>500</span>
+                                        <span>{boostData?.multi_tap?.coins}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -136,7 +170,7 @@ export const Boost = () => {
                             className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
-                            onClick={() => onBoosterClick('mining')}
+                            onClick={() => onBoosterClick('turbo')}
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
@@ -146,7 +180,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('mining')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
-                                        <span>500</span>
+                                        <span>{boostData?.turbo?.coins}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -168,7 +202,7 @@ export const Boost = () => {
                             className={cl(styles.boosterItem, 'gradientWrapper')}
                             justifyContent='space-between'
                             alignItems='center'
-                            onClick={() => onBoosterClick('upgrade_energy')}
+                            onClick={() => onBoosterClick('energy_limit')}
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
@@ -178,7 +212,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('energy_limit')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin"/>
-                                        <span>500</span>
+                                        <span>{boostData?.energy_limit?.coins}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -202,31 +236,37 @@ export const Boost = () => {
             </div>
 
             <FullEnergyPopup
-                open={popupType === 'full_energy'}
+                open={popupType === 'restore_energy'}
                 onClose={onClosePopup}
                 onUpgrade={onFullEnergyUpgrade}
             />
 
             <TurboEnergyPopup
-                open={popupType === 'turbo_energy'}
+                open={popupType === 'energy_turbo'}
                 onClose={onClosePopup}
                 onUpgrade={onTurboEnergyUpdate}
             />
 
+            <CoinsPerTapPopup
+                open={popupType === 'coins_per_tap'}
+                onClose={onClosePopup}
+                onUpgrade={onMultiTapUpgrade}
+            />
+
             <MultitapPopup
-                open={popupType === 'multitap'}
+                open={popupType === 'multi_tap'}
                 onClose={onClosePopup}
                 onUpgrade={onMultiTapUpgrade}
             />
 
             <TurboMiningPopup
-                open={popupType === 'mining'}
+                open={popupType === 'turbo'}
                 onClose={onClosePopup}
                 onUpgrade={onMiningUpgrade}
             />
 
             <EnergyLimitPopup
-                open={popupType === 'upgrade_energy'}
+                open={popupType === 'energy_limit'}
                 onClose={onClosePopup}
                 onUpgrade={onEnergyLimitUpgrade}
             />

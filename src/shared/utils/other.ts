@@ -43,12 +43,13 @@ export function success(message?: string) {
 
 export function showError(message?: string) {
     toast({
-        title: 'Error occurred.',
+        // title: 'Error occurred.',
         description: message || "Request failed.",
         status: 'error',
         position: "top",
         duration: 9000,
         isClosable: true,
+        size: 'small'
     })
 }
 

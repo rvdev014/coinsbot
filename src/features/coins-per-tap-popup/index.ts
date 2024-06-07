@@ -1,0 +1,1 @@
+export {CoinsPerTapPopup} from './ui/coins-per-tap-popup.tsx';

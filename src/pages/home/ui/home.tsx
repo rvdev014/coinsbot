@@ -73,7 +73,8 @@ export const HomePage = () => {
 
     function getProgress(forEnergy = false) {
         if (forEnergy) {
-            return energyLimit - (energyLimit - energy) > 0 ? (energyLimit - (energyLimit - energy)) / energyLimit * 100 : 0;
+            const progress = energyLimit - (energyLimit - energy) > 0 ? (energyLimit - (energyLimit - energy)) / energyLimit * 100 : 0;
+            return 100 - progress;
         }
         return nextLevel?.coins === 0 ? 100 : (coins / nextLevel?.coins) * 100;
     }
