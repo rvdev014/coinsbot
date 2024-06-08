@@ -65,13 +65,17 @@ export const Levels = () => {
                 <div
                     className={styles.levelImg}
                     style={{
-                        border: `5px solid ${levelStore?.level?.color}`,
+                        border: levelStore?.level?.step > 7 ? 'none' : `5px solid ${levelStore?.level?.color}`,
                         background: `radial-gradient(circle, ${levelStore?.level?.color} -50%, #272727 100%)`,
                         boxShadow: `0 0 100px 0 ${hexToRgb(levelStore?.level?.color, 0.7)}`,
                     }}
                 >
                     <img
                         src={levelStore?.level?.img ?? '/img/dog.png'}
+                        style={{
+                            width: levelStore?.level?.step > 7 ? '100%' : `180px`,
+                            height: levelStore?.level?.step > 7 ? '100%' : `180px`,
+                        }}
                         alt="Tapper"
                     />
                 </div>
@@ -116,10 +120,10 @@ export const Levels = () => {
                     {levelStore?.users?.length === 0 ?
                         <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'>
                             <Flex className={styles.userItem_left}>
-                                <div className={styles.userAvatar}>
-                                    {/*<img src="/img/asd.png" alt="Avatar"/>*/}
-                                    <p>C</p>
-                                </div>
+                                {/*<div className={styles.userAvatar}>*/}
+                                {/*    <img src="/img/asd.png" alt="Avatar"/>*/}
+                                {/*    <p>C</p>*/}
+                                {/*</div>*/}
                                 <div className={styles.userInfo}>
                                     <p className={styles.userName}>{t('be_first')}</p>
                                 </div>
