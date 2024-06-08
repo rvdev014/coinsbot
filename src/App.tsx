@@ -20,15 +20,15 @@ function App() {
 
     // alert(tg?.platform)
 
-    if (!isPhone || tg?.platform === 'tdesktop') {
-        return (
-            <div className={styles.wrapper}>
-                <div className={styles.content}>
-                    <QrCode/>
-                </div>
-            </div>
-        );
-    }
+    // if (!isPhone || tg?.platform === 'tdesktop') {
+    //     return (
+    //         <div className={styles.wrapper}>
+    //             <div className={styles.content}>
+    //                 <QrCode/>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <I18nextProvider i18n={i18n}>
