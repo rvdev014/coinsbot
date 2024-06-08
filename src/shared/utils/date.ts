@@ -21,9 +21,25 @@ export function dateGreaterThan(date1: string, date2?: string) {
     return new Date(date1) > new Date(date2);
 }
 
-export function getDayDiffFromNow(date1: string, abs = true) {
-    const diff = (new Date(date1).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+export function getDayDiffFromNow2(date: string, abs = true) {
+    const diff = ((new Date().getTime()) - (new Date(date).getTime())) / (1000 * 60 * 60 * 24);
     return Math.floor(abs ? Math.abs(diff) : diff);
+}
+
+export function getDayDiffFromNow(date: string, abs = true) {
+    const now = new Date();
+    const givenDate = new Date(date);
+
+    // Normalize both dates to the start of the day (midnight)
+    now.setHours(0, 0, 0, 0);
+    givenDate.setHours(0, 0, 0, 0);
+
+    // Calculate the difference in milliseconds and convert to days
+    const diffInMillis = now.getTime() - givenDate.getTime();
+    const diffInDays = diffInMillis / (1000 * 60 * 60 * 24);
+
+    // Return the absolute value of the difference if abs is true, otherwise return the difference
+    return abs ? Math.abs(diffInDays) : diffInDays;
 }
 
 export function checkDatesEqual(date1: Date, date2: Date, withDay = false) {

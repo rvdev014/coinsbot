@@ -73,11 +73,13 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                     let activeDayBonus: IBonus | undefined = undefined;
                     if (userDayBonus) {
                         const dayDiff = getDayDiffFromNow(userBonusDate);
-                        console.log('dayDiff', dayDiff, userBonusDate)
                         if (dayDiff < 1) {
                             activeDayBonus = undefined;
                         } else if (dayDiff === 1) {
                             activeDayBonus = bonuses.find(bonus => bonus.day > userDayBonus?.day);
+                            if (!activeDayBonus) {
+                                activeDayBonus = bonuses.find(bonus => bonus.day === 1);
+                            }
                         } else {
                             activeDayBonus = bonuses.find(bonus => bonus.day === 1);
                         }
@@ -110,7 +112,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
             set({isClaimLoading: true});
             try {
-                const user = await CoinsApi.updateBonus(useUserStore.getState().user_id, activeDayBonus.id);
+                const user = await CoinsApi.updateBonus(useUserStore.getState().user_id);
                 if (user) {
                     set({isOpenDaily: false});
                     success('Bonus claimed successfully!')

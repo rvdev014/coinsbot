@@ -14,8 +14,8 @@ export const CoinsApi = {
         );
         return response.data?.data;
     },
-    async updateBonus(userId: string|number, dayBonusId: string|number) {
-        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/bonus/${dayBonusId}`);
+    async updateBonus(userId: string|number) {
+        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/bonus`);
         return response.data?.data;
     },
     async restoreEnergy(userId: string|number) {

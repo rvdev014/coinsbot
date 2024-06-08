@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import styles from "./styles.module.scss";
 import {Flex} from "@chakra-ui/react";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
@@ -24,6 +24,12 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
     const onClaimClick = useEarnStore(state => state.onClaimClick);
     const isClaimLoading = useEarnStore(state => state.isClaimLoading);
 
+    const isDayBonusLast = useMemo(() => {
+        if (!bonuses?.length || bonuses.length < 1 || !userDayBonus) return false;
+
+        return userDayBonus.id === bonuses[bonuses.length - 1].id;
+    }, [userDayBonus, bonuses]);
+
     return (
         <Popup isOpen={isOpen} onClose={onClose}>
 
@@ -40,7 +46,7 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
                         <div className={styles.daysList}>
                             {bonuses?.map((bonus, index) => {
 
-                                const isComplete = userDayBonus ? (userDayBonus.day >= bonus.day) : false;
+                                const isComplete = (!isDayBonusLast && userDayBonus) ? (userDayBonus.day >= bonus.day) : false;
                                 const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;
 
                                 return (
