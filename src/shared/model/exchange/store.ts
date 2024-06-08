@@ -21,12 +21,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                     energyTimeout: setInterval(() => {
                         const userState = useUserStore.getState();
 
-                        let updateEnergy = userState.coins_per_tap;
-                        if (dateGreaterThan(userState.multi_tap)) {
-                            updateEnergy *= 2;
-                        }
-
-                        let energy = userState.energy + updateEnergy;
+                        let energy = userState.energy + userState.energy_per_second;
                         if (energy > userState.energy_limit) {
                             energy = userState.energy_limit;
                         }
@@ -74,7 +69,11 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                 const tappedCoins = get().tappedCoins;
                 set({tappedCoins: 0});
                 if (tappedCoins > 0) {
-                    await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
+                    await CoinsApi.updateCoins(
+                        useUserStore.getState().user_id,
+                        tappedCoins,
+                        useUserStore.getState().energy
+                    );
                 }
             } catch (e) {
                 showError()

@@ -38,6 +38,18 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             }
         },
 
+        onCoinsPerTapUpgrade: async () => {
+            try {
+                const userId = useUserStore.getState().user_id;
+                const user  = await CoinsApi.coinsPerTapUpdate(userId, 500)
+                useUserStore.getState().setInitialStore({...user})
+                set({popupType: null})
+                success('Coins per tap upgraded successfully.')
+            } catch (e) {
+                showError()
+            }
+        },
+
         onMultiTapUpgrade: async () => {
             try {
                 const userId = useUserStore.getState().user_id;

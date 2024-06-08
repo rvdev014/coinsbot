@@ -10,6 +10,7 @@ export interface IBoostStore {
     onBoosterClick: (type: BoostType) => void;
     onClosePopup: () => void;
     onMultiTapUpgrade: () => void;
+    onCoinsPerTapUpgrade: () => void;
     onEnergyLimitUpgrade: (price: number) => void;
     onTurboEnergyUpdate: () => void;
     onMiningUpgrade: () => void;

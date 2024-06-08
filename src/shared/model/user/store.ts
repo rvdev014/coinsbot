@@ -31,7 +31,8 @@ export const useUserStore = create<IUserStore>((set, get) => {
             set({
                 ...store,
                 coins_per_tap: coinsPerTap,
-                coins_per_hour: coinsPerHour
+                coins_per_hour: coinsPerHour,
+                energy_per_second: store.coins_per_tap,
             });
         },
 
@@ -47,6 +48,7 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 showError()
             }
         },
+
         setUserData: (data) => set({...data}),
 
         updateLevel: async () => {

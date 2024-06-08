@@ -26,6 +26,7 @@ export interface IUserData {
     coins_per_hour: number,
     coins_per_second: number,
     coins_per_tap: number,
+    energy_per_second: number,
     referral_levels: object,
     multi_tap: string,
     bonus_date: string,

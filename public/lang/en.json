@@ -21,6 +21,7 @@
   "full_energy_desc": "Fills the energy scale to maximum, without waiting",
   "turbo_mining": "Turbo mining",
   "turbo_mining_active": "Turbo mining is active",
+  "coins_per_tap_desc": "+1 for coins per tap",
   "turbo_mining_desc": "x2 faster energy recovery",
   "multitap": "Multitap",
   "multitap_active": "Multitap is active",

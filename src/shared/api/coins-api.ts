@@ -7,8 +7,11 @@ export const CoinsApi = {
         const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/task/${taskId}`);
         return response.data?.data;
     },
-    async updateCoins(userId: string|number, coins: number) {
-        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/taped`, {coins});
+    async updateCoins(userId: string|number, coins: number, energy: number) {
+        const response = await apiInstance.post<{data: IUserData}>(
+            `/user/${userId}/taped`,
+            {coins, energy}
+        );
         return response.data?.data;
     },
     async updateBonus(userId: string|number, dayBonusId: string|number) {
@@ -25,6 +28,10 @@ export const CoinsApi = {
     },
     async multiTapUpdate(userId: string|number, coins: number) {
         const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/multi-tap/update`, {coins});
+        return response.data?.data;
+    },
+    async coinsPerTapUpdate(userId: string|number, coins: number) {
+        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/coins-per-tap/update`, {coins});
         return response.data?.data;
     },
     async miningUpdate(userId: string|number, coins: number) {

@@ -20,6 +20,7 @@
   "full_energy_desc": "Заполняет энергию до максимума",
   "turbo_mining": "Турбо майнинг",
   "turbo_mining_active": "Турбо майнинг активен",
+  "coins_per_tap_desc": "+1 прибыли за тап",
   "turbo_mining_desc": "x2 восстановление энергии",
   "multitap": "Мульти тап",
   "multitap_active": "Мульти тап активен",
@@ -28,7 +29,7 @@
   "mining_active": "Майнинг активен",
   "mining_desc": "x2 прибыль в час",
   "energy_limit": "Лимит энергии",
-  "energy_limit_desc": "+500 к лимиту энергии",
+  "energy_limit_desc": "+500 лимиту энергии",
 
   "free": "Бесплатно",
 

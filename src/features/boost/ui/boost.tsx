@@ -3,17 +3,18 @@ import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
-import {EnergyLimitPopup} from "../../energy-popup";
 import {useBoostStore} from "../model/store.ts";
-import {FullEnergyPopup} from "../../full-energy-popup";
-import {TurboMiningPopup} from "../../turbo-mining-popup";
-import {MultitapPopup} from "../../multitap-popup";
-import {TurboEnergyPopup} from "../../turbo-energy-popup";
 import {UserCoins} from "../../user-coins";
 import cl from "classnames";
 import {t} from "i18next";
-import {CoinsPerTapPopup} from "../../coins-per-tap-popup";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {RestoreEnergyPopup} from "./popups/restore-energy-popup.tsx";
+import {EnergyTurboPopup} from "./popups/energy-turbo-popup.tsx";
+import {CoinsPerTapPopup} from "./popups/coins-per-tap-popup.tsx";
+import {MultiTapPopup} from "./popups/multi-tap-popup.tsx";
+import {TurboPopup} from "./popups/turbo-popup.tsx";
+import {EnergyLimitPopup} from "./popups/energy-limit-popup.tsx";
+import {Popup} from "../../../shared/ui/popup/popup.tsx";
 
 export const Boost = () => {
 
@@ -27,6 +28,7 @@ export const Boost = () => {
     const onMiningUpgrade = useBoostStore(state => state.onMiningUpgrade);
     const onTurboEnergyUpdate = useBoostStore(state => state.onTurboEnergyUpdate);
     const onMultiTapUpgrade = useBoostStore(state => state.onMultiTapUpgrade);
+    const onCoinsPerTapUpgrade = useBoostStore(state => state.onCoinsPerTapUpgrade);
     const onEnergyLimitUpgrade = useBoostStore(state => state.onEnergyLimitUpgrade);
     const onFullEnergyUpgrade = useBoostStore(state => state.onFullEnergyUpgrade);
 
@@ -115,7 +117,7 @@ export const Boost = () => {
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('coins_per_tap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-icon.png" alt="Coin"/>
+                                        <img src="/img/coin-level.png" alt="Coin"/>
                                         <span>{boostData?.coins_per_tap?.coins}</span>
                                     </Flex>
                                 </div>
@@ -147,7 +149,7 @@ export const Boost = () => {
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('multitap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-icon.png" alt="Coin"/>
+                                        <img src="/img/coin-level.png" alt="Coin"/>
                                         <span>{boostData?.multi_tap?.coins}</span>
                                     </Flex>
                                 </div>
@@ -179,7 +181,7 @@ export const Boost = () => {
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('mining')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-icon.png" alt="Coin"/>
+                                        <img src="/img/coin-level.png" alt="Coin"/>
                                         <span>{boostData?.turbo?.coins}</span>
                                     </Flex>
                                 </div>
@@ -211,7 +213,7 @@ export const Boost = () => {
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('energy_limit')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-icon.png" alt="Coin"/>
+                                        <img src="/img/coin-level.png" alt="Coin"/>
                                         <span>{boostData?.energy_limit?.coins}</span>
                                     </Flex>
                                 </div>
@@ -235,41 +237,29 @@ export const Boost = () => {
 
             </div>
 
-            <FullEnergyPopup
-                open={popupType === 'restore_energy'}
-                onClose={onClosePopup}
-                onUpgrade={onFullEnergyUpgrade}
-            />
+            <Popup isOpen={popupType === 'restore_energy'} onClose={onClosePopup}>
+                <RestoreEnergyPopup onUpgrade={onFullEnergyUpgrade}/>
+            </Popup>
 
-            <TurboEnergyPopup
-                open={popupType === 'energy_turbo'}
-                onClose={onClosePopup}
-                onUpgrade={onTurboEnergyUpdate}
-            />
+            <Popup isOpen={popupType === 'energy_turbo'} onClose={onClosePopup}>
+                <EnergyTurboPopup onUpgrade={onTurboEnergyUpdate}/>
+            </Popup>
 
-            <CoinsPerTapPopup
-                open={popupType === 'coins_per_tap'}
-                onClose={onClosePopup}
-                onUpgrade={onMultiTapUpgrade}
-            />
+            <Popup isOpen={popupType === 'coins_per_tap'} onClose={onClosePopup}>
+                <CoinsPerTapPopup onUpgrade={onCoinsPerTapUpgrade}/>
+            </Popup>
 
-            <MultitapPopup
-                open={popupType === 'multi_tap'}
-                onClose={onClosePopup}
-                onUpgrade={onMultiTapUpgrade}
-            />
+            <Popup isOpen={popupType === 'multi_tap'} onClose={onClosePopup}>
+                <MultiTapPopup onUpgrade={onMultiTapUpgrade}/>
+            </Popup>
 
-            <TurboMiningPopup
-                open={popupType === 'turbo'}
-                onClose={onClosePopup}
-                onUpgrade={onMiningUpgrade}
-            />
+            <Popup isOpen={popupType === 'turbo'} onClose={onClosePopup}>
+                <TurboPopup onUpgrade={onMiningUpgrade}/>
+            </Popup>
 
-            <EnergyLimitPopup
-                open={popupType === 'energy_limit'}
-                onClose={onClosePopup}
-                onUpgrade={onEnergyLimitUpgrade}
-            />
+            <Popup isOpen={popupType === 'energy_limit'} onClose={onClosePopup}>
+                <EnergyLimitPopup onUpgrade={onEnergyLimitUpgrade}/>
+            </Popup>
         </>
     )
 };
