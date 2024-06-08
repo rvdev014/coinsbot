@@ -25,6 +25,8 @@ export const HomePage = () => {
     const lastLevel = useUserStore(state => state.last_level);
     const coinsPerTap = useUserStore(state => state.coins_per_tap);
     const coinsPerHour = useUserStore(state => state.coins_per_hour);
+    const energy = useUserStore(state => state.energy);
+    const energyLimit = useUserStore(state => state.energy_limit);
 
     useEffect(() => {
         initExchange();
@@ -69,7 +71,11 @@ export const HomePage = () => {
         return formatPrice(nextLevel?.coins - coins);
     }
 
-    function getProgress() {
+    function getProgress(forEnergy = false) {
+        if (forEnergy) {
+            const progress = energyLimit - (energyLimit - energy) > 0 ? (energyLimit - (energyLimit - energy)) / energyLimit * 100 : 0;
+            return 100 - progress;
+        }
         return nextLevel?.coins === 0 ? 100 : (coins / nextLevel?.coins) * 100;
     }
 
@@ -127,7 +133,7 @@ export const HomePage = () => {
 
                 <div className={styles.tapWrapper}>
                     <CircularProgressbarWithChildren
-                        value={getProgress()}
+                        value={getProgress(true)}
                         strokeWidth={2}
                         styles={buildStyles({
                             textColor: "transparent",

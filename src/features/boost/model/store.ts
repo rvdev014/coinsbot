@@ -4,6 +4,7 @@ import {createStandaloneToast, useToast} from "@chakra-ui/react";
 import {showError, success} from "../../../shared/utils/other.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
+import {apiInstance} from "../../../shared/api/axios.ts";
 
 const initialStore = {} as IBoostStore;
 
@@ -82,7 +83,11 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
         },
 
         init: async () => {
+            try {
 
+            } catch (e) {
+                showError()
+            }
         }
     }
 })

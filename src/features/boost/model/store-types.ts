@@ -1,4 +1,8 @@
-export type BoostType = 'full_energy' | 'turbo_energy' | 'multitap' | 'upgrade_energy' | 'mining';
+export type BoostType = 'restore_energy' | 'energy_turbo' | 'coins_per_tap' | 'multi_tap' | 'turbo' | 'energy_limit';
+export interface IBoostInfo {
+    coins: number;
+    can_update: boolean;
+}
 
 export interface IBoostStore {
     popupType: BoostType | null;
