@@ -74,7 +74,8 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                 const tappedCoins = get().tappedCoins;
                 set({tappedCoins: 0});
                 if (tappedCoins > 0) {
-                    await CoinsApi.updateCoins(useUserStore.getState().user_id, tappedCoins);
+                    const userStore = useUserStore.getState();
+                    await CoinsApi.updateCoins(userStore.user_id, tappedCoins, userStore.energy);
                 }
             } catch (e) {
                 showError()
