@@ -58,7 +58,12 @@ export const Levels = () => {
     return (
         <div className={styles.wrapper}>
             <Flex className={styles.slider}>
-                <button className={`${styles.arrow} ${styles.arrowLeft}`} onClick={() => changeLevel('prev', step)}>
+                <button
+                    className={`${styles.arrow}
+                     ${styles.arrowLeft}`}
+                    onClick={() => changeLevel('prev', step)}
+                    disabled={step === 1}
+                >
                     <img src="/img/arrow-left.png" alt="Left" />
                 </button>
 
@@ -80,7 +85,12 @@ export const Levels = () => {
                     />
                 </div>
 
-                <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={() => changeLevel('next', step)}>
+                <button
+                    className={`${styles.arrow} 
+                    ${styles.arrowRight}`}
+                    onClick={() => changeLevel('next', step)}
+                    disabled={step === useUserStore.getState().last_level?.step}
+                >
                     <img src="/img/arrow-right.png" alt="Right" />
                 </button>
             </Flex>

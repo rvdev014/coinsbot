@@ -2,7 +2,7 @@ import {create} from "zustand";
 import {IUserStore} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {showError} from "../../utils/other.ts";
-import {dateGreaterThan} from "../../utils/date.ts";
+import {dateGreaterThan, getDayDiffFromNow} from "../../utils/date.ts";
 import i18next from "i18next";
 
 const initialStore = {
@@ -25,6 +25,12 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 coinsPerHour *= 2;
             }
 
+            let dayBonus = store.day_bonus;
+            console.log('getDayDiffFromNow(store.bonus_date)', getDayDiffFromNow(store.bonus_date))
+            if (getDayDiffFromNow(store.bonus_date) > 1) {
+                dayBonus = null;
+            }
+
             console.log('store', store)
             i18next.changeLanguage(store.language_code);
 
@@ -33,6 +39,7 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 coins_per_tap: coinsPerTap,
                 coins_per_hour: coinsPerHour,
                 energy_per_second: store.coins_per_tap,
+                day_bonus: dayBonus,
             });
         },
 

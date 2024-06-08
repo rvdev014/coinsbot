@@ -20,3 +20,14 @@ export function dateGreaterThan(date1: string, date2?: string) {
     if (!date2) return new Date(date1) > new Date();
     return new Date(date1) > new Date(date2);
 }
+
+export function getDayDiffFromNow(date1: string, abs = true) {
+    const diff = (new Date(date1).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+    return Math.floor(abs ? Math.abs(diff) : diff);
+}
+
+export function checkDatesEqual(date1: Date, date2: Date, withDay = false) {
+    return date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        (withDay ? date1.getDate() === date2.getDate() : true);
+}

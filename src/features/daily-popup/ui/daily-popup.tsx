@@ -19,7 +19,6 @@ interface IProps {
 export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
 
     const userDayBonus = useUserStore(state => state.day_bonus);
-    const isLoading = useEarnStore(state => state.isLoading);
     const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
     const activeDayBonus = useEarnStore(state => state.active_day_bonus);
     const onClaimClick = useEarnStore(state => state.onClaimClick);
@@ -78,11 +77,7 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
 
                 {!activeDayBonus
                     ?
-                    <button
-                        className={styles.claimBtn}
-                        onClick={onClaimClick}
-                        disabled={true}
-                    >{t('not_today')}</button>
+                    <button className={styles.claimBtn} disabled={true}>{t('not_today')}</button>
                     :
                     <button
                         className={cl(styles.claimBtn, 'gradientWrapper')}

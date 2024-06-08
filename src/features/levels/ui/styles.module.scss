@@ -13,6 +13,10 @@
   margin-left: 20px;
 }
 
+.arrow:disabled {
+  opacity: 0.3;
+}
+
 .levelImg {
   width: 228px;
   height: 228px;
@@ -108,6 +112,7 @@
       letter-spacing: -0.03em;
       text-align: center;
     }
+
     img {
       margin-right: 5px;
     }
