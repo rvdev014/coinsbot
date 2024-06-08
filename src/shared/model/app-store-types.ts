@@ -16,6 +16,7 @@ export interface ITgDataUnsafe {
 }
 
 export interface IAppStore {
+    webApp: any;
     isAppLoading: boolean;
     initTelegram: () => void;
 }

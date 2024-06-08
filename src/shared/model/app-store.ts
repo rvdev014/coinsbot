@@ -20,6 +20,9 @@ export const useAppStore = create<IAppStore>((set, get) => {
 
             const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            window.Telegram?.WebApp?.enableClosingConfirmation()
             /*if (!tgDataUnsafe?.user) {
                 set({
                     // isTelegramWebApp: false,
@@ -33,7 +36,10 @@ export const useAppStore = create<IAppStore>((set, get) => {
             } catch (e) {
                 showError()
             } finally {
-                set({isAppLoading: false});
+                set({
+                    isAppLoading: false,
+                    webApp: tg,
+                });
             }
         },
     }

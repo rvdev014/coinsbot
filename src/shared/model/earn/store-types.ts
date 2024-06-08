@@ -4,9 +4,10 @@ export interface IEarnStore {
     selectedTask: ITask | null;
     active_day_bonus: IBonus | null;
 
+    tasksOpenedUrl: number[];
+
     totalBonusCoins: number;
     isLoading: boolean;
-    isOpenedTaskUrl: boolean;
     isTasksLoading: boolean;
     isBonusesLoading: boolean;
     isClaimLoading: boolean;
@@ -34,6 +35,8 @@ export interface ITask {
     url: string
     channel_id: string
     coins: number
+    active: boolean
+    is_external: boolean
     created_at: string
     updated_at: string
 }

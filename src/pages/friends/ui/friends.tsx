@@ -6,6 +6,7 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
 import {t} from "i18next";
+import {useAppStore} from "../../../shared/model/app-store.ts";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
@@ -31,9 +32,9 @@ export const FriendsPage = () => {
 
     useEffect(() => {}, [referrals]);
 
-    const copyUrl = async () => {
+    const onInviteFriend = async () => {
         try {
-
+            useAppStore.getState().webApp?.openTelegramLink(``)
         } catch (e) {
             console.log(e)
         }
@@ -142,7 +143,7 @@ export const FriendsPage = () => {
                 ))}
             </div>
 
-            <button className={styles.inviteFriendBtnWrapper} onClick={copyUrl}>
+            <button className={styles.inviteFriendBtnWrapper} onClick={onInviteFriend}>
                 <div className={cl(styles.inviteFriendBtn, 'gradientWrapper')}>
                     {t('invite_fren')}
                     <span

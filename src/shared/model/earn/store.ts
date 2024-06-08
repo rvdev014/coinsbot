@@ -8,6 +8,7 @@ import {getDayDiffFromNow} from "../../utils/date.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
+    tasksOpenedUrl: [] as number[],
     bonuses: [] as IBonus[],
     selectedTask: null,
     active_day_bonus: null,
@@ -138,7 +139,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 }
             } catch (e) {
                 showError('Checking failed! Task is not completed!');
-                set({isOpenedTaskUrl: false})
+                set({tasksOpenedUrl: get().tasksOpenedUrl.filter(id => id !== task.id)});
             }
         },
 

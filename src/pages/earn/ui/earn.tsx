@@ -8,6 +8,7 @@ import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {t} from "i18next";
+import {Popup} from "../../../shared/ui/popup/popup.tsx";
 
 export const EarnPage = () => {
 
@@ -73,7 +74,12 @@ export const EarnPage = () => {
 
                                         <Flex className={styles.taskItem_left}>
                                             <div className={styles.taskIcon}>
-                                                <img src="/img/task-tg.png" alt="Task tg"/>
+                                                <img
+                                                    src={task.img ?? "/img/task-tg.png"}
+                                                    // @ts-ignore
+                                                    onError={(e) => e.target.src = "/img/task-tg.png"}
+                                                    alt="Task tg"
+                                                />
                                             </div>
                                             <div className={styles.taskInfo}>
                                                 <p className={styles.taskName}>{task.title}</p>
@@ -109,11 +115,12 @@ export const EarnPage = () => {
                 onClose={() => useEarnStore.setState({isOpenDaily: false})}
             />
 
-            <JoinPopup
-                task={selectedTask}
-                onClose={onTaskClose}
-                onCompleteTask={onCompleteTask}
-            />
+            <Popup isOpen={selectedTask !== null} onClose={onTaskClose}>
+                <JoinPopup
+                    task={selectedTask}
+                    onCompleteTask={onCompleteTask}
+                />
+            </Popup>
         </>
     );
 };
