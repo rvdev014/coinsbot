@@ -4,7 +4,8 @@ import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
-import {generateTimeDiff} from "../../../../shared/utils/date.ts";
+import {dateGreaterThan, generateTimeDiff} from "../../../../shared/utils/date.ts";
+import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 
 interface IProps {
     onUpgrade: () => void;
@@ -12,22 +13,22 @@ interface IProps {
 
 export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
+    const [disabled, setDisabled] = useState<boolean>(false);
+
     const restoreEnergyAt = useUserStore(state => state.restore_energy_at);
-    const [disableClaim, setDisableClaim] = useState(false);
-    const [timer, setTimer] = useState<string>('');
+    const restoreEnergyEndsAt = useMemo(() => {
+        const date = new Date(restoreEnergyAt);
+        date.setHours(date.getHours() + 6);
+        return date;
+    }, [restoreEnergyAt]);
 
     useEffect(() => {
-        function checkClaim() {
-            const time6hoursEarlier = new Date().getTime() - 6 * 60 * 60 * 1000;
-            const restoreAtTime = new Date(restoreEnergyAt).getTime();
-            setDisableClaim(restoreAtTime < time6hoursEarlier);
-        }
-
-        checkClaim();
-        const interval = setInterval(checkClaim, 1000);
-
-        return () => clearInterval(interval);
+        setDisabled(dateGreaterThan(restoreEnergyEndsAt));
     }, []);
+
+    function onTimerEnds() {
+        setDisabled(dateGreaterThan(restoreEnergyEndsAt));
+    }
 
     return (
         <div className={styles.content}>
@@ -44,23 +45,23 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            <button
-                className={cl(styles.startBtn, 'gradientWrapper')}
-                onClick={onUpgrade}
-                disabled={disableClaim}
-            >
-                {disableClaim ? generateTimeDiff(restoreEnergyAt) : t('upgrade')}
-
-                {!disableClaim &&
+            {disabled
+                ?
+                <button className={styles.startBtn} disabled={true}>
+                    <Timer toDate={restoreEnergyEndsAt} onTimerEnds={onTimerEnds}/>
+                </button>
+                :
+                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
+                    {t('upgrade')}
                     <span
                         className='gradient'
                         style={{
                             boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
                             bottom: '-30px'
                         }}
-                    />}
-
-            </button>
+                    />
+                </button>
+            }
 
         </div>
     );

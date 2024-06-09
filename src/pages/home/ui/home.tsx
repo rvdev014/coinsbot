@@ -14,7 +14,7 @@ import cl from "classnames";
 
 export const HomePage = () => {
 
-    const tapperRef = React.useRef<HTMLDivElement>(null);
+    const tapperRef = React.useRef<HTMLButtonElement>(null);
 
     const onTap = useExchangeStore(state => state.onTap);
     const initExchange = useExchangeStore(state => state.initExchange);
@@ -32,38 +32,40 @@ export const HomePage = () => {
         initExchange();
     }, [initExchange]);
 
-    function tapper(event: React.MouseEvent<HTMLDivElement>) {
-        event.preventDefault();
+    function tapper(event: React.TouchEvent<HTMLButtonElement>) {
         if (!tapperRef.current || !coinsPerHour || useUserStore.getState().energy < coinsPerTap) return;
 
-        const plusOne = document.createElement('span')
-        plusOne.innerHTML = `+${coinsPerTap}`;
+        // @ts-ignore
+        for (const touch of event.changedTouches) {
+            const plusOne = document.createElement('span')
+            plusOne.innerHTML = `+${coinsPerTap}`;
 
-        const x = event.clientX - tapperRef.current.getBoundingClientRect().left;
-        const y = event.clientY - tapperRef.current.getBoundingClientRect().top;
+            const x = touch.clientX - tapperRef.current.getBoundingClientRect().left;
+            const y = touch.clientY - tapperRef.current.getBoundingClientRect().top;
 
-        plusOne.style.position = 'absolute';
-        plusOne.style.left = x + 'px';
-        plusOne.style.top = y + 'px';
-        plusOne.style.fontSize = '28px';
-        plusOne.style.fontWeight = 'bold';
-        plusOne.style.textShadow = '0 0 2px #000';
-        plusOne.style.color = '#fff';
-        plusOne.style.transition = 'all 1.5s';
-        plusOne.style.transform = 'translate(-50%, -50%)';
-        plusOne.style.zIndex = '1000';
-        tapperRef.current.appendChild(plusOne);
+            plusOne.style.position = 'absolute';
+            plusOne.style.left = x + 'px';
+            plusOne.style.top = y + 'px';
+            plusOne.style.fontSize = '28px';
+            plusOne.style.fontWeight = 'bold';
+            plusOne.style.textShadow = '0 0 2px #000';
+            plusOne.style.color = '#fff';
+            plusOne.style.transition = 'all 1.5s';
+            plusOne.style.transform = 'translate(-50%, -50%)';
+            plusOne.style.zIndex = '1000';
+            tapperRef.current.appendChild(plusOne);
 
-        onTap();
+            onTap();
 
-        setTimeout(() => {
-            plusOne.style.top = y - 130 + 'px';
-            plusOne.style.opacity = '0';
-        }, 20);
+            setTimeout(() => {
+                plusOne.style.top = y - 130 + 'px';
+                plusOne.style.opacity = '0';
+            }, 20);
 
-        setTimeout(() => {
-            tapperRef.current?.removeChild(plusOne);
-        }, 800);
+            setTimeout(() => {
+                tapperRef.current?.removeChild(plusOne);
+            }, 800);
+        }
     }
 
     function getRemainCoins(coins: number) {
@@ -141,21 +143,21 @@ export const HomePage = () => {
                             trailColor: "transparent"
                         })}
                     >
-                        <div
+                        <button
                             className={styles.tapper}
                             style={{
                                 background: `radial-gradient(circle, ${level?.color ?? '#B9B9B9'} -50%, #272727 100%)`,
                                 boxShadow: `0 0 40px 0 ${hexToRgb(level?.color ?? '#B9B9B9', 0.6)}`,
                             }}
                             ref={tapperRef}
-                            onClick={tapper}
+                            onTouchEnd={tapper}
                         >
                             <img
                                 draggable={false}
-                                src={level?.img ?? '/img/dog.png'}
+                                src={`/img/levels/level-${level?.step ?? 1}.png`}
                                 alt="Tapper"
                             />
-                        </div>
+                        </button>
                     </CircularProgressbarWithChildren>
                 </div>
 

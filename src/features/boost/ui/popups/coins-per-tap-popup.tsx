@@ -4,6 +4,7 @@ import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
+import {formatPrice} from "../../../../shared/utils/other.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -12,14 +13,6 @@ interface IProps {
 export const CoinsPerTapPopup: FC<IProps> = ({onUpgrade}) => {
 
     const boostData = useUserStore(state => state.boost);
-    const multiTapEndsAt = useUserStore(state => state.multi_tap);
-
-    const isDisabled = useMemo(() => {
-        // check 6 hours passed since last restore or disable button
-        const now = new Date().getTime();
-        const multiTapEndsDate = new Date(multiTapEndsAt).getTime();
-        return multiTapEndsDate > now;
-    }, [multiTapEndsAt]);
 
     return (
 
@@ -31,15 +24,11 @@ export const CoinsPerTapPopup: FC<IProps> = ({onUpgrade}) => {
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
                     <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                    <span>{boostData?.coins_per_tap?.coins}</span>
+                    <span>{formatPrice(boostData?.coins_per_tap?.coins)}</span>
                 </Flex>
             </div>
 
-            <button
-                className={cl(styles.startBtn, 'gradientWrapper')}
-                onClick={onUpgrade}
-                disabled={isDisabled}
-            >
+            <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
                 {t('upgrade')}
                 <span
                     className='gradient'

@@ -1,3 +1,8 @@
+export function testDate() {
+    // date 10 seconds greater than now
+    return new Date(new Date().getTime() + 10000);
+}
+
 export function parseStr2Date(dateStr: string, withTimezone = true) {
     if (!withTimezone) {
         const dateWithTimeZone = new Date(dateStr);
@@ -16,7 +21,7 @@ export function generateTimeDiff(timeTo: string) {
     return `Wait ${Math.floor(hours)}h ${Math.floor(minutes)}m`
 }
 
-export function dateGreaterThan(date1: string, date2?: string) {
+export function dateGreaterThan(date1: string|Date, date2?: string|Date) {
     if (!date2) return new Date(date1) > new Date();
     return new Date(date1) > new Date(date2);
 }
