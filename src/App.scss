@@ -32,6 +32,10 @@ html, body {
     background: var(--Orlando-orlando-100, #1C1C1D)!important;
 }
 
+body {
+    touch-action: none !important;
+}
+
 #root {
     height: 100%;
 }
