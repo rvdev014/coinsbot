@@ -1,10 +1,13 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import styles from "./popups.module.scss";
 import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {formatPrice} from "../../../../shared/utils/other.ts";
+import {shallow} from "zustand/shallow";
+import {dateGreaterThan} from "../../../../shared/utils/date.ts";
+import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 
 interface IProps {
     onUpgrade: () => void;
@@ -13,6 +16,21 @@ interface IProps {
 export const CoinsPerTapPopup: FC<IProps> = ({onUpgrade}) => {
 
     const boostData = useUserStore(state => state.boost);
+    const [coinsDisabled, setCoinsDisabled] = useState<boolean>(false);
+
+    useEffect(() => {
+        const unsubscribe = useUserStore.subscribe(
+            state => state.coins,
+            coins => {
+                setCoinsDisabled(coins < boostData?.coins_per_tap?.coins);
+            },
+            {
+                equalityFn: shallow,
+                fireImmediately: true
+            }
+        );
+        return () => unsubscribe();
+    }, [boostData]);
 
     return (
 
@@ -28,16 +46,18 @@ export const CoinsPerTapPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
-                {t('upgrade')}
-                <span
-                    className='gradient'
-                    style={{
-                        boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                        bottom: '-30px'
-                    }}
-                />
-            </button>
+            {coinsDisabled
+                ?
+                <button className={cl(styles.startBtn, styles.disabled)} disabled={true}>
+                    {t('not_enough_coins')}
+                </button>
+                :
+                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
+                    {t('upgrade')}
+                    <span className='gradient'
+                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
+                </button>
+            }
 
         </div>
 

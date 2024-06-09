@@ -74,10 +74,10 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             }
         },
 
-        onEnergyLimitUpgrade: async (price) => {
+        onEnergyLimitUpgrade: async () => {
             try {
                 const userId = useUserStore.getState().user_id;
-                const user  = await CoinsApi.energyLimitUpdate(userId, price)
+                const user  = await CoinsApi.energyLimitUpdate(userId, 500)
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Energy limit upgraded successfully.')

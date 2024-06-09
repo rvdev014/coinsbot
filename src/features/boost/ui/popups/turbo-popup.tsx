@@ -7,6 +7,7 @@ import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {formatPrice} from "../../../../shared/utils/other.ts";
+import {shallow} from "zustand/shallow";
 
 interface IProps {
     onUpgrade: () => void;
@@ -16,14 +17,28 @@ export const TurboPopup: FC<IProps> = ({onUpgrade}) => {
 
     const boostData = useUserStore(state => state.boost);
     const turboEndsAt = useUserStore(state => state.turbo);
-    const [disabled, setDisabled] = useState<boolean>(false);
+    const [timerDisabled, setTimerDisabled] = useState<boolean>(false);
+    const [coinsDisabled, setCoinsDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        setDisabled(dateGreaterThan(turboEndsAt));
-    }, []);
+        const unsubscribe = useUserStore.subscribe(
+            state => state.coins,
+            coins => {
+                setCoinsDisabled(coins < boostData?.turbo?.coins);
+            },
+            {
+                equalityFn: shallow,
+                fireImmediately: true
+            }
+        );
+
+        setTimerDisabled(dateGreaterThan(turboEndsAt));
+
+        return () => unsubscribe();
+    }, [boostData, turboEndsAt]);
 
     function onTimerEnds() {
-        setDisabled(dateGreaterThan(turboEndsAt));
+        setTimerDisabled(dateGreaterThan(turboEndsAt));
     }
 
     return (
@@ -39,12 +54,18 @@ export const TurboPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            {disabled
+            {timerDisabled
                 ?
                 <button className={styles.startBtn} disabled={true}>
                     <Timer toDate={turboEndsAt} onTimerEnds={onTimerEnds}/>
                 </button>
                 :
+                coinsDisabled
+                    ?
+                    <button className={cl(styles.startBtn, styles.disabled)} disabled={true}>
+                        {t('not_enough_coins')}
+                    </button>
+                    :
                 <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
                     {t('upgrade')}
                     <span className='gradient'

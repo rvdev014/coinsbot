@@ -1,31 +1,35 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import styles from "./popups.module.scss";
 import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {formatPrice} from "../../../../shared/utils/other.ts";
+import {shallow} from "zustand/shallow";
+import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 
 interface IProps {
-    onUpgrade: (price: number) => void;
+    onUpgrade: () => void;
 }
 
 export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
 
     const boostData = useUserStore(state => state.boost);
+    const [coinsDisabled, setCoinsDisabled] = useState<boolean>(false);
 
-    function getUpgradePrice() {
-        const price = 500;
-
-        const userStore = useUserStore.getState();
-        const userLevelEnergyLimit = userStore.level.energy_limit;
-
-        const diff = userStore.energy_limit - userLevelEnergyLimit;
-        if (diff > 0) {
-            return price * (diff / 500 + 1);
-        }
-        return price;
-    }
+    useEffect(() => {
+        const unsubscribe = useUserStore.subscribe(
+            state => state.coins,
+            coins => {
+                setCoinsDisabled(coins < boostData?.energy_limit?.coins);
+            },
+            {
+                equalityFn: shallow,
+                fireImmediately: true
+            }
+        );
+        return () => unsubscribe();
+    }, [boostData]);
 
     return (
         <div className={styles.content}>
@@ -40,19 +44,18 @@ export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            <button
-                className={cl(styles.startBtn, 'gradientWrapper')}
-                onClick={() => onUpgrade(getUpgradePrice())}
-            >
-                {t('upgrade')}
-                <span
-                    className='gradient'
-                    style={{
-                        boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                        bottom: '-30px'
-                    }}
-                />
-            </button>
+            {coinsDisabled
+                ?
+                <button className={cl(styles.startBtn, styles.disabled)} disabled={true}>
+                    {t('not_enough_coins')}
+                </button>
+                :
+                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
+                    {t('upgrade')}
+                    <span className='gradient'
+                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
+                </button>
+            }
 
         </div>
     );

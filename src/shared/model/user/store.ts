@@ -4,12 +4,13 @@ import {MainApi} from "../../api/main-api.ts";
 import {showError} from "../../utils/other.ts";
 import {dateGreaterThan, getDayDiffFromNow} from "../../utils/date.ts";
 import i18next from "i18next";
+import {subscribeWithSelector} from "zustand/middleware";
 
 const initialStore = {
 
 } as IUserStore;
 
-export const useUserStore = create<IUserStore>((set, get) => {
+export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get) => {
     return {
         ...initialStore,
 
@@ -73,4 +74,4 @@ export const useUserStore = create<IUserStore>((set, get) => {
             }
         }
     }
-})
+}))
