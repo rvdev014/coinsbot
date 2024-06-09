@@ -34,7 +34,7 @@ export const FriendsPage = () => {
 
     const onInviteFriend = async () => {
         try {
-            useAppStore.getState().webApp?.openTelegramLink(``)
+            useAppStore.getState().webApp?.switchInlineQuery('Join us! https://t.me/cryptokawasbot?start=542918091', ["users", "groups", "channels"])
         } catch (e) {
             console.log(e)
         }
