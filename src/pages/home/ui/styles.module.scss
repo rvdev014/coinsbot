@@ -103,6 +103,7 @@
   margin-top: 30px;
 
   .tapper {
+    cursor: default;
     width: 97%;
     height: 97%;
     display: flex;
@@ -111,6 +112,12 @@
     border-radius: 50%;
     background: radial-gradient(circle, rgb(116 116 116) 0%, rgb(0, 0, 0) 100%);
     //box-shadow: 10px 10px 80px 0px rgba(#1E51B4, 0.5);
+
+    &:active img {
+      transform: scale(0.99);
+      transform-origin: bottom;
+      transition: 0.1s ease-in-out;
+    }
 
     img {
       width: 98%;

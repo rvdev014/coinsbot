@@ -118,7 +118,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('coins_per_tap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-level.png" alt="Coin"/>
-                                        <span>{boostData?.coins_per_tap?.coins}</span>
+                                        <span>{formatPrice(boostData?.coins_per_tap?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -150,7 +150,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('multitap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-level.png" alt="Coin"/>
-                                        <span>{boostData?.multi_tap?.coins}</span>
+                                        <span>{formatPrice(boostData?.multi_tap?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -182,7 +182,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('mining')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-level.png" alt="Coin"/>
-                                        <span>{boostData?.turbo?.coins}</span>
+                                        <span>{formatPrice(boostData?.turbo?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
@@ -214,7 +214,7 @@ export const Boost = () => {
                                     <p className={styles.boosterName}>{t('energy_limit')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
                                         <img src="/img/coin-level.png" alt="Coin"/>
-                                        <span>{boostData?.energy_limit?.coins}</span>
+                                        <span>{formatPrice(boostData?.energy_limit?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>

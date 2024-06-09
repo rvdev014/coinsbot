@@ -1,9 +1,12 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import styles from "./popups.module.scss";
 import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
+import {formatPrice} from "../../../../shared/utils/other.ts";
+import {dateGreaterThan} from "../../../../shared/utils/date.ts";
+import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 
 interface IProps {
     onUpgrade: () => void;
@@ -11,14 +14,17 @@ interface IProps {
 
 export const MultiTapPopup: FC<IProps> = ({onUpgrade}) => {
 
+    const boostData = useUserStore(state => state.boost);
     const multiTapEndsAt = useUserStore(state => state.multi_tap);
+    const [disabled, setDisabled] = useState<boolean>(false);
 
-    const isDisabled = useMemo(() => {
-        // check 6 hours passed since last restore or disable button
-        const now = new Date().getTime();
-        const multiTapEndsDate = new Date(multiTapEndsAt).getTime();
-        return multiTapEndsDate > now;
-    }, [multiTapEndsAt]);
+    useEffect(() => {
+        setDisabled(dateGreaterThan(multiTapEndsAt));
+    }, []);
+
+    function onTimerEnds() {
+        setDisabled(dateGreaterThan(multiTapEndsAt));
+    }
 
     return (
         <div className={styles.content}>
@@ -29,25 +35,22 @@ export const MultiTapPopup: FC<IProps> = ({onUpgrade}) => {
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
                     <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                    <span>500</span>
+                    <span>{formatPrice(boostData?.multi_tap?.coins)}</span>
                 </Flex>
             </div>
 
-            <button
-                className={cl(styles.startBtn, 'gradientWrapper')}
-                onClick={onUpgrade}
-                disabled={isDisabled}
-            >
-                {isDisabled ? t('multitap_active') : t('upgrade')}
-                {!isDisabled &&
-                    <span
-                        className='gradient'
-                        style={{
-                            boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                            bottom: '-30px'
-                        }}
-                    />}
-            </button>
+            {disabled
+                ?
+                <button className={styles.startBtn} disabled={true}>
+                    <Timer toDate={multiTapEndsAt} onTimerEnds={onTimerEnds}/>
+                </button>
+                :
+                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
+                    {t('upgrade')}
+                    <span className='gradient'
+                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
+                </button>
+            }
 
         </div>
     );

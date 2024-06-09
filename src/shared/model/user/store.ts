@@ -25,20 +25,23 @@ export const useUserStore = create<IUserStore>((set, get) => {
                 coinsPerHour *= 2;
             }
 
+            let energyPerSecond = coinsPerTap;
+            if (dateGreaterThan(store.energy_turbo_at)) {
+                energyPerSecond *= 2;
+            }
+
             let dayBonus = store.day_bonus;
-            console.log('getDayDiffFromNow(store.bonus_date)', getDayDiffFromNow(store.bonus_date))
             if (getDayDiffFromNow(store.bonus_date) > 1) {
                 dayBonus = null;
             }
 
-            console.log('store', store)
             i18next.changeLanguage(store.language_code);
 
             set({
                 ...store,
                 coins_per_tap: coinsPerTap,
                 coins_per_hour: coinsPerHour,
-                energy_per_second: store.coins_per_tap,
+                energy_per_second: energyPerSecond,
                 day_bonus: dayBonus,
             });
         },

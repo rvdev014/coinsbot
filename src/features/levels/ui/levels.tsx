@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { Flex } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {formatNumber, hexToRgb, showError} from "../../../shared/utils/other.ts";
+import {formatNumber, formatPrice, hexToRgb, showError} from "../../../shared/utils/other.ts";
 import { t } from "i18next";
 import { useUserStore } from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
@@ -76,7 +76,7 @@ export const Levels = () => {
                     }}
                 >
                     <img
-                        src={levelStore?.level?.img ?? '/img/dog.png'}
+                        src={`/img/levels/level-${levelStore?.level?.step ?? 1}.png`}
                         style={{
                             width: levelStore?.level?.step > 7 ? '100%' : `180px`,
                             height: levelStore?.level?.step > 7 ? '100%' : `180px`,
@@ -119,7 +119,7 @@ export const Levels = () => {
                                     </p>
                                     <Flex className={styles.userBalance} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin" />
-                                        <span>{user?.coins}</span>
+                                        <span>{formatPrice(user?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>

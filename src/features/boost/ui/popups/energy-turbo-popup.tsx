@@ -4,6 +4,8 @@ import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
+import {Timer} from "../../../../shared/ui/timer/timer.tsx";
+import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -12,21 +14,19 @@ interface IProps {
 export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
 
     const energyTurboEndsAt = useUserStore(state => state.energy_turbo_at);
-    const [timeDiff, setTimeDiff] = useState();
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-
+        setDisabled(dateGreaterThan(energyTurboEndsAt));
     }, []);
 
-    function checkDisabled() {
-        if (energyTurboEndsAt && timeDiff) {
-            return timeDiff > 0;
-        }
-        return false;
+    function onTimerEnds() {
+        setDisabled(dateGreaterThan(energyTurboEndsAt));
     }
 
     return (
         <div className={styles.content}>
+
             <img className={styles.taskIcon} src="/img/turbo-lg.png" alt="Paw"/>
             <h2 className={styles.title}>{t('turbo_mining')}</h2>
             <p className={styles.text}>{t('turbo_mining_desc')}</p>
@@ -38,9 +38,11 @@ export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            {checkDisabled()
+            {disabled
                 ?
-                <button className={styles.startBtn} disabled={true}>{t('turbo_mining_active')}</button>
+                <button className={styles.startBtn} disabled={true}>
+                    <Timer toDate={energyTurboEndsAt} onTimerEnds={onTimerEnds}/>
+                </button>
                 :
                 <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
                     {t('upgrade')}

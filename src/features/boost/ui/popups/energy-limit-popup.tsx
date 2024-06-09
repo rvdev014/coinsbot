@@ -12,6 +12,8 @@ interface IProps {
 
 export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
 
+    const boostData = useUserStore(state => state.boost);
+
     function getUpgradePrice() {
         const price = 500;
 
@@ -34,7 +36,7 @@ export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
                     <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                    <span>{formatPrice(getUpgradePrice())}</span>
+                    <span>{formatPrice(boostData?.energy_limit?.coins)}</span>
                 </Flex>
             </div>
 
