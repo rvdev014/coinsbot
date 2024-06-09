@@ -6,6 +6,7 @@ import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
+import {shallow} from "zustand/shallow";
 
 interface IProps {
     onUpgrade: () => void;
@@ -13,15 +14,30 @@ interface IProps {
 
 export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
 
+    const boostData = useUserStore(state => state.boost);
     const energyTurboEndsAt = useUserStore(state => state.energy_turbo_at);
-    const [disabled, setDisabled] = useState<boolean>(false);
+    const [timerDisabled, setTimerDisabled] = useState<boolean>(false);
+    const [coinsDisabled, setCoinsDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        setDisabled(dateGreaterThan(energyTurboEndsAt));
-    }, []);
+        const unsubscribe = useUserStore.subscribe(
+            state => state.coins,
+            coins => {
+                setCoinsDisabled(coins < boostData?.energy_turbo?.coins);
+            },
+            {
+                equalityFn: shallow,
+                fireImmediately: true
+            }
+        );
+
+        setTimerDisabled(dateGreaterThan(energyTurboEndsAt));
+
+        return () => unsubscribe();
+    }, [boostData, energyTurboEndsAt]);
 
     function onTimerEnds() {
-        setDisabled(dateGreaterThan(energyTurboEndsAt));
+        setTimerDisabled(dateGreaterThan(energyTurboEndsAt));
     }
 
     return (
@@ -34,15 +50,21 @@ export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
                     <img src="/img/coin-icon-lg.png" alt="Coin"/>
-                    <span>500</span>
+                    <span>{boostData?.energy_turbo?.coins}</span>
                 </Flex>
             </div>
 
-            {disabled
+            {timerDisabled
                 ?
                 <button className={styles.startBtn} disabled={true}>
                     <Timer toDate={energyTurboEndsAt} onTimerEnds={onTimerEnds}/>
                 </button>
+                :
+                coinsDisabled
+                    ?
+                    <button className={cl(styles.startBtn, styles.disabled)} disabled={true}>
+                        {t('not_enough_coins')}
+                    </button>
                 :
                 <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
                     {t('upgrade')}

@@ -58,5 +58,7 @@
   "friends": "friends",
   "line": "line",
 
+  "not_enough_coins": "Not enough coins",
+
   "upgrade": "Upgrade"
 }
