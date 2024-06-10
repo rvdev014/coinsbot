@@ -26,7 +26,10 @@ export const Levels = () => {
 
     function getFirstLetter(user: IUserData) {
         if (user.first_name || user.last_name) {
-            return user.first_name?.charAt(0) + user.last_name?.charAt(0);
+            const first = user.first_name?.charAt(0);
+            const second = user.last_name?.charAt(0) ?? user.first_name?.charAt(1);
+
+            return (first ?? 'A') + (second ?? 'A');
         }
         return user.username?.charAt(0);
     }
@@ -99,7 +102,7 @@ export const Levels = () => {
                                         <Flex className={styles.userItem_left}>
                                             <div className={styles.userAvatar}>
                                                 {/*<img src="/img/asd.png" alt="Avatar"/>*/}
-                                                <p>{getFirstLetter(user)}</p>
+                                                <p>{getFirstLetter(user) ?? 'AA'}</p>
                                             </div>
                                             <div className={styles.userInfo}>
                                                 <p className={styles.userName}>
