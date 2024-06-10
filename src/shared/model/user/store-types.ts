@@ -2,9 +2,12 @@ import {IBonus} from "../earn/store-types.ts";
 import {BoostType, IBoostInfo} from "../../../features/boost/model/store-types.ts";
 
 export interface IUserStore extends IUserData {
+    energyTimeout: number | null;
+    coinsTimeout: number | null;
+
     setInitialStore(store: IUserData): void;
     init(userId: number): Promise<void>;
-    setUserData(data: IUserData): void;
+    initInterval(): void;
     updateLevel(): void;
     reset(): void;
 }

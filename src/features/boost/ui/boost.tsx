@@ -20,7 +20,6 @@ export const Boost = () => {
 
     // const coins = useUserStore(state => state.coins);
     const boostData = useUserStore(state => state.boost);
-    const initExchange = useExchangeStore(state => state.initExchange);
     const popupType = useBoostStore(state => state.popupType);
     const onBoosterClick = useBoostStore(state => state.onBoosterClick);
     const onClosePopup = useBoostStore(state => state.onClosePopup);
@@ -31,12 +30,6 @@ export const Boost = () => {
     const onCoinsPerTapUpgrade = useBoostStore(state => state.onCoinsPerTapUpgrade);
     const onEnergyLimitUpgrade = useBoostStore(state => state.onEnergyLimitUpgrade);
     const onFullEnergyUpgrade = useBoostStore(state => state.onFullEnergyUpgrade);
-
-    useEffect(() => {
-        initExchange();
-    }, [initExchange]);
-
-    console.log('Boost render')
 
     return (
         <>

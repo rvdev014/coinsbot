@@ -1,6 +1,6 @@
 import {apiInstance} from "./axios.ts";
-import {ILevelStore} from "../../features/levels/model/store-types.ts";
-import {IUserData} from "../model/user/store-types.ts";
+import {ILevelData, ILevelStore} from "../../features/levels/model/store-types.ts";
+import {ILevel, IUserData} from "../model/user/store-types.ts";
 
 export const CoinsApi = {
     async taskComplete(userId: string|number, taskId: string|number) {
@@ -42,8 +42,12 @@ export const CoinsApi = {
         const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/energy-limit/update`, {coins});
         return response.data?.data;
     },
+    async getLevels() {
+        const response = await apiInstance.get<{data: ILevel[]}>(`/levels`);
+        return response.data?.data ?? [];
+    },
     async getLevelsStats(userId: string|number, step: string|number) {
-        const response = await apiInstance.get<ILevelStore>(`/statistics?user_id=${userId}&step=${step}`);
+        const response = await apiInstance.get<ILevelData>(`/statistics?user_id=${userId}&step=${step}`);
         return response.data;
     }
 }

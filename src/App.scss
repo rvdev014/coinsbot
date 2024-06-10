@@ -91,3 +91,8 @@ a:focus, button:focus {
         box-shadow: 0 0 30px 20px rgba(#FBBD46, 0.5);
     }
 }
+
+button:active {
+    outline: none;
+    transform: scale(0.99);
+}

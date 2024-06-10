@@ -92,14 +92,6 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
 
         onClosePopup: async () => {
             set({popupType: null})
-        },
-
-        init: async () => {
-            try {
-
-            } catch (e) {
-                showError()
-            }
         }
     }
 })

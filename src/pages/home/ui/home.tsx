@@ -17,7 +17,6 @@ export const HomePage = () => {
     const tapperRef = React.useRef<HTMLButtonElement>(null);
 
     const onTap = useExchangeStore(state => state.onTap);
-    const initExchange = useExchangeStore(state => state.initExchange);
 
     const coins = useUserStore(state => state.coins);
     const level = useUserStore(state => state.level);
@@ -27,10 +26,6 @@ export const HomePage = () => {
     const coinsPerHour = useUserStore(state => state.coins_per_hour);
     const energy = useUserStore(state => state.energy);
     const energyLimit = useUserStore(state => state.energy_limit);
-
-    useEffect(() => {
-        initExchange();
-    }, [initExchange]);
 
     function tapper(event: React.TouchEvent<HTMLButtonElement>) {
         if (!tapperRef.current || !coinsPerHour || useUserStore.getState().energy < coinsPerTap) return;

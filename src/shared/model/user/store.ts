@@ -7,12 +7,58 @@ import i18next from "i18next";
 import {subscribeWithSelector} from "zustand/middleware";
 
 const initialStore = {
-
+    energyTimeout: null
 } as IUserStore;
 
 export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get) => {
     return {
         ...initialStore,
+
+        init: async (userId) => {
+            try {
+                console.log('userId', userId)
+                if (!userId) return;
+                const user = await MainApi.userPerHour(userId);
+                if (user) {
+                    get().setInitialStore({...user});
+                    get().initInterval();
+                }
+            } catch (e) {
+                showError()
+            }
+        },
+
+        initInterval: () => {
+            if (!get().energyTimeout) {
+                set({
+                    energyTimeout: setInterval(() => {
+                        const userState = get();
+
+                        let energy = userState.energy + userState.energy_per_second;
+                        if (energy > userState.energy_limit) {
+                            energy = userState.energy_limit;
+                        }
+                        set({energy});
+                    }, 1000)
+                });
+            }
+
+            // Per second balance update
+            /*if (!get().coinsTimeout) {
+                set({
+                    coinsTimeout: setInterval(async () => {
+                        const userState = get();
+                        const coinsPerSecond = userState.coins_per_hour / 5400;
+                        let coins = Math.ceil(userState.coins + coinsPerSecond);
+                        set({coins});
+
+                        if (coins >= userState.next_level?.coins) {
+                            get().updateLevel();
+                        }
+                    }, 1000)
+                });
+            }*/
+        },
 
         setInitialStore: (store) => {
 
@@ -46,21 +92,6 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 day_bonus: dayBonus,
             });
         },
-
-        init: async (userId) => {
-            try {
-                console.log('userId', userId)
-                if (!userId) return;
-                const user = await MainApi.userPerHour(userId);
-                if (!user) return;
-
-                get().setInitialStore({...user});
-            } catch (e) {
-                showError()
-            }
-        },
-
-        setUserData: (data) => set({...data}),
 
         updateLevel: async () => {
             try {

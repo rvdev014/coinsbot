@@ -1,10 +1,15 @@
 import {ILevel, IUserData} from "../../../shared/model/user/store-types.ts";
 
 export interface ILevelStore extends ILevelData {
+    isLoading: boolean,
+    isStatsLoading: boolean,
+    levelsData: ILevel[],
     levelsCache: ILevelData[],
+    currentLevel: ILevel,
 
-    init(userId: string | number, step: string | number): Promise<void>;
-    setStatisticData(data: ILevelData): void;
+    init(): Promise<void>;
+    fetchStats(userId: number, step: number): Promise<void>;
+    onSlide(type: 'prev' | 'next'): void;
     reset(): void;
 }
 
@@ -14,5 +19,4 @@ export interface ILevelData {
     next_level: ILevel
     prev_level: ILevel
     users: IUserData[],
-    loading: boolean,
 }

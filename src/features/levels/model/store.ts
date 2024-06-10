@@ -3,64 +3,75 @@ import {ILevelData, ILevelStore} from "./store-types.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {showError} from "../../../shared/utils/other.ts";
+import {ILevel} from "../../../shared/model/user/store-types.ts";
 
 const initialStore = {
+    isLoading: false,
+    isStatsLoading: false,
+    levelsData: [] as ILevel[],
     levelsCache: [] as ILevelData[],
-    loading: false,
 } as ILevelStore;
 
 export const useLevelStore = create<ILevelStore>((set, get) => {
     return {
         ...initialStore,
-        init: async (userId, step) => {
-            set({loading: true});
+
+        init: async () => {
+            set({isLoading: true});
             try {
-                const cacheExists = get().levelsCache.find((item) => item.level.step === step);
-                if (cacheExists) {
-                    set({...cacheExists});
-                    return;
-                }
-                const statistics = await CoinsApi.getLevelsStats(userId, step);
-                if (statistics) {
-                    set({
-                        ...statistics,
-                        levelsCache: [...get().levelsCache, statistics]
-                    });
-                }
-            } catch (e) {
-                console.log(e);
-                showError()
-            } finally {
-                set({loading: false});
-            }
-        },
-        onNext: async () => {
-            set({loading: true});
-            try {
-                const userState = useUserStore.getState();
-                if (get().next_level.step) {
-                    const data = await CoinsApi.getLevelsStats(userState.user_id, get().next_level.step);
-                    set({...data});
-                }
+                const userId = useUserStore.getState().user_id;
+                const currentLevel = useUserStore.getState().level;
+
+                set({currentLevel});
+
+                const promises = [
+                    CoinsApi.getLevels().then(levelsData => set({levelsData})),
+                    get().fetchStats(userId, currentLevel.step),
+                ];
+
+                await Promise.allSettled(promises);
             } catch (e) {
                 showError()
             } finally {
-                set({loading: false});
+                set({isLoading: false});
             }
         },
-        onPrev: async () => {
-            set({loading: true});
+
+        fetchStats(userId, step) {
+            set({isStatsLoading: true})
+            return CoinsApi.getLevelsStats(userId, step)
+                .then(data => set({
+                    ...data,
+                    levelsCache: [...get().levelsCache, data]
+                }))
+                .finally(() => set({isStatsLoading: false}));
+        },
+
+        onSlide: async (type) => {
+            set({isStatsLoading: true});
             try {
                 const userState = useUserStore.getState();
-                if (get().prev_level.step) {
-                    const data = await CoinsApi.getLevelsStats(userState.user_id, get().prev_level.step);
-                    set({...data});
+                const currentLevel = get().levelsData.find(level => {
+                    return level.step === (type === 'next' ? get().next_level.step : get().prev_level.step)
+                });
+
+                if (currentLevel) {
+                    set({currentLevel});
+
+                    const cacheExists = get().levelsCache.find(level => level.level.step === currentLevel.step);
+                    if (cacheExists) {
+                        return set({...cacheExists});
+                    }
+
+                    await get().fetchStats(userState.user_id, currentLevel.step);
                 }
             } catch (e) {
+                console.log(e)
                 showError()
             } finally {
-                set({loading: false});
+                set({isStatsLoading: false});
             }
         },
+
     }
 })

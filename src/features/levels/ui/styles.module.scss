@@ -1,16 +1,16 @@
 .slider {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   margin-top: 30px;
 }
 
-.arrowLeft {
-  margin-right: 20px;
-}
-
-.arrowRight {
-  margin-left: 20px;
+.arrow {
+  min-width: 14px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .arrow:disabled {
@@ -25,6 +25,7 @@
   align-items: center;
   border-radius: 50%;
   border: 5px solid #3f3735;
+  margin: 0 15px;
 
   img {
 
