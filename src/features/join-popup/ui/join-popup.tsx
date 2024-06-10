@@ -18,10 +18,10 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
     const tasksOpenedUrl = useEarnStore(state => state.tasksOpenedUrl);
 
     function onSubscribeClick(task: ITask) {
-        console.log(task.is_external, task.url)
         if (task.is_external) {
             useAppStore.getState().webApp?.openLink(task.url);
         } else {
+            console.log(useAppStore.getState().webApp)
             useAppStore.getState().webApp?.openTelegramLink(task.url);
         }
         useEarnStore.setState({

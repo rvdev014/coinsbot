@@ -62,7 +62,7 @@ export const EarnPage = () => {
                         <div className={styles.tasksList}>
 
                             {tasks.map((task, index) => {
-                                const isCompleted = userTasks.some(userTask => userTask.id === task.id);
+                                const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
                                 return (
                                     <Flex
                                         key={task.id}

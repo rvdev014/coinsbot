@@ -18,6 +18,8 @@ export const useAppStore = create<IAppStore>((set, get) => {
             tg.ready();
             tg.expand();
 
+            console.log(tg)
+
             const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

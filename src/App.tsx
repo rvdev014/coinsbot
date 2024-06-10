@@ -18,9 +18,7 @@ function App() {
     // @ts-expect-error
     const tg = window.Telegram.WebApp;
 
-    // alert(tg?.platform)
-
-    // if (!isPhone || tg?.platform === 'tdesktop') {
+    // if (!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown') {
     //     return (
     //         <div className={styles.wrapper}>
     //             <div className={styles.content}>
