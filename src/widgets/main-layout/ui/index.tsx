@@ -9,13 +9,32 @@ export const MainLayout = () => {
 
     const isAppLoading = useAppStore(state => state.isAppLoading)
     const initTelegram = useAppStore(state => state.initTelegram)
-    const layoutRef = React.useRef(null)
+    const layoutRef = React.useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         initTelegram();
+    }, []);
+
+    useEffect(() => {
+        if (!layoutRef.current) return;
+
+        const layout = layoutRef.current;
+        console.log('layout', layout)
+
+        function scrollHandler() {
+            console.log('layout.scrollTop', layout.scrollTop)
+            if (layout.scrollTop === 0) {
+                layout.scrollTop = 1; // Prevent bounce effect when reaching the top
+            }
+            if (layout.scrollTop + layout.offsetHeight === layout.scrollHeight) {
+                layout.scrollTop = layout.scrollTop - 1; // Prevent bounce effect when reaching the bottom
+            }
+        }
+
+        layout.addEventListener('scroll', scrollHandler);
 
         return () => {
-
+            layout.removeEventListener('scroll', scrollHandler);
         };
     }, [layoutRef.current]);
 
