@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {BottomMenu} from "../../bottom-menu";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
@@ -14,6 +14,17 @@ export const MainLayout = () => {
     useEffect(() => {
         initTelegram();
     }, []);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        // check location is not main page (/)
+        if (location.pathname !== '/') {
+            useAppStore.getState().webApp?.BackButton.show();
+        } else {
+            useAppStore.getState().webApp?.BackButton.hide();
+        }
+    }, [location]);
 
     useEffect(() => {
         if (!layoutRef.current) return;

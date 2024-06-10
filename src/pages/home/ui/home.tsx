@@ -115,7 +115,7 @@ export const HomePage = () => {
                         <img src="/img/coin-icon-lg.png" alt="Coin"/>
                         <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
                     </Flex>
-                    <Link to={`/levels/${level?.step ?? 1}`}>
+                    <Link to='/levels'>
                         <Flex className={styles.level} alignItems='center'>
                             <Flex className={styles.level_info}>
                                 <Text>{level?.title}</Text>
