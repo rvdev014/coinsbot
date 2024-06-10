@@ -104,8 +104,8 @@
 
   .tapper {
     cursor: default;
-    width: 97%;
-    height: 97%;
+    width: 95%;
+    height: 95%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +115,7 @@
 
     &:active img {
       transform: scale(0.99);
-      transform-origin: bottom;
+      //transform-origin: bottom;
       transition: 0.1s ease-in-out;
     }
 

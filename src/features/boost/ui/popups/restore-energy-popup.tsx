@@ -4,7 +4,7 @@ import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
 import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
-import {dateGreaterThan, generateTimeDiff} from "../../../../shared/utils/date.ts";
+import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 
 interface IProps {

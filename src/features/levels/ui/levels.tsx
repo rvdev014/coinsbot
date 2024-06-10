@@ -7,6 +7,7 @@ import { t } from "i18next";
 import { useUserStore } from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
+import {IUserData} from "../../../shared/model/user/store-types.ts";
 
 export const Levels = () => {
     const location = useLocation();
@@ -53,6 +54,13 @@ export const Levels = () => {
 
     if (levelStore?.loading) {
         return <Loader/>
+    }
+
+    function renderName(user: IUserData) {
+        if (user?.first_name || user?.last_name) {
+            return [user?.first_name, user?.last_name].filter(Boolean).join(' ');
+        }
+        return user?.username;
     }
 
     return (
@@ -111,11 +119,7 @@ export const Levels = () => {
                                 </div>
                                 <div className={styles.userInfo}>
                                     <p className={styles.userName}>
-                                        {
-                                            user?.first_name || user?.last_name
-                                                ? `${user?.first_name} ${user?.last_name}`
-                                                : user?.username
-                                        }
+                                        {renderName(user)}
                                     </p>
                                     <Flex className={styles.userBalance} alignItems='center'>
                                         <img src="/img/coin-icon.png" alt="Coin" />

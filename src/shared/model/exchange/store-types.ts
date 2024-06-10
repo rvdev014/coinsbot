@@ -7,4 +7,6 @@ export interface IExchangeStore {
     onTap(): void;
     onTapEnd(): void;
     reset(): void;
+
+    storeBalance(balance: number): Promise<void>;
 }

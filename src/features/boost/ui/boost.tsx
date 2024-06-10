@@ -71,7 +71,7 @@ export const Boost = () => {
                     <Flex className={styles.balance} justifyContent='space-between' gap={'11px'}>
 
                         <Flex
-                            className={styles.card}
+                            className={cl(styles.card, 'gradientWrapper')}
                             alignItems='center'
                             flex={1}
                             onClick={() => onBoosterClick('restore_energy')}
@@ -81,10 +81,19 @@ export const Boost = () => {
                                 <p className={styles.cardInfo_title}>{t('full_energy')}</p>
                                 {/*<p className={styles.cardInfo_text}>6/6 available</p>*/}
                             </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 40px 40px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
                         </Flex>
 
                         <Flex
-                            className={styles.card}
+                            className={cl(styles.card, 'gradientWrapper')}
                             alignItems='center'
                             flex={1}
                             onClick={() => onBoosterClick('energy_turbo')}
@@ -94,6 +103,15 @@ export const Boost = () => {
                                 <p className={styles.cardInfo_title}>{t('turbo_mining')}</p>
                                 {/*<p className={styles.cardInfo_text}>3/3 available</p>*/}
                             </div>
+
+                            <span
+                                className='gradient'
+                                style={{
+                                    boxShadow: `rgba(62, 136, 247, 0.5) 0px 0px 40px 40px`,
+                                    bottom: '-30px',
+                                    left: 0
+                                }}
+                            />
                         </Flex>
 
                     </Flex>
