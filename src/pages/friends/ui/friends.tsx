@@ -37,12 +37,23 @@ export const FriendsPage = () => {
     const onInviteFriend = async () => {
         try {
             const referralLink = `https://t.me/${BOT_USERNAME}?start=${userId}`; // Your referral link
-            const message =
-                `Играй со мной, стань генеральным директором криптобиржи и получи раздачу токенов!
-💸 2 тыс. монет в подарок при первом посещении
-🔥 25 тысяч монет, если у тебя Telegram Premium`;
+            const messages: any = {
+                en: `Join me and earn Wclyde with me!
 
-            useAppStore.getState().webApp?.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`);
+💵10k Wclayde as a first-time gift
+💰20k Wclayde if you have Telegram Premium`,
+                ru: `Присоединяйся ко мне и зарабатывай Wclyde вместе со мной!
+
+💵10 тысяч Wclayde в подарок на первое посещение
+💰20 тысяч Wclayde, если у тебя Telegram Premium`
+            }
+
+
+            const message = messages[useUserStore.getState().language_code ?? 'en'];
+
+            useAppStore.getState().webApp?.openTelegramLink(
+                `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`
+            );
             // window.location.href = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
             // useAppStore.getState().webApp?.switchInlineQuery('Join us! https://t.me/cryptokawasbot?start=542918091', ["users", "groups", "channels"])
         } catch (e) {

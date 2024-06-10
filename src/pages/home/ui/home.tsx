@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
 import {Flex, Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
@@ -110,7 +110,7 @@ export const HomePage = () => {
 
             <div className={styles.mainContent}>
 
-            <div className={styles.levelWrapper}>
+                <div className={styles.levelWrapper}>
                     <Flex className={styles.balance} alignItems='center'>
                         <img src="/img/coin-icon-lg.png" alt="Coin"/>
                         <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
