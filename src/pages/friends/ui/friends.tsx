@@ -6,6 +6,7 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
 import {t} from "i18next";
+import {BOT_USERNAME} from "../../../shared/consts.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 
 export const FriendsPage = () => {
@@ -30,11 +31,20 @@ export const FriendsPage = () => {
 
     }, [userId]);
 
-    useEffect(() => {}, [referrals]);
+    useEffect(() => {
+    }, [referrals]);
 
     const onInviteFriend = async () => {
         try {
-            useAppStore.getState().webApp?.switchInlineQuery('Join us! https://t.me/cryptokawasbot?start=542918091', ["users", "groups", "channels"])
+            const referralLink = `https://t.me/${BOT_USERNAME}?start=${userId}`; // Your referral link
+            const message =
+                `Играй со мной, стань генеральным директором криптобиржи и получи раздачу токенов!
+💸 2 тыс. монет в подарок при первом посещении
+🔥 25 тысяч монет, если у тебя Telegram Premium`;
+
+            useAppStore.getState().webApp?.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`);
+            // window.location.href = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
+            // useAppStore.getState().webApp?.switchInlineQuery('Join us! https://t.me/cryptokawasbot?start=542918091', ["users", "groups", "channels"])
         } catch (e) {
             console.log(e)
         }

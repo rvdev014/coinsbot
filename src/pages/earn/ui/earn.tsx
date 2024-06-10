@@ -25,7 +25,6 @@ export const EarnPage = () => {
     const onCompleteTask = useEarnStore(state => state.onCompleteTask);
     const onTaskClose = useEarnStore(state => state.onTaskClose);
     const initEarn = useEarnStore(state => state.initEarn);
-    const isLoading = useEarnStore(state => state.isLoading);
     const isTasksLoading = useEarnStore(state => state.isTasksLoading);
 
     useEffect(() => {
@@ -109,11 +108,9 @@ export const EarnPage = () => {
             </div>
 
 
-            <DailyPopup
-                isOpen={isOpenDaily}
-                bonuses={bonuses}
-                onClose={() => useEarnStore.setState({isOpenDaily: false})}
-            />
+            <Popup isOpen={isOpenDaily} onClose={() => useEarnStore.setState({isOpenDaily: false})}>
+                <DailyPopup bonuses={bonuses}/>
+            </Popup>
 
             <Popup isOpen={selectedTask !== null} onClose={onTaskClose}>
                 <JoinPopup

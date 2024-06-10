@@ -1,7 +1,6 @@
 import React, {FC, useMemo} from 'react';
 import styles from "./styles.module.scss";
 import {Flex} from "@chakra-ui/react";
-import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import cl from 'classnames';
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
@@ -11,12 +10,10 @@ import {IBonus} from "../../../shared/model/earn/store-types.ts";
 import {t} from "i18next";
 
 interface IProps {
-    isOpen: boolean;
     bonuses: IBonus[] | null;
-    onClose: () => void;
 }
 
-export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
+export const DailyPopup: FC<IProps> = ({bonuses}) => {
 
     const userDayBonus = useUserStore(state => state.day_bonus);
     const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
@@ -31,75 +28,70 @@ export const DailyPopup: FC<IProps> = ({isOpen, onClose, bonuses}) => {
     }, [userDayBonus, bonuses]);
 
     return (
-        <Popup isOpen={isOpen} onClose={onClose}>
+        <div className={styles.content}>
+            <h2 className={styles.title}>{t('daily_reward')}</h2>
+            <p className={styles.text}>
+                {t('daily_reward_desc')}
+            </p>
+
+            {isBonusesLoading
+                ? <Loader/>
+                : (
+                    <div className={styles.daysList}>
+                        {bonuses?.map((bonus, index) => {
+
+                            const isComplete = (!isDayBonusLast && userDayBonus) ? (userDayBonus.day >= bonus.day) : false;
+                            const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;
+
+                            return (
+                                <div
+                                    key={bonus.id}
+                                    className={cl(
+                                        styles.dayItem,
+                                        isComplete ? styles.complete : '',
+                                        isActive ? styles.active : '',
+                                        'gradientWrapper'
+                                    )}
+                                >
+                                    <p className={styles.dayItem_text}>{t('day')} {index + 1}</p>
+                                    <Flex className={styles.dayItem_info} alignItems='center'
+                                          justifyContent='center'>
+                                        <img
+                                            src={bonus.img}
+                                            alt="Coin"
+                                            onError={(e) => e.currentTarget.src = '/img/coin-icon.png'}
+                                        />
+                                        <span>{formatPrice(bonus.coins)}</span>
+                                    </Flex>
+                                    {isComplete &&
+                                        <span
+                                            className='gradient'
+                                            style={{boxShadow: `0 0 30px 20px rgba(153, 214, 23, 0.5)`}}
+                                        />}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
 
 
-            <div className={styles.content}>
-                <h2 className={styles.title}>{t('daily_reward')}</h2>
-                <p className={styles.text}>
-                    {t('daily_reward_desc')}
-                </p>
+            {!activeDayBonus
+                ?
+                <button className={styles.claimBtn} disabled={true}>{t('not_today')}</button>
+                :
+                <button
+                    className={cl(styles.claimBtn, 'gradientWrapper')}
+                    onClick={onClaimClick}
+                    disabled={isBonusesLoading || isClaimLoading}
+                >
+                    {isClaimLoading ? '...' : t('claim')}
+                    {!isBonusesLoading && !isClaimLoading &&
+                        <span
+                            className='gradient'
+                            style={{boxShadow: `0 0 100px 50px rgba(153, 214, 23, 0.5)`}}
+                        />}
+                </button>}
 
-                {isBonusesLoading
-                    ? <Loader/>
-                    : (
-                        <div className={styles.daysList}>
-                            {bonuses?.map((bonus, index) => {
-
-                                const isComplete = (!isDayBonusLast && userDayBonus) ? (userDayBonus.day >= bonus.day) : false;
-                                const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;
-
-                                return (
-                                    <div
-                                        key={bonus.id}
-                                        className={cl(
-                                            styles.dayItem,
-                                            isComplete ? styles.complete : '',
-                                            isActive ? styles.active : '',
-                                            'gradientWrapper'
-                                        )}
-                                    >
-                                        <p className={styles.dayItem_text}>{t('day')} {index + 1}</p>
-                                        <Flex className={styles.dayItem_info} alignItems='center'
-                                              justifyContent='center'>
-                                            <img
-                                                src={bonus.img}
-                                                alt="Coin"
-                                                onError={(e) => e.currentTarget.src = '/img/coin-icon.png'}
-                                            />
-                                            <span>{formatPrice(bonus.coins)}</span>
-                                        </Flex>
-                                        {isComplete &&
-                                            <span
-                                                className='gradient'
-                                                style={{boxShadow: `0 0 30px 20px rgba(153, 214, 23, 0.5)`}}
-                                            />}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
-
-
-                {!activeDayBonus
-                    ?
-                    <button className={styles.claimBtn} disabled={true}>{t('not_today')}</button>
-                    :
-                    <button
-                        className={cl(styles.claimBtn, 'gradientWrapper')}
-                        onClick={onClaimClick}
-                        disabled={isBonusesLoading || isClaimLoading}
-                    >
-                        {isClaimLoading ? '...' : t('claim')}
-                        {!isBonusesLoading && !isClaimLoading &&
-                            <span
-                                className='gradient'
-                                style={{boxShadow: `0 0 100px 50px rgba(153, 214, 23, 0.5)`}}
-                            />}
-                    </button>}
-
-            </div>
-
-        </Popup>
+        </div>
     );
 };
