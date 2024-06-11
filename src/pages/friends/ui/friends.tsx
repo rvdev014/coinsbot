@@ -36,7 +36,7 @@ export const FriendsPage = () => {
 
     const onInviteFriend = async () => {
         try {
-            const referralLink = `https://t.me/${BOT_USERNAME}?start=${userId}`; // Your referral link
+            const referralLink = `https://t.me/${BOT_USERNAME}/clyde?start=${userId}`; // Your referral link
             const messages: any = {
                 en: `Join me and earn Wclyde with me!
 
