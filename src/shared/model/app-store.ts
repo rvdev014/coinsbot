@@ -35,7 +35,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
             }*/
 
             try {
-                const userId = tgDataUnsafe?.user?.id ?? 355919981;
+                const userId = tgDataUnsafe?.user?.id;
                 await useUserStore.getState().init(userId, {
                     user_id: userId,
                     username: tgDataUnsafe?.user?.username,
