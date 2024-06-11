@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import styles from "./styles.module.scss";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {Flex} from "@chakra-ui/react";
@@ -8,6 +8,7 @@ import cl from "classnames";
 import {t} from "i18next";
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
+import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
 
 interface IProps {
     task: ITask | null;
@@ -16,6 +17,16 @@ interface IProps {
 
 export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
     const tasksOpenedUrl = useEarnStore(state => state.tasksOpenedUrl);
+    const isSubmitLoading = useEarnStore(state => state.isSubmitLoading);
+    const timeout = useRef<number | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (timeout.current) {
+                clearTimeout(timeout.current);
+            }
+        }
+    }, []);
 
     function onSubscribeClick(task: ITask) {
         if (task.is_external) {
@@ -23,9 +34,12 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
         } else {
             useAppStore.getState().webApp?.openTelegramLink(task.url);
         }
-        useEarnStore.setState({
-            tasksOpenedUrl: [...tasksOpenedUrl, task.id]
-        });
+
+        timeout.current = setTimeout(() => {
+            useEarnStore.setState({
+                tasksOpenedUrl: [...tasksOpenedUrl, task.id]
+            });
+        }, 1000);
     }
 
     if (!task) return null;
@@ -51,33 +65,13 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
 
             {tasksOpenedUrl.includes(task.id)
                 ?
-                <button
-                    className={cl(styles.startBtn, 'gradientWrapper')}
-                    onClick={() => onCompleteTask(task)}
-                >
+                <ClaimBtn loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
                     {t('complete_task')}
-                    <span
-                        className='gradient'
-                        style={{
-                            boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                            bottom: '-30px'
-                        }}
-                    />
-                </button>
+                </ClaimBtn>
                 :
-                <button
-                    className={cl(styles.startBtn, 'gradientWrapper')}
-                    onClick={() => onSubscribeClick(task)}
-                >
+                <ClaimBtn onClick={() => onSubscribeClick(task)}>
                     {t('subscribe')}
-                    <span
-                        className='gradient'
-                        style={{
-                            boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                            bottom: '-30px'
-                        }}
-                    />
-                </button>}
+                </ClaimBtn>}
 
         </div>
     )

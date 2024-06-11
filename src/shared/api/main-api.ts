@@ -1,5 +1,5 @@
 import {apiInstance} from "./axios.ts";
-import {IUserData} from "../model/user/store-types.ts";
+import {IPerHourPayload, IUserData} from "../model/user/store-types.ts";
 import {IBonus, ITask} from "../model/earn/store-types.ts";
 import {IList} from "../model/friends/store-types.ts";
 
@@ -8,8 +8,8 @@ export const MainApi = {
         const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/level/${levelId}`);
         return response.data?.data;
     },
-    async userPerHour(userId: string | number) {
-        const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/per/hour`);
+    async userPerHour(userId: string | number, bodyParams?: IPerHourPayload) {
+        const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/per/hour`, bodyParams ?? {});
         return response.data?.data;
     },
     async getUser(userId: string | number) {

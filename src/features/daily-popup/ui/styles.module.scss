@@ -17,7 +17,7 @@
 }
 
 .daysList {
-  margin-top: 20px;
+  margin: 20px 0 17px 0;
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(3, 1fr);
@@ -70,7 +70,6 @@
 
 
 .claimBtn {
-  margin-top: 17px;
   width: 100%;
   padding: 18px 0;
   border-radius: 12px;

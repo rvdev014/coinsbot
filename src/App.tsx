@@ -8,6 +8,7 @@ import {I18nextProvider} from "react-i18next";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import i18n from "./i18n";
+import {APP_ENV} from "./shared/consts.ts";
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
     // @ts-expect-error
     const tg = window.Telegram.WebApp;
 
-    if (!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown') {
+    if ((!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown') && APP_ENV === 'production') {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.content}>

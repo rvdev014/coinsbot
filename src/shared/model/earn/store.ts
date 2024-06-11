@@ -16,7 +16,7 @@ const initialStore = {
     isLoading: false,
     isTasksLoading: false,
     isBonusesLoading: false,
-    isClaimLoading: false,
+    isSubmitLoading: false,
     isCheckingTaskLoading: false,
     isOpenDaily: false,
 } as IEarnStore;
@@ -111,7 +111,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             const activeDayBonus = get().active_day_bonus;
             if (!activeDayBonus) return;
 
-            set({isClaimLoading: true});
+            set({isSubmitLoading: true});
             try {
                 const user = await CoinsApi.updateBonus(useUserStore.getState().user_id);
                 if (user) {
@@ -123,11 +123,13 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             } catch (e) {
                 showError()
             } finally {
-                set({isClaimLoading: false});
+                set({isSubmitLoading: false});
             }
         },
 
         async onCompleteTask(task: ITask) {
+
+            set({isSubmitLoading: true});
             try {
                 const userId = useUserStore.getState().user_id;
                 const user = await CoinsApi.taskComplete(userId, task.id);
@@ -140,6 +142,8 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             } catch (e) {
                 showError('Checking failed! Task is not completed!');
                 set({tasksOpenedUrl: get().tasksOpenedUrl.filter(id => id !== task.id)});
+            } finally {
+                set({isSubmitLoading: false});
             }
         },
 

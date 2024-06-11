@@ -10,7 +10,7 @@ export interface IEarnStore {
     isLoading: boolean;
     isTasksLoading: boolean;
     isBonusesLoading: boolean;
-    isClaimLoading: boolean;
+    isSubmitLoading: boolean;
     isCheckingTaskLoading: boolean;
     isOpenDaily: boolean;
 

@@ -14,11 +14,10 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
     return {
         ...initialStore,
 
-        init: async (userId) => {
+        init: async (userId, params) => {
             try {
-                console.log('userId', userId)
                 if (!userId) return;
-                const user = await MainApi.userPerHour(userId);
+                const user = await MainApi.userPerHour(userId, params);
                 if (user) {
                     get().setInitialStore({...user});
                     get().initInterval();

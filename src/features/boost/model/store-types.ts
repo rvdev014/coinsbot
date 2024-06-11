@@ -5,6 +5,7 @@ export interface IBoostInfo {
 }
 
 export interface IBoostStore {
+    isSubmitLoading: boolean;
     popupType: BoostType | null;
 
     onBoosterClick: (type: BoostType) => void;

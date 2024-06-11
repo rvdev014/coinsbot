@@ -7,12 +7,16 @@ import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {shallow} from "zustand/shallow";
+import {useBoostStore} from "../../model/store.ts";
+import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
 
 interface IProps {
     onUpgrade: () => void;
 }
 
 export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
+
+    const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
 
     const boostData = useUserStore(state => state.boost);
     const energyTurboEndsAt = useUserStore(state => state.energy_turbo_at);
@@ -30,6 +34,8 @@ export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
                 fireImmediately: true
             }
         );
+
+        console.log(energyTurboEndsAt, dateGreaterThan(energyTurboEndsAt))
 
         setTimerDisabled(dateGreaterThan(energyTurboEndsAt));
 
@@ -65,12 +71,10 @@ export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
                     <button className={cl(styles.startBtn, styles.disabled)} disabled={true}>
                         {t('not_enough_coins')}
                     </button>
-                :
-                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
-                    {t('upgrade')}
-                    <span className='gradient'
-                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
-                </button>
+                    :
+                    <ClaimBtn onClick={onUpgrade} loading={isSubmitLoading}>
+                        {t('upgrade')}
+                    </ClaimBtn>
             }
 
         </div>

@@ -6,10 +6,21 @@ export interface IUserStore extends IUserData {
     coinsTimeout: number | null;
 
     setInitialStore(store: IUserData): void;
-    init(userId: number): Promise<void>;
+    init(userId: number, params?: IPerHourPayload): Promise<void>;
     initInterval(): void;
     updateLevel(): void;
     reset(): void;
+}
+
+export interface IPerHourPayload {
+    user_id?: number;
+    username?: string;
+    first_name?: string;
+    last_name?: string;
+    language_code?: string;
+    logo?: string;
+    is_premium?: boolean;
+    referral?: string;
 }
 
 export interface IUserData {
@@ -65,15 +76,4 @@ export interface ILevel {
     coins_per_tap: number
     created_at: string
     updated_at: string
-}
-
-export interface DayBonus {
-    id: number;
-    coins: number;
-    title_ru: string;
-    title_en: string;
-    img: string;
-    day: number;
-    created_at: string;
-    updated_at: string;
 }

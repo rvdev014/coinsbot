@@ -1,3 +1,18 @@
+export interface IAppStore {
+    webApp: any;
+    isAppLoading: boolean;
+    initTelegram: () => void;
+}
+
+export interface ITgDataUnsafe {
+    user: ITgUser;
+    chat_instance: string;
+    chat_type: string;
+    start_param: string;
+    auth_date: string;
+    hash: string;
+}
+
 export interface ITgUser {
     id: number;
     first_name: string;
@@ -6,17 +21,4 @@ export interface ITgUser {
     language_code: string;
     is_premium: boolean;
     allows_write_to_pm: boolean;
-}
-
-export interface ITgDataUnsafe {
-    query_id: string;
-    user: ITgUser;
-    auth_date: string;
-    hash: string;
-}
-
-export interface IAppStore {
-    webApp: any;
-    isAppLoading: boolean;
-    initTelegram: () => void;
 }

@@ -8,6 +8,7 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IBonus} from "../../../shared/model/earn/store-types.ts";
 import {t} from "i18next";
+import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
 
 interface IProps {
     bonuses: IBonus[] | null;
@@ -19,7 +20,7 @@ export const DailyPopup: FC<IProps> = ({bonuses}) => {
     const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
     const activeDayBonus = useEarnStore(state => state.active_day_bonus);
     const onClaimClick = useEarnStore(state => state.onClaimClick);
-    const isClaimLoading = useEarnStore(state => state.isClaimLoading);
+    const isSubmitLoading = useEarnStore(state => state.isSubmitLoading);
 
     const isDayBonusLast = useMemo(() => {
         if (!bonuses?.length || bonuses.length < 1 || !userDayBonus) return false;
@@ -74,24 +75,14 @@ export const DailyPopup: FC<IProps> = ({bonuses}) => {
                     </div>
                 )}
 
-
-            {!activeDayBonus
-                ?
-                <button className={styles.claimBtn} disabled={true}>{t('not_today')}</button>
-                :
-                <button
-                    className={cl(styles.claimBtn, 'gradientWrapper')}
-                    onClick={onClaimClick}
-                    disabled={isBonusesLoading || isClaimLoading}
-                >
-                    {isClaimLoading ? '...' : t('claim')}
-                    {!isBonusesLoading && !isClaimLoading &&
-                        <span
-                            className='gradient'
-                            style={{boxShadow: `0 0 100px 50px rgba(153, 214, 23, 0.5)`}}
-                        />}
-                </button>}
-
+            <ClaimBtn
+                disabled={!activeDayBonus}
+                disabledContent={t('not_today')}
+                loading={isBonusesLoading || isSubmitLoading}
+                onClick={onClaimClick}
+            >
+                {t('claim')}
+            </ClaimBtn>
         </div>
     );
 };

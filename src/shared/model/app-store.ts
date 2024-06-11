@@ -35,7 +35,17 @@ export const useAppStore = create<IAppStore>((set, get) => {
             }*/
 
             try {
-                await useUserStore.getState().init(tgDataUnsafe?.user?.id ?? 355919981);
+                const userId = tgDataUnsafe?.user?.id ?? 355919981;
+                await useUserStore.getState().init(userId, {
+                    user_id: userId,
+                    username: tgDataUnsafe?.user?.username,
+                    first_name: tgDataUnsafe?.user?.first_name,
+                    last_name: tgDataUnsafe?.user?.last_name,
+                    language_code: tgDataUnsafe?.user?.language_code,
+                    // logo: tgDataUnsafe?.user?.logo,
+                    is_premium: tgDataUnsafe?.user?.is_premium,
+                    referral: tgDataUnsafe?.start_param,
+                });
             } catch (e) {
                 showError()
             } finally {

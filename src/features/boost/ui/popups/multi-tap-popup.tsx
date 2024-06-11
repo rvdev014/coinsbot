@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import styles from "./popups.module.scss";
 import {Flex} from "@chakra-ui/react";
 import cl from "classnames";
@@ -8,12 +8,16 @@ import {formatPrice} from "../../../../shared/utils/other.ts";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {shallow} from "zustand/shallow";
+import {useBoostStore} from "../../model/store.ts";
+import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
 
 interface IProps {
     onUpgrade: () => void;
 }
 
 export const MultiTapPopup: FC<IProps> = ({onUpgrade}) => {
+
+    const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
 
     const boostData = useUserStore(state => state.boost);
     const multiTapEndsAt = useUserStore(state => state.multi_tap);
@@ -66,11 +70,9 @@ export const MultiTapPopup: FC<IProps> = ({onUpgrade}) => {
                         {t('not_enough_coins')}
                     </button>
                     :
-                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
-                    {t('upgrade')}
-                    <span className='gradient'
-                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
-                </button>
+                    <ClaimBtn onClick={onUpgrade} loading={isSubmitLoading}>
+                        {t('upgrade')}
+                    </ClaimBtn>
             }
 
         </div>

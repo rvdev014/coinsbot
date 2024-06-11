@@ -7,12 +7,16 @@ import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {formatPrice} from "../../../../shared/utils/other.ts";
 import {shallow} from "zustand/shallow";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
+import {useBoostStore} from "../../model/store.ts";
+import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
 
 interface IProps {
     onUpgrade: () => void;
 }
 
 export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
+
+    const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
 
     const boostData = useUserStore(state => state.boost);
     const [coinsDisabled, setCoinsDisabled] = useState<boolean>(false);
@@ -50,11 +54,9 @@ export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
                     {t('not_enough_coins')}
                 </button>
                 :
-                <button className={cl(styles.startBtn, 'gradientWrapper')} onClick={onUpgrade}>
+                <ClaimBtn onClick={onUpgrade} loading={isSubmitLoading}>
                     {t('upgrade')}
-                    <span className='gradient'
-                          style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`, bottom: '-30px'}}/>
-                </button>
+                </ClaimBtn>
             }
 
         </div>

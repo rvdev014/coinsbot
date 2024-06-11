@@ -6,6 +6,8 @@ import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
+import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
+import {useBoostStore} from "../../model/store.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -14,6 +16,7 @@ interface IProps {
 export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
     const [disabled, setDisabled] = useState<boolean>(false);
+    const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
 
     const restoreEnergyAt = useUserStore(state => state.restore_energy_at);
     const restoreEnergyEndsAt = useMemo(() => {
@@ -24,7 +27,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
     useEffect(() => {
         setDisabled(dateGreaterThan(restoreEnergyEndsAt));
-    }, []);
+    }, [restoreEnergyEndsAt]);
 
     function onTimerEnds() {
         setDisabled(dateGreaterThan(restoreEnergyEndsAt));
@@ -45,7 +48,16 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
                 </Flex>
             </div>
 
-            {disabled
+            <ClaimBtn
+                disabled={disabled}
+                disabledContent={<Timer toDate={restoreEnergyEndsAt} onTimerEnds={onTimerEnds}/>}
+                loading={isSubmitLoading}
+                onClick={onUpgrade}
+            >
+                {t('upgrade')}
+            </ClaimBtn>
+
+            {/*{disabled
                 ?
                 <button className={styles.startBtn} disabled={true}>
                     <Timer toDate={restoreEnergyEndsAt} onTimerEnds={onTimerEnds}/>
@@ -61,7 +73,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
                         }}
                     />
                 </button>
-            }
+            }*/}
 
         </div>
     );

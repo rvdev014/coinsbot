@@ -92,6 +92,23 @@ a:focus, button:focus {
     }
 }
 
+.claimBtn {
+    width: 100%;
+    padding: 18px 0;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #17D686 0%, #0C7046 100%);
+
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29.04px;
+    letter-spacing: -0.04em;
+    text-align: center;
+
+    &:disabled {
+        background: #525252;
+    }
+}
+
 /*
 button:active {
     outline: none;
