@@ -8,6 +8,7 @@ import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
 import {useBoostStore} from "../../model/store.ts";
+import {boostImgData} from "../../model/utils.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -35,7 +36,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
     return (
         <div className={styles.content}>
-            <img className={styles.taskIcon} src="/img/paw-lg.png" alt="Paw"/>
+            <img className={styles.taskIcon} src={boostImgData.pawLg} alt="Paw"/>
             <h2 className={styles.title}>{t('full_energy')}</h2>
             <p className={styles.text}>
                 {t('full_energy_desc')}
@@ -43,7 +44,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
-                    <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                    <img src={boostImgData.coinIconLg} alt="Coin"/>
                     <span>{t('free')}</span>
                 </Flex>
             </div>

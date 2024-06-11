@@ -1,5 +1,31 @@
 import {createStandaloneToast} from "@chakra-ui/react";
 
+export function preloadImages(images: string[]) {
+    return new Promise((resolve, reject) => {
+        let loadedCount = 0;
+        const totalImages = images.length;
+
+        if (totalImages === 0) {
+            resolve(1);
+            return;
+        }
+
+        images.forEach(url => {
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+                loadedCount += 1;
+                if (loadedCount === totalImages) {
+                    resolve(1);
+                }
+            };
+            img.onerror = () => {
+                reject(new Error(`Failed to load image: ${url}`));
+            };
+        });
+    });
+}
+
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export const formatNumber = (num: any) => {
 

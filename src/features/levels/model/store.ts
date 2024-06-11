@@ -2,8 +2,9 @@ import {create} from "zustand";
 import {ILevelData, ILevelStore} from "./store-types.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
-import {showError} from "../../../shared/utils/other.ts";
+import {preloadImages, showError} from "../../../shared/utils/other.ts";
 import {ILevel} from "../../../shared/model/user/store-types.ts";
+import {levelsImgData} from "./utils.ts";
 
 const initialStore = {
     isLoading: false,
@@ -25,6 +26,7 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
                 set({currentLevel});
 
                 const promises = [
+                    preloadImages(Object.values(levelsImgData)),
                     CoinsApi.getLevels().then(levelsData => set({levelsData})),
                     get().fetchStats(userId, currentLevel.step),
                 ];

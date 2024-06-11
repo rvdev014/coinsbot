@@ -9,6 +9,7 @@ import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {shallow} from "zustand/shallow";
 import {useBoostStore} from "../../model/store.ts";
 import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
+import {boostImgData} from "../../model/utils.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -49,13 +50,13 @@ export const EnergyTurboPopup: FC<IProps> = ({onUpgrade}) => {
     return (
         <div className={styles.content}>
 
-            <img className={styles.taskIcon} src="/img/turbo-lg.png" alt="Paw"/>
+            <img className={styles.taskIcon} src={boostImgData.turboLg} alt="Paw"/>
             <h2 className={styles.title}>{t('turbo_mining')}</h2>
             <p className={styles.text}>{t('turbo_mining_desc')}</p>
 
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
-                    <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                    <img src={boostImgData.coinIconLg} alt="Coin"/>
                     <span>{boostData?.energy_turbo?.coins}</span>
                 </Flex>
             </div>

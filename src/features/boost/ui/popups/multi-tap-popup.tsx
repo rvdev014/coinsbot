@@ -10,6 +10,7 @@ import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {shallow} from "zustand/shallow";
 import {useBoostStore} from "../../model/store.ts";
 import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
+import {boostImgData} from "../../model/utils.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -47,13 +48,13 @@ export const MultiTapPopup: FC<IProps> = ({onUpgrade}) => {
 
     return (
         <div className={styles.content}>
-            <img className={styles.taskIcon} src="/img/multitap-lg.png" alt="Paw"/>
+            <img className={styles.taskIcon} src={boostImgData.multitapLg} alt="Paw"/>
             <h2 className={styles.title}>{t('multitap')}</h2>
             <p className={styles.text}>{t('multitap_desc')}</p>
 
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
-                    <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                    <img src={boostImgData.coinIconLg} alt="Coin"/>
                     <span>{formatPrice(boostData?.multi_tap?.coins)}</span>
                 </Flex>
             </div>

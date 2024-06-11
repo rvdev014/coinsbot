@@ -8,40 +8,7 @@ import {useLevelStore} from "../model/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IUserData} from "../../../shared/model/user/store-types.ts";
 import cl from "classnames";
-
-import level1Img from '../../../assets/img/levels/level-1.png';
-import level2Img from '../../../assets/img/levels/level-2.png';
-import level3Img from '../../../assets/img/levels/level-3.png';
-import level4Img from '../../../assets/img/levels/level-4.png';
-import level5Img from '../../../assets/img/levels/level-5.png';
-import level6Img from '../../../assets/img/levels/level-6.png';
-import level7Img from '../../../assets/img/levels/level-7.png';
-import level8Img from '../../../assets/img/levels/level-8.png';
-import level9Img from '../../../assets/img/levels/level-9.png';
-import level10Img from '../../../assets/img/levels/level-10.png';
-import level11Img from '../../../assets/img/levels/level-11.png';
-import level12Img from '../../../assets/img/levels/level-12.png';
-import level13Img from '../../../assets/img/levels/level-13.png';
-import level14Img from '../../../assets/img/levels/level-14.png';
-import level15Img from '../../../assets/img/levels/level-15.png';
-
-const levelsImg: any = {
-    1: level1Img,
-    2: level2Img,
-    3: level3Img,
-    4: level4Img,
-    5: level5Img,
-    6: level6Img,
-    7: level7Img,
-    8: level8Img,
-    9: level9Img,
-    10: level10Img,
-    11: level11Img,
-    12: level12Img,
-    13: level13Img,
-    14: level14Img,
-    15: level15Img,
-}
+import {levelsImgData} from "../model/utils.ts";
 
 export const Levels = () => {
 
@@ -98,7 +65,7 @@ export const Levels = () => {
                 >
                     <img
                         onLoad={e => e.currentTarget.style.display = 'block'}
-                        src={levelsImg[level.step] ?? levelsImg[1]}
+                        src={levelsImgData[`level${level.step}`]}
                         style={{
                             width: level.step > 7 ? '100%' : `180px`,
                             height: level.step > 7 ? '100%' : `180px`,

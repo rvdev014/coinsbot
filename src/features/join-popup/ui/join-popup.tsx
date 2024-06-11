@@ -9,6 +9,7 @@ import {t} from "i18next";
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
+import {earnImgData} from "../../../shared/model/earn/utils.ts";
 
 interface IProps {
     task: ITask | null;
@@ -48,9 +49,10 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
         <div className={styles.content}>
             <img
                 className={styles.taskIcon}
-                src={task.img ?? "/img/task-tg.png"}
+                src={earnImgData.taskTgLg}
+                // src={task.img ?? earnImgData.taskTg}
                 // @ts-ignore
-                onError={(e) => e.target.src = "/img/task-tg-lg.png"}
+                // onError={(e) => e.target.src = earnImgData.taskTgLg}
                 alt="Task tg"
             />
             <h2 className={styles.title}>{task.title}</h2>
@@ -59,7 +61,7 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
             </p>
 
             <Flex className={styles.taskPrice} alignItems='center'>
-                <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                <img src={earnImgData.coinIconLg} alt="Coin"/>
                 <span>+{formatPrice(task.coins)}</span>
             </Flex>
 

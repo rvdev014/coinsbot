@@ -58,9 +58,8 @@ export const DailyPopup: FC<IProps> = ({bonuses}) => {
                                     <Flex className={styles.dayItem_info} alignItems='center'
                                           justifyContent='center'>
                                         <img
-                                            src={bonus.img}
+                                            src='/img/coin-icon.png'
                                             alt="Coin"
-                                            onError={(e) => e.currentTarget.src = '/img/coin-icon.png'}
                                         />
                                         <span>{formatPrice(bonus.coins)}</span>
                                     </Flex>

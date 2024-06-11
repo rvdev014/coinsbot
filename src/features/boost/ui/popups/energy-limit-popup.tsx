@@ -9,6 +9,7 @@ import {shallow} from "zustand/shallow";
 import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {useBoostStore} from "../../model/store.ts";
 import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
+import {boostImgData} from "../../model/utils.ts";
 
 interface IProps {
     onUpgrade: () => void;
@@ -37,13 +38,13 @@ export const EnergyLimitPopup: FC<IProps> = ({onUpgrade}) => {
 
     return (
         <div className={styles.content}>
-            <img className={styles.taskIcon} src="/img/bone-icon-lg.png" alt="Bone"/>
+            <img className={styles.taskIcon} src={boostImgData.boneLg} alt="Bone"/>
             <h2 className={styles.title}>{t('energy_limit')}</h2>
             <p className={styles.text}>{t('energy_limit_desc')}</p>
 
             <div className={styles.priceWrapper}>
                 <Flex className={styles.price} alignItems='center'>
-                    <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                    <img src={boostImgData.coinIconLg} alt="Coin"/>
                     <span>{formatPrice(boostData?.energy_limit?.coins)}</span>
                 </Flex>
             </div>

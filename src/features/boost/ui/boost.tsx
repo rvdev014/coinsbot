@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
-import {formatPrice} from "../../../shared/utils/other.ts";
-import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
+import {formatPrice, preloadImages} from "../../../shared/utils/other.ts";
 import {useBoostStore} from "../model/store.ts";
 import {UserCoins} from "../../user-coins";
 import cl from "classnames";
@@ -15,6 +14,8 @@ import {MultiTapPopup} from "./popups/multi-tap-popup.tsx";
 import {TurboPopup} from "./popups/turbo-popup.tsx";
 import {EnergyLimitPopup} from "./popups/energy-limit-popup.tsx";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
+import {boostImgData} from "../model/utils.ts";
+import {Loader} from "../../../shared/ui/loader/loader.tsx";
 
 export const Boost = () => {
 
@@ -31,6 +32,15 @@ export const Boost = () => {
     const onEnergyLimitUpgrade = useBoostStore(state => state.onEnergyLimitUpgrade);
     const onFullEnergyUpgrade = useBoostStore(state => state.onFullEnergyUpgrade);
 
+    const [loading, setLoading] = React.useState(true);
+
+    useEffect(() => {
+        preloadImages(Object.values(boostImgData))
+            .finally(() => setLoading(false));
+    }, []);
+
+    if (loading) return <Loader size='lg'/>;
+
     return (
         <>
             <div className={styles.wrapper}>
@@ -40,13 +50,13 @@ export const Boost = () => {
                     <UserCoins>
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
-                                <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                                <img src={boostImgData.coinIconLg} alt="Coin"/>
                                 <span className={styles.balance_number}>{formatPrice(coins)}</span>
                             </Flex>
                         )}
                     </UserCoins>
                     <Flex className={styles.mainCard_info} alignItems='center'>
-                        <img src="/img/question.png" alt="Question"/>
+                        <img src={boostImgData.question} alt="Question"/>
                         <p className={styles.mainCard_info_text}>{t('how_boost_works')}</p>
                     </Flex>
 
@@ -69,7 +79,7 @@ export const Boost = () => {
                             flex={1}
                             onClick={() => onBoosterClick('restore_energy')}
                         >
-                            <img src="/img/energy-icon-lg.png" alt="Energy"/>
+                            <img src={boostImgData.energyIconLg} alt="Energy"/>
                             <div className={styles.cardInfo}>
                                 <p className={styles.cardInfo_title}>{t('full_energy')}</p>
                                 {/*<p className={styles.cardInfo_text}>6/6 available</p>*/}
@@ -91,7 +101,7 @@ export const Boost = () => {
                             flex={1}
                             onClick={() => onBoosterClick('energy_turbo')}
                         >
-                            <img src="/img/boost-icon-lg.png" alt="Boost"/>
+                            <img src={boostImgData.boostIconLg} alt="Boost"/>
                             <div className={styles.cardInfo}>
                                 <p className={styles.cardInfo_title}>{t('turbo_mining')}</p>
                                 {/*<p className={styles.cardInfo_text}>3/3 available</p>*/}
@@ -110,7 +120,6 @@ export const Boost = () => {
                     </Flex>
                 </div>
 
-
                 <div className={styles.boosters}>
 
                     <div className={styles.boostersList}>
@@ -123,18 +132,18 @@ export const Boost = () => {
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
-                                    <img src="/img/coin-level.png" alt="coins"/>
+                                    <img src={boostImgData.coinLevel} alt="coins"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('coins_per_tap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                        <img src={boostImgData.coinLevel} alt="Coin"/>
                                         <span>{formatPrice(boostData?.coins_per_tap?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
                             <div className={styles.boosterArrow}>
-                                <img src="/img/arrow.png" alt="Arrow"/>
+                                <img src={boostImgData.arrow} alt="Arrow"/>
                             </div>
 
                             <span
@@ -155,18 +164,18 @@ export const Boost = () => {
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
-                                    <img src="/img/multitap-icon.png" alt="Avatar"/>
+                                    <img src={boostImgData.multitapIcon} alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('multitap')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                        <img src={boostImgData.coinLevel} alt="Coin"/>
                                         <span>{formatPrice(boostData?.multi_tap?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
                             <div className={styles.boosterArrow}>
-                                <img src="/img/arrow.png" alt="Arrow"/>
+                                <img src={boostImgData.arrow} alt="Arrow"/>
                             </div>
 
                             <span
@@ -187,18 +196,18 @@ export const Boost = () => {
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
-                                    <img src="/img/mining-icon.png" alt="Avatar"/>
+                                    <img src={boostImgData.miningIcon} alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('mining')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                        <img src={boostImgData.coinLevel} alt="Coin"/>
                                         <span>{formatPrice(boostData?.turbo?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
                             <div className={styles.boosterArrow}>
-                                <img src="/img/arrow.png" alt="Arrow"/>
+                                <img src={boostImgData.arrow} alt="Arrow"/>
                             </div>
 
                             <span
@@ -219,18 +228,18 @@ export const Boost = () => {
                         >
                             <Flex className={styles.boosterItem_left}>
                                 <div className={styles.boosterItem_icon}>
-                                    <img src="/img/bone-icon.png" alt="Avatar"/>
+                                    <img src={boostImgData.boneIcon} alt="Avatar"/>
                                 </div>
                                 <div className={styles.boosterInfo}>
                                     <p className={styles.boosterName}>{t('energy_limit')}</p>
                                     <Flex className={styles.boosterPrice} alignItems='center'>
-                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                        <img src={boostImgData.coinLevel} alt="Coin"/>
                                         <span>{formatPrice(boostData?.energy_limit?.coins)}</span>
                                     </Flex>
                                 </div>
                             </Flex>
                             <div className={styles.boosterArrow}>
-                                <img src="/img/arrow.png" alt="Arrow"/>
+                                <img src={boostImgData.arrow} alt="Arrow"/>
                             </div>
 
                             <span

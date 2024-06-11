@@ -9,6 +9,7 @@ import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {t} from "i18next";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
+import {earnImgData} from "../../../shared/model/earn/utils.ts";
 
 export const EarnPage = () => {
 
@@ -37,19 +38,19 @@ export const EarnPage = () => {
             <div className={styles.wrapper}>
 
                 <div className={styles.header}>
-                    <img className={styles.headerCoinIcon} src="/img/coin-level.png" alt="Coin level"/>
+                    <img className={styles.headerCoinIcon} src={earnImgData.coinLevel} alt="Coin level"/>
                     <p className={styles.title}>{t('earn_more_coins')}</p>
                     <p className={styles.bonusTitle}>+{formatPrice(totalBonusCoins ?? 0)}</p>
 
                     <button className={styles.dailyBtn} onClick={onDailyClick}>
                         <Flex className={styles.dailyBtn_left}>
                             <div className={styles.badgeIcon}>
-                                <img src="/img/coin-icon.png" alt="Coin"/>
+                                <img src={earnImgData.coinIcon} alt="Coin"/>
                                 {activeDayBonus && <span></span>}
                             </div>
                             <p>{t('daily_reward')}</p>
                         </Flex>
-                        <img src="/img/arrow.png" alt="Arrow"/>
+                        <img src={earnImgData.arrow} alt="Arrow"/>
                     </button>
                 </div>
 
@@ -74,16 +75,17 @@ export const EarnPage = () => {
                                         <Flex className={styles.taskItem_left}>
                                             <div className={styles.taskIcon}>
                                                 <img
-                                                    src={task.img ?? "/img/task-tg.png"}
+                                                    src={earnImgData.taskTg}
+                                                    // src={task.img ?? earnImgData.taskTg}
                                                     // @ts-ignore
-                                                    onError={(e) => e.target.src = "/img/task-tg.png"}
+                                                    // onError={(e) => e.target.src = earnImgData.taskTg}
                                                     alt="Task tg"
                                                 />
                                             </div>
                                             <div className={styles.taskInfo}>
                                                 <p className={styles.taskName}>{task.title}</p>
                                                 <Flex className={styles.taskPrice} alignItems='center'>
-                                                    <img src="/img/coin-icon.png" alt="Coin"/>
+                                                    <img src={earnImgData.coinIcon} alt="Coin"/>
                                                     <span>{formatPrice(task.coins)}</span>
                                                 </Flex>
                                             </div>
@@ -93,7 +95,7 @@ export const EarnPage = () => {
                                             ?
                                             <Text>&#10003;</Text>
                                             :
-                                            <img className={styles.taskArrow} src="/img/arrow.png" alt="Arrow"/>}
+                                            <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
 
                                     </Flex>
                                 )

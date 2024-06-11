@@ -1,0 +1,17 @@
+export const levelsImgData: any = {
+    level1: '/img/levels/level-1.png',
+    level2: '/img/levels/level-2.png',
+    level3: '/img/levels/level-3.png',
+    level4: '/img/levels/level-4.png',
+    level5: '/img/levels/level-5.png',
+    level6: '/img/levels/level-6.png',
+    level7: '/img/levels/level-7.png',
+    level8: '/img/levels/level-8.png',
+    level9: '/img/levels/level-9.png',
+    level10: '/img/levels/level-10.png',
+    level11: '/img/levels/level-11.png',
+    level12: '/img/levels/level-12.png',
+    level13: '/img/levels/level-13.png',
+    level14: '/img/levels/level-14.png',
+    level15: '/img/levels/level-15.png',
+}

@@ -1,0 +1,16 @@
+export const boostImgData = {
+    pawLg: '/img/paw-lg.png',
+    question: '/img/question.png',
+    energyIconLg: '/img/energy-icon-lg.png',
+    boostIconLg: '/img/boost-icon-lg.png',
+    coinLevel: '/img/coin-level.png',
+    arrow: '/img/arrow.png',
+    multitapIcon: '/img/multitap-icon.png',
+    multitapLg: '/img/multitap-lg.png',
+    miningIcon: '/img/mining-icon.png',
+    miningLg: '/img/mining-lg.png',
+    boneIcon: '/img/bone-icon.png',
+    boneLg: '/img/bone-icon-lg.png',
+    coinIconLg: '/img/coin-icon-lg.png',
+    turboLg: '/img/turbo-lg.png',
+}

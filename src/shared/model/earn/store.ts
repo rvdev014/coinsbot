@@ -3,8 +3,9 @@ import {IBonus, IEarnStore, ITask} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {useUserStore} from "../user/store.ts";
 import {CoinsApi} from "../../api/coins-api.ts";
-import {showError, success} from "../../utils/other.ts";
+import {preloadImages, showError, success} from "../../utils/other.ts";
 import {getDayDiffFromNow} from "../../utils/date.ts";
+import {earnImgData} from "./utils.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
@@ -33,6 +34,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 set({isLoading: true});
 
                 const promises = [
+                    preloadImages(Object.values(earnImgData)),
                     get().fetchTasks(),
                     get().fetchBonuses(false),
                 ];
