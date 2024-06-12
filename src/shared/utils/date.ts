@@ -12,28 +12,19 @@ export function parseStr2Date(dateStr: string, withTimezone = true) {
     return new Date(dateStr);
 }
 
-export function generateTimeDiff(timeTo: string) {
-    const date = new Date().getTime();
-    const toDate = new Date(timeTo).getTime();
-    const diff = date - toDate;
-    const hours = 6 - (diff / 1000 / 60 / 60);
-    const minutes = 60 - (diff / 1000 / 60 % 60);
-    return `Wait ${Math.floor(hours)}h ${Math.floor(minutes)}m`
-}
-
 export function dateGreaterThan(date1: string|Date, date2?: string|Date) {
     if (!date2) return new Date(date1) > new Date();
     return new Date(date1) > new Date(date2);
 }
 
-export function getDayDiffFromNow2(date: string, abs = true) {
-    const diff = ((new Date().getTime()) - (new Date(date).getTime())) / (1000 * 60 * 60 * 24);
-    return Math.floor(abs ? Math.abs(diff) : diff);
-}
-
 export function getDayDiffFromNow(date: string, abs = true) {
-    const now = new Date();
-    const givenDate = new Date(date);
+    const fromDate = new Date(date);
+    const timezoneOffset = fromDate.getTimezoneOffset() * 60000;
+    const now = new Date(fromDate.getTime() + timezoneOffset);
+    const givenDate = new Date(Date.now() + timezoneOffset);
+
+    console.log('givenDate', givenDate)
+    console.log('now', now)
 
     // Normalize both dates to the start of the day (midnight)
     now.setHours(0, 0, 0, 0);
