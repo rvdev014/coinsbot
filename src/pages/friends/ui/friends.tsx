@@ -108,10 +108,10 @@ export const FriendsPage = () => {
                 </div>
             </Flex>
 
-
-            <div className={styles.friendsWrapper}>
-                {referrals?.list?.map((list, index) => (
-                    <span key={index}>
+            {
+                referrals?.total_count > 0 && <div className={styles.friendsWrapper}>
+                    {referrals?.list?.map((list, index) => (
+                        <span key={index}>
                         <Flex className={styles.friendsTitleWrapper} alignItems='center'>
                             <hr className={styles.divider}/>
                             <h2>{list?.level} {t('line')}</h2>
@@ -145,24 +145,18 @@ export const FriendsPage = () => {
                                 </Flex>
                             ))}
 
-                            {
-                                list?.users?.length === 0 &&
-                                <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'>
-                                    <Flex className={styles.userItem_left}>
-                                        <div className={styles.userInfo}>
-                                            <p className={styles.userName}></p>
-                                            <Flex className={styles.userBalance} alignItems='center'>
-                                                <span className={styles.userLevel}></span>
-                                            </Flex>
-                                        </div>
-                                    </Flex>
-                                </Flex>
-                            }
-
                         </div>
                     </span>
-                ))}
-            </div>
+                    ))}
+
+                </div>
+            }
+
+            {/*{*/}
+            {/*    referrals?.total_count === 0 && <div className={styles.friendsEmptyList}>*/}
+            {/*        You don't have any invited friends yet. Send your link to your contacts to get bonuses from Clyde*/}
+            {/*    </div>*/}
+            {/*}*/}
 
             <div className={styles.inviteFriendBtnWrapper}>
                 <button className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}>
