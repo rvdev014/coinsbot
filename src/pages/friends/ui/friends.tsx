@@ -164,8 +164,8 @@ export const FriendsPage = () => {
                 ))}
             </div>
 
-            <button className={styles.inviteFriendBtnWrapper} onClick={onInviteFriend}>
-                <div className={cl(styles.inviteFriendBtn, 'gradientWrapper')}>
+            <div className={styles.inviteFriendBtnWrapper}>
+                <button className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}>
                     {t('invite_fren')}
                     <span
                         className='gradient'
@@ -174,8 +174,9 @@ export const FriendsPage = () => {
                             bottom: '-30px'
                         }}
                     />
-                </div>
-            </button>
+                </button>
+            </div>
+
 
         </div>
     );

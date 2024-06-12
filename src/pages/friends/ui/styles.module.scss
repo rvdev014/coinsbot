@@ -1,5 +1,5 @@
 .wrapper {
-
+  padding-bottom: 50px;
 }
 
 .mainBlock {
@@ -221,13 +221,15 @@
 
 .inviteFriendBtnWrapper {
   position: fixed;
-  bottom: calc(64px + 13px);
+  bottom: calc(64px + 18px);
   max-width: calc(500px - 28px);
   width: calc(100% - 28px);
   height: 56px;
+  z-index: 999;
 }
 
 .inviteFriendBtn {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

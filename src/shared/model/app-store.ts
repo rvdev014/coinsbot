@@ -24,7 +24,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
                 history.push('/');
             });
 
-            const tgDataUnsafe: ITgDataUnsafe = tg.initDataUnsafe;
+            const tgDataUnsafe: ITgDataUnsafe = tg?.initDataUnsafe;
 
             /*if (!tgDataUnsafe?.user) {
                 set({
