@@ -5,6 +5,7 @@ import {showError, success} from "../../../shared/utils/other.ts";
 import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {apiInstance} from "../../../shared/api/axios.ts";
+import {dateGreaterThan} from "../../../shared/utils/date.ts";
 
 const initialStore = {
     isSubmitLoading: false,
@@ -19,15 +20,28 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             set({isSubmitLoading: true})
             try {
                 const userId = useUserStore.getState().user_id;
-                const user  = await CoinsApi.restoreEnergy(userId)
-                set({popupType: null})
-                useUserStore.getState().setInitialStore({...user})
-                success('Energy restored successfully.')
+                const user  = await CoinsApi.restoreEnergy(userId);
+                if (user) {
+                    // set({popupType: null})
+                    useUserStore.getState().setInitialStore({...user})
+
+                    get().checkRestoreEnergyClaimDisabled()
+
+                    success('Energy restored successfully.')
+                }
             } catch (e) {
                 showError()
             } finally {
                 set({isSubmitLoading: false})
             }
+        },
+
+        checkRestoreEnergyClaimDisabled: async () => {
+            const restoreEnergyAt = new Date(useUserStore.getState().restore_energy_at)
+            restoreEnergyAt.setHours(restoreEnergyAt.getHours() + 6);
+            const restoreEnergyEndsAt = new Date(restoreEnergyAt);
+
+            set({isRestoreEnergyClaimDisabled: dateGreaterThan(restoreEnergyEndsAt)})
         },
 
         onTurboEnergyUpdate: async () => {

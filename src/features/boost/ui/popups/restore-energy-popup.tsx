@@ -16,9 +16,9 @@ interface IProps {
 
 export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
-    const [disabled, setDisabled] = useState<boolean>(false);
+    // const [disabled, setDisabled] = useState<boolean>(false);
     const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
-
+    const isClaimDisabled = useBoostStore(state => state.isRestoreEnergyClaimDisabled);
     const restoreEnergyAt = useUserStore(state => state.restore_energy_at);
     const restoreEnergyEndsAt = useMemo(() => {
         const date = new Date(restoreEnergyAt);
@@ -27,11 +27,11 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
     }, [restoreEnergyAt]);
 
     useEffect(() => {
-        setDisabled(dateGreaterThan(restoreEnergyEndsAt));
-    }, [restoreEnergyEndsAt]);
+        useBoostStore.getState().checkRestoreEnergyClaimDisabled();
+    }, []);
 
     function onTimerEnds() {
-        setDisabled(dateGreaterThan(restoreEnergyEndsAt));
+        useBoostStore.getState().checkRestoreEnergyClaimDisabled();
     }
 
     return (
@@ -50,7 +50,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
             </div>
 
             <ClaimBtn
-                disabled={disabled}
+                disabled={isClaimDisabled}
                 disabledContent={<Timer toDate={restoreEnergyEndsAt} onTimerEnds={onTimerEnds}/>}
                 loading={isSubmitLoading}
                 onClick={onUpgrade}

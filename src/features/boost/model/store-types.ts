@@ -6,6 +6,7 @@ export interface IBoostInfo {
 
 export interface IBoostStore {
     isSubmitLoading: boolean;
+    isRestoreEnergyClaimDisabled: boolean;
     popupType: BoostType | null;
 
     onBoosterClick: (type: BoostType) => void;
@@ -16,6 +17,8 @@ export interface IBoostStore {
     onTurboEnergyUpdate: () => void;
     onMiningUpgrade: () => void;
     onFullEnergyUpgrade: () => void;
+
+    checkRestoreEnergyClaimDisabled: () => void;
 
     init(): Promise<void>;
     reset(): void;

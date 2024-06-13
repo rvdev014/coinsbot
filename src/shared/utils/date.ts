@@ -12,8 +12,12 @@ export function parseStr2Date(dateStr: string, withTimezone = true) {
     return new Date(dateStr);
 }
 
-export function dateGreaterThan(date1: string|Date, date2?: string|Date) {
-    if (!date2) return new Date(date1) > new Date();
+export function dateGreaterThan(date1?: string|Date, date2?: string|Date) {
+    console.log('date1', date1)
+    if (!date1) return false;
+    if (!date2) {
+        return new Date(date1) > new Date();
+    }
     return new Date(date1) > new Date(date2);
 }
 
