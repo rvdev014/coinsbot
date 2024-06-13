@@ -14,7 +14,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
     return {
         ...initialStore,
 
-        onTap: () => {
+        onTap: async () => {
 
             const userState = useUserStore.getState();
             const coinsPerTap = userState.coins_per_tap;
@@ -24,6 +24,10 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             if (energy < 0) {
                 energy = 0;
                 coins = userState.coins;
+            }
+
+            if (coins >= userState.next_level?.coins) {
+                coins = userState.next_level?.coins;
             }
 
             useUserStore.setState({coins, energy});
@@ -38,7 +42,10 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
                 const tappedCoins = get().tappedCoins;
                 set({tappedCoins: 0});
                 if (tappedCoins > 0) {
-                    await CoinsApi.updateCoins(userStore.user_id, tappedCoins, userStore.energy);
+                    const user = await CoinsApi.updateCoins(userStore.user_id, tappedCoins, userStore.energy);
+                    if (user) {
+                        useUserStore.getState().setInitialStore({...user});
+                    }
                 }
             } catch (e) {
                 showError()

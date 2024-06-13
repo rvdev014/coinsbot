@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {IUserStore} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
-import {showError} from "../../utils/other.ts";
+import {showError, success} from "../../utils/other.ts";
 import {dateGreaterThan, getDayDiffFromNow} from "../../utils/date.ts";
 import i18next from "i18next";
 import {subscribeWithSelector} from "zustand/middleware";
@@ -59,7 +59,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             }*/
         },
 
-        setInitialStore: (store) => {
+        setInitialStore: async (store) => {
 
             let coinsPerTap = store.coins_per_tap;
             if (dateGreaterThan(store.multi_tap)) {
@@ -81,6 +81,10 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 dayBonus = null;
             }
 
+            if (get().level?.step < store.level?.step) {
+                success('Congratulations! You have reached a new level');
+            }
+
             i18next.changeLanguage(store.language_code);
 
             set({
@@ -92,10 +96,9 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             });
         },
 
-        updateLevel: async () => {
+        async updateLevel() {
             try {
-                const user = await MainApi.userPerHour(get().user_id);//get().next_level?.step);
-                // const user = await MainApi.updateLevel(get().user_id, 3);//get().next_level?.step);
+                const user = await MainApi.userPerHour(get().user_id);
                 if (user) {
                     get().setInitialStore({...user});
                 }

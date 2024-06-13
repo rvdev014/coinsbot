@@ -8,7 +8,7 @@ export interface IUserStore extends IUserData {
     setInitialStore(store: IUserData): void;
     init(userId: number, params?: IPerHourPayload): Promise<void>;
     initInterval(): void;
-    updateLevel(): void;
+    updateLevel(): Promise<void>;
     reset(): void;
 }
 
