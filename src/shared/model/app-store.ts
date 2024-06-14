@@ -16,13 +16,6 @@ export const useAppStore = create<IAppStore>((set, get) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
             const tg = window.Telegram.WebApp;
-            tg.ready();
-            tg.expand();
-            tg.enableClosingConfirmation();
-
-            tg.onEvent('backButtonClicked', function() {
-                history.push('/');
-            });
 
             const tgDataUnsafe: ITgDataUnsafe = tg?.initDataUnsafe;
 

@@ -9,6 +9,7 @@ import {I18nextProvider} from "react-i18next";
 // @ts-expect-error
 import i18n from "./i18n";
 import {APP_ENV} from "./shared/consts.ts";
+import {history} from "./app/router/router-history.ts";
 
 function App() {
 
@@ -18,6 +19,9 @@ function App() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.enableClosingConfirmation();
+    tg.expand()
 
     if ((!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown') && APP_ENV === 'production') {
         return (
@@ -28,6 +32,10 @@ function App() {
             </div>
         );
     }
+
+    tg.onEvent('backButtonClicked', function() {
+        history.push('/');
+    });
 
     return (
         <I18nextProvider i18n={i18n}>
