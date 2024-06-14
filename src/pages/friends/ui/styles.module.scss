@@ -40,6 +40,8 @@
   margin-top: 10px;
 
   img {
+    width: 36px;
+    height: 36px;
     margin-right: 8px;
   }
 
@@ -128,9 +130,15 @@
 }
 
 .friendsEmptyList {
-  margin-top: 26px;
+  max-width: 250px;
+  margin: 26px auto 0 auto;
   text-align: center;
   color: #9F9F9F;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  letter-spacing: -0.03em;
+  opacity: 0.5;
 }
 
 .friendsTitleWrapper {
@@ -141,6 +149,12 @@
   margin-top: 5px;
 
   span {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14.52px;
+    letter-spacing: -0.03em;
+    text-align: center;
+
     margin-left: 8px;
     padding: 5px 9px;
     border-radius: 16px;
@@ -212,6 +226,8 @@
       color: #7C7C7C;
     }
     img {
+      width: 24px;
+      height: 24px;
       margin-right: 5px;
     }
   }

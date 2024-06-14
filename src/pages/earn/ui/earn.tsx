@@ -10,12 +10,15 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {t} from "i18next";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {earnImgData} from "../../../shared/model/earn/utils.ts";
+import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
+import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 
 export const EarnPage = () => {
 
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
 
-    const tasks = useEarnStore(state => state.tasks);
+    const tasksOwner = useEarnStore(state => state.tasksOwner);
+    const tasksPartner = useEarnStore(state => state.tasksPartner);
     const userTasks = useUserStore(state => state.tasks);
     const bonuses = useEarnStore(state => state.bonuses);
     const totalBonusCoins = useEarnStore(state => state.totalBonusCoins);
@@ -54,59 +57,113 @@ export const EarnPage = () => {
                     </button>
                 </div>
 
-                <div className={styles.tasksWrapper}>
+                <LoaderBlock loading={isTasksLoading}>
+                    <div className={styles.tasksWrapper}>
 
-                    {isTasksLoading
-                        ? <Loader/>
-                        :
-                        <div className={styles.tasksList}>
+                        <ConditionBlock condition={tasksOwner.length > 0}>
+                            <div className={styles.tasksList}>
 
-                            {tasks.map((task, index) => {
-                                const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
-                                return (
-                                    <Flex
-                                        key={task.id}
-                                        className={styles.taskItem}
-                                        justifyContent='space-between'
-                                        alignItems='center'
-                                        onClick={isCompleted ? () => {} : () => onTaskClick(task)}
-                                    >
+                                <div className={styles.tasksTitle}>
+                                    <p>{t('owner_tasks')}</p>
+                                </div>
 
-                                        <Flex className={styles.taskItem_left}>
-                                            <div className={styles.taskIcon}>
-                                                <img
-                                                    src={earnImgData.taskTg}
-                                                    // src={task.img ?? earnImgData.taskTg}
-                                                    // @ts-ignore
-                                                    // onError={(e) => e.target.src = earnImgData.taskTg}
-                                                    alt="Task tg"
-                                                />
-                                            </div>
-                                            <div className={styles.taskInfo}>
-                                                <p className={styles.taskName}>{task.title}</p>
-                                                <Flex className={styles.taskPrice} alignItems='center'>
-                                                    <img src={earnImgData.coinIcon} alt="Coin"/>
-                                                    <span>{formatPrice(task.coins)}</span>
-                                                </Flex>
-                                            </div>
+                                {tasksOwner.map((task, index) => {
+                                    const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
+                                    return (
+                                        <Flex
+                                            key={task.id}
+                                            className={styles.taskItem}
+                                            justifyContent='space-between'
+                                            alignItems='center'
+                                            onClick={isCompleted ? () => {
+                                            } : () => onTaskClick(task)}
+                                        >
+
+                                            <Flex className={styles.taskItem_left}>
+                                                <div className={styles.taskIcon}>
+                                                    <img
+                                                        src={earnImgData.taskTg}
+                                                        // src={task.img ?? earnImgData.taskTg}
+                                                        // @ts-ignore
+                                                        // onError={(e) => e.target.src = earnImgData.taskTg}
+                                                        alt="Task tg"
+                                                    />
+                                                </div>
+                                                <div className={styles.taskInfo}>
+                                                    <p className={styles.taskName}>{task.title}</p>
+                                                    <Flex className={styles.taskPrice} alignItems='center'>
+                                                        <img src={earnImgData.coinIcon} alt="Coin"/>
+                                                        <span>{formatPrice(task.coins)}</span>
+                                                    </Flex>
+                                                </div>
+                                            </Flex>
+
+                                            {isCompleted
+                                                ?
+                                                <Text>&#10003;</Text>
+                                                :
+                                                <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+
                                         </Flex>
+                                    )
+                                })}
 
-                                        {isCompleted
-                                            ?
-                                            <Text>&#10003;</Text>
-                                            :
-                                            <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+                            </div>
+                        </ConditionBlock>
 
-                                    </Flex>
-                                )
-                            })}
+                        <ConditionBlock condition={tasksPartner.length > 0}>
+                            <div className={styles.tasksList}>
 
-                        </div>
-                    }
+                                <div className={styles.tasksTitle}>
+                                    <p>{t('partner_tasks')}</p>
+                                </div>
 
+                                {tasksPartner.map((task, index) => {
+                                    const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
+                                    return (
+                                        <Flex
+                                            key={task.id}
+                                            className={styles.taskItem}
+                                            justifyContent='space-between'
+                                            alignItems='center'
+                                            onClick={isCompleted ? () => {
+                                            } : () => onTaskClick(task)}
+                                        >
 
-                </div>
+                                            <Flex className={styles.taskItem_left}>
+                                                <div className={styles.taskIcon}>
+                                                    <img
+                                                        src={earnImgData.taskTg}
+                                                        // src={task.img ?? earnImgData.taskTg}
+                                                        // @ts-ignore
+                                                        // onError={(e) => e.target.src = earnImgData.taskTg}
+                                                        alt="Task tg"
+                                                    />
+                                                </div>
+                                                <div className={styles.taskInfo}>
+                                                    <p className={styles.taskName}>{task.title}</p>
+                                                    <Flex className={styles.taskPrice} alignItems='center'>
+                                                        <img src={earnImgData.coinIcon} alt="Coin"/>
+                                                        <span>{formatPrice(task.coins)}</span>
+                                                    </Flex>
+                                                </div>
+                                            </Flex>
 
+                                            {isCompleted
+                                                ?
+                                                <Text>&#10003;</Text>
+                                                :
+                                                <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+
+                                        </Flex>
+                                    )
+                                })}
+
+                            </div>
+                        </ConditionBlock>
+
+                    </div>
+                </LoaderBlock>
             </div>
 
 

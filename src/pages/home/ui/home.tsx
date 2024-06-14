@@ -84,7 +84,7 @@ export const HomePage = () => {
                 <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                     <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
                     <Flex className={styles.headerInfo_info}>
-                        <img src="/img/coin-icon.png" alt="Coin"/>
+                        <img src="/img/coin-level.png" alt="Coin"/>
                         <Text>+{coinsPerTap}</Text>
                     </Flex>
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
@@ -112,7 +112,7 @@ export const HomePage = () => {
 
                 <div className={styles.levelWrapper}>
                     <Flex className={styles.balance} alignItems='center'>
-                        <img src="/img/coin-icon-lg.png" alt="Coin"/>
+                        <img src="/img/coin-level.png" alt="Coin"/>
                         <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
                     </Flex>
                     <Link to='/levels'>

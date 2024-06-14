@@ -57,5 +57,10 @@
 
   "not_enough_coins": "Not enough coins",
 
+  "owner_tasks": "Clyde tasks",
+  "partner_tasks": "Sponsor tasks",
+
+  "no_invited_friends": "You don't have any invited friends yet. Send your link to your contacts to get bonuses from Clyde",
+
   "upgrade": "Upgrade"
 }

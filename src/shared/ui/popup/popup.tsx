@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Drawer, DrawerContent, DrawerOverlay} from "@chakra-ui/react";
 import styles from "./styles.module.scss";
 import cl from "classnames";
+import {boostImgData} from "../../../features/boost/model/utils.ts";
 
 
 interface IProps {
@@ -18,7 +19,7 @@ export const Popup: FC<IProps> = ({isOpen, onClose, children}) => {
                 <DrawerContent className={cl(styles.wrapper, 'gradientWrapper')}>
                     {children}
                     <button className={styles.close} onClick={onClose}>
-                        <img src="/img/close.png" alt="Close"/>
+                        <img src={boostImgData.closeIcon} alt="Close"/>
                     </button>
                     <span
                         className='gradient'

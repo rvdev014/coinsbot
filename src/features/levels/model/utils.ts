@@ -1,4 +1,4 @@
-export const levelsImgData: any = {
+export const levelsImgData = {
     level1: '/img/levels/level-1.png',
     level2: '/img/levels/level-2.png',
     level3: '/img/levels/level-3.png',

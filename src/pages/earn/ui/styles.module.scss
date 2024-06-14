@@ -7,6 +7,8 @@
   position: relative;
 
   .headerCoinIcon {
+    width: 105px;
+    height: 105px;
     border-radius: 50%;
     box-shadow: 0 0 100px 0 rgb(#FFD40517, 0.7);
   }
@@ -35,9 +37,9 @@
   }
 
   .dailyBtn {
-    position: absolute;
-    bottom: -20px;
-
+    //position: absolute;
+    //bottom: -20px;
+    margin-top: -20px;
     background: #262626;
     border-radius: 12px;
     padding: 8px 13px 8px 8px;
@@ -73,6 +75,8 @@
         }
 
         img {
+          width: 24px;
+          height: 24px;
           margin-right: 8px;
         }
 
@@ -83,7 +87,37 @@
 }
 
 .tasksWrapper {
-  margin-top: 50px;
+  margin-top: 30px;
+}
+
+.tasksList {
+  margin-bottom: 30px;
+}
+
+.tasksTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  margin-bottom: 16px;
+}
+
+.tasksTitle::before,
+.tasksTitle::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #323232;
+  margin: 0 15px;
+}
+
+.tasksTitle p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+  letter-spacing: -0.03em;
+  text-align: left;
 }
 
 .taskItem {
@@ -143,7 +177,10 @@
       letter-spacing: -0.04em;
       text-align: center;
     }
+
     img {
+      width: 24px;
+      height: 24px;
       margin-right: 5px;
     }
   }

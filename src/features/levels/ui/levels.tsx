@@ -112,7 +112,7 @@ export const Levels = () => {
                                                     {renderName(user)}
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
-                                                    <img src="/img/coin-icon.png" alt="Coin"/>
+                                                    <img src="/img/coin-level.png" alt="Coin"/>
                                                     <span>{formatPrice(user.coins)}</span>
                                                 </Flex>
                                             </div>

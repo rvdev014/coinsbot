@@ -11,6 +11,7 @@ export const boostImgData = {
     miningLg: '/img/mining-lg.png',
     boneIcon: '/img/bone-icon.png',
     boneLg: '/img/bone-icon-lg.png',
-    coinIconLg: '/img/coin-icon-lg.png',
+    coinIconLg: '/img/coin-level.png',
     turboLg: '/img/turbo-lg.png',
+    closeIcon: '/img/close.png',
 }

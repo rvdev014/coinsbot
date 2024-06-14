@@ -9,6 +9,8 @@ import {earnImgData} from "./utils.ts";
 
 const initialStore = {
     tasks: [] as ITask[],
+    tasksOwner: [] as ITask[],
+    tasksPartner: [] as ITask[],
     tasksOpenedUrl: [] as number[],
     bonuses: [] as IBonus[],
     selectedTask: null,
@@ -51,7 +53,10 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             set({isTasksLoading: true});
             return MainApi.getTasks()
                 .then((tasks) => {
-                    set({tasks});
+                    const tasksOwner = tasks.filter(task => task.type === 'owner');
+                    const tasksPartner = tasks.filter(task => task.type === 'partner');
+
+                    set({tasks, tasksOwner, tasksPartner});
                 })
                 .finally(() => {
                     set({isTasksLoading: false});

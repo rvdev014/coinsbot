@@ -1,5 +1,7 @@
 export interface IEarnStore {
     tasks: ITask[];
+    tasksOwner: ITask[];
+    tasksPartner: ITask[];
     bonuses: IBonus[];
     selectedTask: ITask | null;
     active_day_bonus: IBonus | null;
@@ -34,6 +36,7 @@ export interface ITask {
     img: string
     url: string
     channel_id: string
+    type: 'owner' | 'partner' | 'other'
     coins: number
     active: boolean
     is_external: boolean
