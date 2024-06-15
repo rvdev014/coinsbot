@@ -1,4 +1,22 @@
 import {createStandaloneToast} from "@chakra-ui/react";
+import {IUserData} from "../model/user/store-types.ts";
+
+export function renderUserName(user: IUserData) {
+    if (user?.first_name || user?.last_name) {
+        return [user?.first_name, user?.last_name].filter(Boolean).join(' ');
+    }
+    return user?.username;
+}
+
+export function getFirstLetter(user: IUserData) {
+    if (user.first_name || user.last_name) {
+        const first = user.first_name?.charAt(0);
+        const second = user.last_name?.charAt(0) ?? user.first_name?.charAt(1);
+
+        return (first ?? 'A') + (second ?? 'A');
+    }
+    return user.username?.charAt(0);
+}
 
 export function preloadImages(images: string[]) {
     return new Promise((resolve, reject) => {

@@ -50,7 +50,7 @@ export const MainLayout = () => {
     }, [layoutRef.current]);
 
     if (isAppLoading) {
-        return <Loader withText={true} size='xl'/>
+        return <Loader withText={true} size='xl' styles={{marginTop: '30px'}}/>
     }
 
     return (

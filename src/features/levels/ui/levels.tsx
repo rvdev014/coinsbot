@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
-import {formatNumber, formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
+import {formatNumber, formatPrice, getFirstLetter, hexToRgb, renderUserName} from "../../../shared/utils/other.ts";
 import {t} from "i18next";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
@@ -24,23 +24,6 @@ export const Levels = () => {
     useEffect(() => {
         initLevels();
     }, [userLevel]);
-
-    function getFirstLetter(user: IUserData) {
-        if (user.first_name || user.last_name) {
-            const first = user.first_name?.charAt(0);
-            const second = user.last_name?.charAt(0) ?? user.first_name?.charAt(1);
-
-            return (first ?? 'A') + (second ?? 'A');
-        }
-        return user.username?.charAt(0);
-    }
-
-    function renderName(user: IUserData) {
-        if (user?.first_name || user?.last_name) {
-            return [user?.first_name, user?.last_name].filter(Boolean).join(' ');
-        }
-        return user?.username;
-    }
 
     if (!level) return;
 
@@ -109,7 +92,7 @@ export const Levels = () => {
                                             </div>
                                             <div className={styles.userInfo}>
                                                 <p className={styles.userName}>
-                                                    {renderName(user)}
+                                                    {renderUserName(user)}
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <img src="/img/coin-level.png" alt="Coin"/>

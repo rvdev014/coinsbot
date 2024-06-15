@@ -3,16 +3,18 @@ import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
 import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
-import {showError} from "../../../shared/utils/other.ts";
+import {getFirstLetter, renderUserName, showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
 import {t} from "i18next";
 import {BOT_USERNAME} from "../../../shared/consts.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
+import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
 
+    const isLoading = useReferralStore(state => state.loading);
     const referrals = useReferralStore();
 
     useEffect(() => {
@@ -69,15 +71,16 @@ export const FriendsPage = () => {
                 <h2 className={styles.title}>{t('invite_frens')}</h2>
                 <hr className={styles.divider}/>
                 <p className={styles.text}>{t('you_have_earned')}</p>
-                <Flex className={styles.earnedBalance} alignItems='center'>
-                    <img src="/img/coin-level.png" alt="Coin"/>
-                    <span>{referrals?.total_coins ?? 0}</span>
-                </Flex>
-
-                <Flex className={styles.friendsInfo} alignItems='center'>
-                    <img src="/img/friends-icon.png" alt="Friends"/>
-                    <p>{referrals?.total_count ?? 0} <span>{t('friends')}</span></p>
-                </Flex>
+                <LoaderBlock loading={isLoading} height='90px'>
+                    <Flex className={styles.earnedBalance} alignItems='center'>
+                        <img src="/img/coin-level.png" alt="Coin"/>
+                        <span>{referrals?.total_coins ?? 0}</span>
+                    </Flex>
+                    <Flex className={styles.friendsInfo} alignItems='center'>
+                        <img src="/img/friends-icon.png" alt="Friends"/>
+                        <p>{referrals?.total_count ?? 0} <span>{t('friends')}</span></p>
+                    </Flex>
+                </LoaderBlock>
 
                 <span
                     className='gradient'
@@ -110,6 +113,7 @@ export const FriendsPage = () => {
             </Flex>
 
             <ConditionBlock
+                loading={isLoading}
                 condition={referrals?.total_count > 0}
                 emptyContent={
                     <div className={styles.friendsEmptyList}>
@@ -140,10 +144,12 @@ export const FriendsPage = () => {
                                         <Flex className={styles.userItem_left}>
                                             <div className={styles.userAvatar}>
                                                 {/*<img src="/img/asd.png" alt="Avatar"/>*/}
-                                                <p>v</p>
+                                                <p>{getFirstLetter(user) ?? 'AA'}</p>
                                             </div>
                                             <div className={styles.userInfo}>
-                                                <p className={styles.userName}>{user?.full_name ?? user?.username}</p>
+                                                <p className={styles.userName}>
+                                                    {renderUserName(user)}
+                                                </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <span className={styles.userLevel}>{user?.level?.title_en}</span>
                                                     <img src="/img/coin-level.png" alt="Coin"/>
