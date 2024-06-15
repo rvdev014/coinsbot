@@ -31,10 +31,12 @@ html, body {
     height: 100%;
     color: #fff!important;
     background: var(--Orlando-orlando-100, #1C1C1D)!important;
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
     touch-action: none !important;
+    scroll-behavior: smooth;
 }
 
 #root {

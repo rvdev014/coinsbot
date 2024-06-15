@@ -42,11 +42,11 @@ export const MainLayout = () => {
             }
         }
 
-        layout.addEventListener('scroll', scrollHandler);
+        /*layout.addEventListener('scroll', scrollHandler);
 
         return () => {
             layout.removeEventListener('scroll', scrollHandler);
-        };
+        };*/
     }, [layoutRef.current]);
 
     if (isAppLoading) {

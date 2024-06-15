@@ -48,8 +48,8 @@ export const useAppStore = create<IAppStore>((set, get) => {
                     preloadImages([
                         ...Object.values(boostImgData),
                         ...Object.values(earnImgData),
-                        ...Object.values(levelsImgData),
-                    ])
+                        // ...Object.values(levelsImgData),
+                    ] as any)
                 ];
 
                 await Promise.allSettled(promises);
