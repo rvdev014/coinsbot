@@ -1,4 +1,4 @@
-export const boostImgData = {
+export const boostImgData: any = {
     pawLg: '/img/paw-lg.png',
     question: '/img/question.png',
     energyIconLg: '/img/energy-icon-lg.png',
