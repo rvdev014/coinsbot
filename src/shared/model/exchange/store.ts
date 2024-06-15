@@ -50,7 +50,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             } catch (e) {
                 showError()
             }
-        }, 300),
+        }, 500),
 
         reset: () => set(initialStore),
     }

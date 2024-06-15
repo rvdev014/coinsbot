@@ -25,6 +25,11 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
 
                 set({currentLevel});
 
+                const cacheExists = get().levelsCache.find(level => level.level.step === currentLevel.step);
+                if (cacheExists) {
+                    return set({...cacheExists});
+                }
+
                 const promises = [
                     preloadImages(Object.values(levelsImgData)),
                     CoinsApi.getLevels().then(levelsData => set({levelsData})),

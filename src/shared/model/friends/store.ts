@@ -1,9 +1,10 @@
 import {create} from "zustand";
-import {IFriendsStore} from "./store-types.ts";
+import {IFriendsStore, IList} from "./store-types.ts";
 import {MainApi} from "../../api/main-api.ts";
 import {showError} from "../../utils/other.ts";
 
 const initialStore = {
+    list: [] as IList[],
     loading: false,
 } as IFriendsStore;
 
@@ -14,6 +15,8 @@ export const useReferralStore = create<IFriendsStore>((set, get) => {
 
             try {
                 set({loading: true});
+
+                if (get().list.length > 0) return;
 
                 const result = await MainApi.getReferrals(userId);
                 if (!result) return;

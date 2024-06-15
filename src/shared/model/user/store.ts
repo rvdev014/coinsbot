@@ -19,7 +19,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 if (!userId) return;
                 const user = await MainApi.userPerHour(userId, params);
                 if (user) {
-                    get().setInitialStore({...user});
+                    get().setInitialStore({...user}, true);
                     get().initInterval();
                 }
             } catch (e) {
@@ -59,7 +59,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             }*/
         },
 
-        setInitialStore: async (store) => {
+        setInitialStore: async (store, withEnergy = false) => {
 
             let coinsPerTap = store.coins_per_tap;
             if (dateGreaterThan(store.multi_tap)) {
@@ -92,6 +92,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 coins_per_tap: coinsPerTap,
                 coins_per_hour: coinsPerHour,
                 energy_per_second: energyPerSecond,
+                energy: withEnergy ? store.energy : get().energy,
                 day_bonus: dayBonus,
             });
         },

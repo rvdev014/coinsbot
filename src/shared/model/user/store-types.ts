@@ -5,7 +5,7 @@ export interface IUserStore extends IUserData {
     energyTimeout: number | null;
     coinsTimeout: number | null;
 
-    setInitialStore(store: IUserData): void;
+    setInitialStore(store: IUserData, withEnergy?: boolean): void;
     init(userId: number, params?: IPerHourPayload): Promise<void>;
     initInterval(): void;
     updateLevel(): Promise<void>;

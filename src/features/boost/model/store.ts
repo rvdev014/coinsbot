@@ -22,7 +22,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.restoreEnergy(userId);
                 if (user) {
-                    // set({popupType: null})
+                    set({popupType: null})
                     useUserStore.getState().setInitialStore({...user})
 
                     get().checkRestoreEnergyClaimDisabled()

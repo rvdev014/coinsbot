@@ -83,8 +83,12 @@ export const Levels = () => {
                             ?
                             <>
                                 {users.map((user: IUserData, index: number) => (
-                                    <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'
-                                          key={1}>
+                                    <Flex
+                                        className={styles.userItem}
+                                        justifyContent='space-between'
+                                        alignItems='center'
+                                        key={index}
+                                    >
                                         <Flex className={styles.userItem_left}>
                                             <div className={styles.userAvatar}>
                                                 {/*<img src="/img/asd.png" alt="Avatar"/>*/}
