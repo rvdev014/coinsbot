@@ -24,6 +24,7 @@ export interface IPerHourPayload {
 }
 
 export interface IUserData {
+    id: number,
     user_id: number,
     day_bonus_id: number,
     level_id: number,
