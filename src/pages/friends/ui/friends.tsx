@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
 import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
-import {getFirstLetter, renderUserName, showError} from "../../../shared/utils/other.ts";
+import {formatPrice, getFirstLetter, renderUserName, showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
 import {t} from "i18next";
 import {BOT_USERNAME} from "../../../shared/consts.ts";
@@ -74,7 +74,7 @@ export const FriendsPage = () => {
                 <LoaderBlock loading={isLoading} height='90px'>
                     <Flex className={styles.earnedBalance} alignItems='center'>
                         <img src="/img/coin-level.png" alt="Coin"/>
-                        <span>{referrals?.total_coins ?? 0}</span>
+                        <span>{formatPrice(referrals?.total_coins ?? 0)}</span>
                     </Flex>
                     <Flex className={styles.friendsInfo} alignItems='center'>
                         <img src="/img/friends-icon.png" alt="Friends"/>
@@ -153,7 +153,7 @@ export const FriendsPage = () => {
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <span className={styles.userLevel}>{user?.level?.title_en}</span>
                                                     <img src="/img/coin-level.png" alt="Coin"/>
-                                                    <span>{user?.coins}</span>
+                                                    <span>{formatPrice(user?.coins)}</span>
                                                 </Flex>
                                             </div>
                                         </Flex>

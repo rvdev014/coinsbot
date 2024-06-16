@@ -6,6 +6,7 @@ import {CoinsApi} from "../../../shared/api/coins-api.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {apiInstance} from "../../../shared/api/axios.ts";
 import {dateGreaterThan} from "../../../shared/utils/date.ts";
+import {history} from "../../../app/router/router-history.ts";
 
 const initialStore = {
     isSubmitLoading: false,
@@ -24,10 +25,10 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 if (user) {
                     set({popupType: null})
                     useUserStore.getState().setInitialStore({...user}, true)
-
-                    get().checkRestoreEnergyClaimDisabled()
+                    get().checkRestoreEnergyClaimDisabled();
 
                     success('Energy restored successfully.')
+                    history.push('/')
                 }
             } catch (e) {
                 showError()
@@ -51,6 +52,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Turbo energy upgraded successfully.')
+                history.push('/')
             } catch (e) {
                 showError()
             } finally {
@@ -66,6 +68,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Coins per tap upgraded successfully.')
+                history.push('/')
             } catch (e) {
                 showError()
             } finally {
@@ -81,6 +84,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Multi tap upgraded successfully.')
+                history.push('/')
             } catch (e) {
                 showError()
             } finally {
@@ -96,6 +100,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Mining started successfully.')
+                history.push('/')
             } catch (e) {
                 showError()
             } finally {
@@ -111,6 +116,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Energy limit upgraded successfully.')
+                history.push('/')
             } catch (e) {
                 showError()
             } finally {
