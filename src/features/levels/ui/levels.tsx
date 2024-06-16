@@ -12,6 +12,7 @@ import {levelsImgData} from "../model/utils.ts";
 
 export const Levels = () => {
 
+    const userId = useUserStore(state => state.id);
     const userLevel = useUserStore(state => state.level);
 
     const level = useLevelStore(state => state.currentLevel);
@@ -82,32 +83,71 @@ export const Levels = () => {
                         users?.length > 0
                             ?
                             <>
-                                {users.map((user: IUserData, index: number) => (
-                                    <Flex
-                                        className={styles.userItem}
-                                        justifyContent='space-between'
-                                        alignItems='center'
-                                        key={index}
-                                    >
-                                        <Flex className={styles.userItem_left}>
-                                            <div className={styles.userAvatar}>
-                                                {/*<img src="/img/asd.png" alt="Avatar"/>*/}
-                                                <p>{getFirstLetter(user) ?? 'AA'}</p>
-                                            </div>
-                                            <div className={styles.userInfo}>
-                                                <p className={styles.userName}>
-                                                    {renderUserName(user)}
-                                                </p>
-                                                <Flex className={styles.userBalance} alignItems='center'>
-                                                    <img src="/img/coin-level.png" alt="Coin"/>
-                                                    <span>{formatPrice(user.coins)}</span>
-                                                </Flex>
-                                            </div>
-                                        </Flex>
+                                {users.map((user: IUserData, index: number) => {
 
-                                        <p className={styles.userRank}>{index + 1}</p>
-                                    </Flex>
-                                ))}
+                                    if (user.id === userId) {
+                                        return (
+                                            <Flex
+                                                className={styles.userItem}
+                                                justifyContent='space-between'
+                                                alignItems='center'
+                                                key={index}
+                                                style={{
+                                                    position: 'sticky',
+                                                    top: '0',
+                                                    bottom: '0',
+                                                    zIndex: 999,
+                                                    border: `1px solid ${level.color}`,
+                                                }}
+                                            >
+                                                <Flex className={styles.userItem_left}>
+                                                    <div className={styles.userAvatar}>
+                                                        {/*<img src="/img/asd.png" alt="Avatar"/>*/}
+                                                        <p>{getFirstLetter(user) ?? 'AA'}</p>
+                                                    </div>
+                                                    <div className={styles.userInfo}>
+                                                        <p className={styles.userName}>
+                                                            {renderUserName(user)}
+                                                        </p>
+                                                        <Flex className={styles.userBalance} alignItems='center'>
+                                                            <img src="/img/coin-level.png" alt="Coin"/>
+                                                            <span>{formatPrice(user.coins)}</span>
+                                                        </Flex>
+                                                    </div>
+                                                </Flex>
+
+                                                <p className={styles.userRank}>{index + 1}</p>
+                                            </Flex>
+                                        );
+                                    }
+
+                                    return (
+                                        <Flex
+                                            className={styles.userItem}
+                                            justifyContent='space-between'
+                                            alignItems='center'
+                                            key={index}
+                                        >
+                                            <Flex className={styles.userItem_left}>
+                                                <div className={styles.userAvatar}>
+                                                    {/*<img src="/img/asd.png" alt="Avatar"/>*/}
+                                                    <p>{getFirstLetter(user) ?? 'AA'}</p>
+                                                </div>
+                                                <div className={styles.userInfo}>
+                                                    <p className={styles.userName}>
+                                                        {renderUserName(user)}
+                                                    </p>
+                                                    <Flex className={styles.userBalance} alignItems='center'>
+                                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                                        <span>{formatPrice(user.coins)}</span>
+                                                    </Flex>
+                                                </div>
+                                            </Flex>
+
+                                            <p className={styles.userRank}>{index + 1}</p>
+                                        </Flex>
+                                    )
+                                })}
                             </>
                             :
                             <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'>

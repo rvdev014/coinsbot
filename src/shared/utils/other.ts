@@ -76,12 +76,11 @@ const {toast} = createStandaloneToast()
 
 export function success(message?: string) {
     toast({
-        title: 'Success.',
+        // title: 'Success.',
         description: message || "Request completed successfully.",
         status: 'success',
         position: "top",
         duration: 3000,
-        isClosable: true,
     })
 }
 
@@ -92,7 +91,6 @@ export function showError(message?: string) {
         status: 'error',
         position: "top",
         duration: 9000,
-        isClosable: true,
         size: 'small'
     })
 }
