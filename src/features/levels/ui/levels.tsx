@@ -15,6 +15,8 @@ export const Levels = () => {
     const userId = useUserStore(state => state.id);
     const userLevel = useUserStore(state => state.level);
 
+    const rank = useLevelStore(state => state.rank);
+    const currentUser = useUserStore(state => state);
     const level = useLevelStore(state => state.currentLevel);
     const users = useLevelStore(state => state.users);
     const isLoading = useLevelStore(state => state.isLoading);
@@ -157,6 +159,40 @@ export const Levels = () => {
                                     </div>
                                 </Flex>
                             </Flex>}
+
+                    {rank > 100 && (
+                        <Flex
+                            className={styles.userItem}
+                            justifyContent='space-between'
+                            alignItems='center'
+                            style={{
+                                position: 'sticky',
+                                top: '0',
+                                bottom: '0',
+                                zIndex: 999,
+                                border: `1px solid ${level.color}`,
+                            }}
+                        >
+                            <Flex className={styles.userItem_left}>
+                                <div className={styles.userAvatar}>
+                                    {/*<img src="/img/asd.png" alt="Avatar"/>*/}
+                                    <p>{getFirstLetter(currentUser) ?? 'AA'}</p>
+                                </div>
+                                <div className={styles.userInfo}>
+                                    <p className={styles.userName}>
+                                        {renderUserName(currentUser)}
+                                    </p>
+                                    <Flex className={styles.userBalance} alignItems='center'>
+                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                        <span>{formatPrice(currentUser.coins)}</span>
+                                    </Flex>
+                                </div>
+                            </Flex>
+
+                            <p className={styles.userRank}>{rank}</p>
+                        </Flex>
+                    )}
+
                 </div>
             </div>
         </div>
