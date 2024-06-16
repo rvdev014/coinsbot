@@ -28,7 +28,7 @@ export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
 
     useEffect(() => {
         useBoostStore.getState().checkRestoreEnergyClaimDisabled();
-    }, []);
+    }, [restoreEnergyEndsAt]);
 
     function onTimerEnds() {
         useBoostStore.getState().checkRestoreEnergyClaimDisabled();

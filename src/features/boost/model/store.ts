@@ -23,7 +23,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 const user  = await CoinsApi.restoreEnergy(userId);
                 if (user) {
                     set({popupType: null})
-                    useUserStore.getState().setInitialStore({...user})
+                    useUserStore.getState().setInitialStore({...user}, true)
 
                     get().checkRestoreEnergyClaimDisabled()
 
@@ -39,9 +39,8 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
         checkRestoreEnergyClaimDisabled: async () => {
             const restoreEnergyAt = new Date(useUserStore.getState().restore_energy_at)
             restoreEnergyAt.setHours(restoreEnergyAt.getHours() + 6);
-            const restoreEnergyEndsAt = new Date(restoreEnergyAt);
 
-            set({isRestoreEnergyClaimDisabled: dateGreaterThan(restoreEnergyEndsAt)})
+            set({isRestoreEnergyClaimDisabled: dateGreaterThan(restoreEnergyAt)})
         },
 
         onTurboEnergyUpdate: async () => {
