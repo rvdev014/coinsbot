@@ -11,6 +11,7 @@ import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progr
 
 import 'react-circular-progressbar/dist/styles.css';
 import cl from "classnames";
+import {Balance} from "../../../shared/ui/balance/balance.tsx";
 
 export const HomePage = () => {
 
@@ -65,7 +66,7 @@ export const HomePage = () => {
 
     function getRemainCoins(coins: number) {
         if (!nextLevel) return 0;
-        return formatPrice(nextLevel?.coins - coins);
+        return nextLevel?.coins - coins;
     }
 
     function getProgress(forEnergy = false) {
@@ -93,7 +94,7 @@ export const HomePage = () => {
                 <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                     <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
                     <Flex className={styles.headerInfo_info}>
-                        <Text>{getRemainCoins(coins)}</Text>
+                        <Balance value={getRemainCoins(coins)} width='9px' spaceWidth='2px'></Balance>
                     </Flex>
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
                 </div>
@@ -113,7 +114,11 @@ export const HomePage = () => {
                 <div className={styles.levelWrapper}>
                     <Flex className={styles.balance} alignItems='center'>
                         <img src="/img/coin-level.png" alt="Coin"/>
-                        <Text className={styles.balance_number}>{formatPrice(coins)}</Text>
+                        <Balance
+                            value={coins}
+                            className={styles.balanceNumber}
+                            classNameWrapper={styles.balanceNumberWrapper}
+                        ></Balance>
                     </Flex>
                     <Link to='/levels'>
                         <Flex className={styles.level} alignItems='center'>
