@@ -5,6 +5,7 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Link} from "react-router-dom";
 import {t} from "i18next";
 import {boostImgData} from "../../../features/boost/model/utils.ts";
+import {motion} from "framer-motion";
 
 export const EnergyInfo = () => {
 
@@ -14,18 +15,24 @@ export const EnergyInfo = () => {
 
     return (
         <Flex className={styles.footer} justifyContent='space-between'>
-            <Flex className={styles.energy} alignItems='center'>
+            <motion.div
+                initial={{ x: -20 }}
+                animate={{ x: 0 }}
+                className={styles.energy}
+            >
                 <img src="/img/energy-icon.png" alt="Energy"/>
                 <Text>{energy}/{energyLimit}</Text>
-            </Flex>
-            <button>
-                <Link to='/boost'>
-                    <Flex className={styles.boost} alignItems='center'>
-                        <img src={boostImgData.turboLg} alt="Boost"/>
-                        <Text>{t('boost')}</Text>
-                    </Flex>
-                </Link>
-            </button>
+            </motion.div>
+            <Link to='/boost'>
+                <motion.div
+                    initial={{ x: 20 }}
+                    animate={{ x: 0 }}
+                    className={styles.boost}
+                >
+                    <img src={boostImgData.turboLg} alt="Boost"/>
+                    <Text>{t('boost')}</Text>
+                </motion.div>
+            </Link>
         </Flex>
     );
 };

@@ -15,28 +15,14 @@
     <script type="module" src="/src/main.tsx"></script>
 
     <script>
-      document.addEventListener('touchstart', handleTouchStart);
-      document.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchmove', function (event) {
+        event.preventDefault()
+      }, false)
 
-      let initialY = null; // Store initial touch position
-
-      function handleTouchStart(event) {
-        initialY = event.touches[0].clientY; // Record initial Y position
-      }
-
-      function handleTouchMove(event) {
-        if (initialY !== null) {
-          const deltaY = event.touches[0].clientY - initialY;
-
-          // Allow scrolling if swipe is within a reasonable threshold
-          if (Math.abs(deltaY) < 50) { // Adjust threshold as needed
-            event.stopPropagation(); // Prevent further event propagation
-          } else {
-            // Reset initialY for next touch event
-            initialY = null;
-          }
-        }
-      }
+      // Allows content to move on touch.
+      document.addEventListener('touchmove', function (event) {
+        event.stopPropagation()
+      }, false)
     </script>
 
   </body>

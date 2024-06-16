@@ -12,6 +12,7 @@ import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progr
 import 'react-circular-progressbar/dist/styles.css';
 import cl from "classnames";
 import {Balance} from "../../../shared/ui/balance/balance.tsx";
+import {motion} from "framer-motion";
 
 export const HomePage = () => {
 
@@ -80,7 +81,11 @@ export const HomePage = () => {
     return (
         <div className={styles.wrapper}>
 
-            <Flex className={styles.header} justifyContent='space-between'>
+            <motion.div
+                initial={{x: -20}}
+                animate={{x: 0}}
+                className={styles.header}
+            >
 
                 <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                     <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
@@ -107,33 +112,39 @@ export const HomePage = () => {
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
                 </div>
 
-            </Flex>
+            </motion.div>
 
             <div className={styles.mainContent}>
 
                 <div className={styles.levelWrapper}>
-                    <Flex className={styles.balance} alignItems='center'>
+                    <motion.div initial={{x: 20}} animate={{x: 0}} className={styles.balance}>
                         <img src="/img/coin-level.png" alt="Coin"/>
                         <Balance
                             value={coins}
                             className={styles.balanceNumber}
                             classNameWrapper={styles.balanceNumberWrapper}
                         ></Balance>
-                    </Flex>
-                    <Link to='/levels'>
-                        <Flex className={styles.level} alignItems='center'>
-                            <Flex className={styles.level_info}>
-                                <Text>{level?.title}</Text>
-                                <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
+                    </motion.div>
+                    <motion.div initial={{x: -20}} animate={{x: 0}}>
+                        <Link to='/levels'>
+                            <Flex className={styles.level} alignItems='center'>
+                                <Flex className={styles.level_info}>
+                                    <Text>{level?.title}</Text>
+                                    <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
+                                </Flex>
+                                <div className={styles.level_btn}>
+                                    <img src="/img/arrow.png" alt="Arrow"/>
+                                </div>
                             </Flex>
-                            <div className={styles.level_btn}>
-                                <img src="/img/arrow.png" alt="Arrow"/>
-                            </div>
-                        </Flex>
-                    </Link>
+                        </Link>
+                    </motion.div>
                 </div>
 
-                <div className={styles.tapWrapper}>
+                <motion.div
+                    initial={{scale: 1.1}}
+                    animate={{scale: 1}}
+                    className={styles.tapWrapper}
+                >
                     <CircularProgressbarWithChildren
                         value={getProgress(true)}
                         strokeWidth={2}
@@ -159,7 +170,7 @@ export const HomePage = () => {
                             />
                         </button>
                     </CircularProgressbarWithChildren>
-                </div>
+                </motion.div>
 
                 <EnergyInfo/>
 

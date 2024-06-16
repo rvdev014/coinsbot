@@ -1,5 +1,6 @@
 import React, {FC, ReactNode} from 'react';
 import {Loader} from "../loader/loader.tsx";
+import {motion} from "framer-motion";
 
 interface IProps {
     loading?: boolean;

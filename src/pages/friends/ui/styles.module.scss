@@ -76,6 +76,8 @@
 
 
 .infoBlocks {
+  display: flex;
+  gap: 8px;
   margin-top: 8px;
 }
 
@@ -252,7 +254,7 @@
 }
 
 .inviteFriendBtn {
-  width: 99%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

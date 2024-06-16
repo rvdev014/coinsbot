@@ -10,6 +10,7 @@ import {BOT_USERNAME} from "../../../shared/consts.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
+import {motion} from "framer-motion";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
@@ -67,7 +68,11 @@ export const FriendsPage = () => {
     return (
         <div className={styles.wrapper}>
 
-            <div className={cl(styles.mainBlock, 'gradientWrapper')}>
+            <motion.div
+                initial={{ x: 20 }}
+                animate={{ x: 0 }}
+                className={cl(styles.mainBlock, 'gradientWrapper')}
+            >
                 <h2 className={styles.title}>{t('invite_frens')}</h2>
                 <hr className={styles.divider}/>
                 <p className={styles.text}>{t('you_have_earned')}</p>
@@ -89,9 +94,13 @@ export const FriendsPage = () => {
                         top: '-30px',
                     }}
                 />
-            </div>
+            </motion.div>
 
-            <Flex className={styles.infoBlocks} gap='8px'>
+            <motion.div
+                initial={{ x: -20 }}
+                animate={{ x: 0 }}
+                className={styles.infoBlocks}
+            >
                 <div className={cl(styles.infoBlock, 'gradientWrapper')}>
                     <h3 className={styles.infoBlock_title}>{t('regular_user')}</h3>
                     <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
@@ -110,18 +119,26 @@ export const FriendsPage = () => {
                     </Flex>
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(117, 70, 251, 0.5)`}}/>
                 </div>
-            </Flex>
+            </motion.div>
 
             <ConditionBlock
                 loading={isLoading}
                 condition={referrals?.total_count > 0}
                 emptyContent={
-                    <div className={styles.friendsEmptyList}>
+                    <motion.div
+                        initial={{ x: 20 }}
+                        animate={{ x: 0 }}
+                        className={styles.friendsEmptyList}
+                    >
                         {t('no_invited_friends')}
-                    </div>
+                    </motion.div>
                 }
             >
-                <div className={styles.friendsWrapper}>
+                <motion.div
+                    initial={{ x: 20 }}
+                    animate={{ x: 0 }}
+                    className={styles.friendsWrapper}
+                >
 
                     {referrals?.list?.map((list, index) => (
                         <ConditionBlock condition={list?.count > 0} key={list?.level}>
@@ -164,7 +181,7 @@ export const FriendsPage = () => {
                         </ConditionBlock>
                     ))}
 
-                </div>
+                </motion.div>
             </ConditionBlock>
 
             {/*{*/}
@@ -174,7 +191,11 @@ export const FriendsPage = () => {
             {/*}*/}
 
             <div className={styles.inviteFriendBtnWrapper}>
-                <button className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}>
+                <motion.button
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}
+                >
                     {t('invite_fren')}
                     <span
                         className='gradient'
@@ -183,7 +204,7 @@ export const FriendsPage = () => {
                             bottom: '-30px'
                         }}
                     />
-                </button>
+                </motion.button>
             </div>
 
 
