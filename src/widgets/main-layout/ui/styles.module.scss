@@ -3,6 +3,7 @@
   margin: 0 auto;
   height: calc(100vh - 64px - 10px);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   overflow-x: hidden;

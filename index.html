@@ -13,5 +13,17 @@
     <div id="root"></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      window.addEventListener('touchmove', function (event) {
+        event.preventDefault()
+      }, false)
+
+      // Allows content to move on touch.
+      document.addEventListener('touchmove', function (event) {
+        event.stopPropagation()
+      }, false)
+    </script>
+
   </body>
 </html>

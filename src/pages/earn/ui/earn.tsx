@@ -13,6 +13,8 @@ import {earnImgData} from "../../../shared/model/earn/utils.ts";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 
+import {motion} from "framer-motion";
+
 export const EarnPage = () => {
 
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
@@ -41,11 +43,29 @@ export const EarnPage = () => {
             <div className={styles.wrapper}>
 
                 <div className={styles.header}>
-                    <img className={styles.headerCoinIcon} src={earnImgData.coinLevel} alt="Coin level"/>
-                    <p className={styles.title}>{t('earn_more_coins')}</p>
-                    <p className={styles.bonusTitle}>+{formatPrice(totalBonusCoins ?? 0)}</p>
+                    <motion.img
+                        initial={{ y: -20 }}
+                        animate={{ y: 0 }}
+                        className={styles.headerCoinIcon} src={earnImgData.coinLevel}
+                        alt="Coin level"
+                    />
+                    <motion.p
+                        initial={{ x: -20 }}
+                        animate={{ x: 0 }}
+                        className={styles.title}
+                    >{t('earn_more_coins')}</motion.p>
+                    <motion.p
+                        initial={{ x: 20 }}
+                        animate={{ x: 0 }}
+                        className={styles.bonusTitle}
+                    >+{formatPrice(totalBonusCoins ?? 0)}</motion.p>
 
-                    <button className={styles.dailyBtn} onClick={onDailyClick}>
+                    <motion.button
+                        initial={{ x: -20 }}
+                        animate={{ x: 0 }}
+                        className={styles.dailyBtn}
+                        onClick={onDailyClick}
+                    >
                         <Flex className={styles.dailyBtn_left}>
                             <div className={styles.badgeIcon}>
                                 <img src={earnImgData.coinIcon} alt="Coin"/>
@@ -54,11 +74,15 @@ export const EarnPage = () => {
                             <p>{t('daily_reward')}</p>
                         </Flex>
                         <img src={earnImgData.arrow} alt="Arrow"/>
-                    </button>
+                    </motion.button>
                 </div>
 
                 <LoaderBlock loading={isTasksLoading}>
-                    <div className={styles.tasksWrapper}>
+                    <motion.div
+                        initial={{ x: -20 }}
+                        animate={{ x: 0 }}
+                        className={styles.tasksWrapper}
+                    >
 
                         <ConditionBlock condition={tasksOwner.length > 0}>
                             <div className={styles.tasksList}>
@@ -162,7 +186,7 @@ export const EarnPage = () => {
                             </div>
                         </ConditionBlock>
 
-                    </div>
+                    </motion.div>
                 </LoaderBlock>
             </div>
 

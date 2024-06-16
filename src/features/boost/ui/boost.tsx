@@ -16,6 +16,7 @@ import {EnergyLimitPopup} from "./popups/energy-limit-popup.tsx";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {boostImgData} from "../model/utils.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
+import {motion} from "framer-motion";
 
 export const Boost = () => {
 
@@ -45,7 +46,11 @@ export const Boost = () => {
         <>
             <div className={styles.wrapper}>
 
-                <div className={cl(styles.mainCard, 'gradientWrapper')}>
+                <motion.div
+                    initial={{ x: 20 }}
+                    animate={{ x: 0 }}
+                    className={cl(styles.mainCard, 'gradientWrapper')}
+                >
                     <p className={styles.mainCard_title}>{t('your_balance')}</p>
                     <UserCoins>
                         {({coins}) => (
@@ -67,9 +72,13 @@ export const Boost = () => {
                             top: '-30px'
                         }}
                     />
-                </div>
+                </motion.div>
 
-                <div className={styles.freeBoosters}>
+                <motion.div
+                    initial={{ x: -20 }}
+                    animate={{ x: 0 }}
+                    className={styles.freeBoosters}
+                >
                     <p className={styles.title}>{t('boosters')}</p>
                     <Flex className={styles.balance} justifyContent='space-between' gap={'11px'}>
 
@@ -118,9 +127,13 @@ export const Boost = () => {
                         </Flex>
 
                     </Flex>
-                </div>
+                </motion.div>
 
-                <div className={styles.boosters}>
+                <motion.div
+                    initial={{ x: 20 }}
+                    animate={{ x: 0 }}
+                    className={styles.boosters}
+                >
 
                     <div className={styles.boostersList}>
 
@@ -253,7 +266,7 @@ export const Boost = () => {
                         </Flex>
 
                     </div>
-                </div>
+                </motion.div>
 
             </div>
 

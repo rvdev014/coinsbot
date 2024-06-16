@@ -9,6 +9,7 @@ import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IUserData} from "../../../shared/model/user/store-types.ts";
 import cl from "classnames";
 import {levelsImgData} from "../model/utils.ts";
+import {motion} from "framer-motion";
 
 export const Levels = () => {
 
@@ -32,7 +33,11 @@ export const Levels = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Flex className={styles.slider}>
+            <motion.div
+                initial={{ x: 20 }}
+                animate={{ x: 0 }}
+                className={styles.slider}
+            >
                 <button
                     className={cl(styles.arrow, styles.arrowLeft)}
                     onClick={() => onSlide('prev')}
@@ -68,14 +73,22 @@ export const Levels = () => {
                 >
                     <img src="/img/arrow-right.png" alt="Right"/>
                 </button>
-            </Flex>
+            </motion.div>
 
-            <div className={styles.levelInfo}>
+            <motion.div
+                initial={{ x: -20 }}
+                animate={{ x: 0 }}
+                className={styles.levelInfo}
+            >
                 <h2 className={styles.levelTitle}>{level.title}</h2>
                 <h2 className={styles.levelText}>{t('from')} {formatNumber(level.coins)}</h2>
-            </div>
+            </motion.div>
 
-            <div className={styles.usersWrapper}>
+            <motion.div
+                initial={{ x: 20 }}
+                animate={{ x: 0 }}
+                className={styles.usersWrapper}
+            >
                 <div className={styles.usersList}>
 
                     {(isLoading || isStatsLoading)
@@ -194,7 +207,7 @@ export const Levels = () => {
                             </Flex>}
 
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 };

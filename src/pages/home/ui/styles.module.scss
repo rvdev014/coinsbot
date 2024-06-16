@@ -4,6 +4,8 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
   height: 64px;
   gap: 9px;
 }
@@ -58,6 +60,8 @@
 }
 
 .balance {
+  display: flex;
+  align-items: center;
   margin-bottom: 16px;
 
   .balanceNumberWrapper {
@@ -135,6 +139,8 @@
   margin-bottom: 10px;
 
   .energy {
+    display: flex;
+    align-items: center;
     img {
       width: 32px;
       height: 32px;
@@ -143,6 +149,8 @@
   }
 
   .boost {
+    display: flex;
+    align-items: center;
     img {
       width: 32px;
       height: 32px;
