@@ -15,14 +15,20 @@
     <script type="module" src="/src/main.tsx"></script>
 
     <script>
-      window.addEventListener('touchmove', function (event) {
-        event.preventDefault()
-      }, false)
+      /*document.addEventListener('touchstart', function(event) {
+        if (event.target.closest('.scrollable')) {
+          event.target.closest('.scrollable').style.touchAction = 'auto';
+        } else {
+          event.preventDefault();
+        }
+      }, { passive: false });
 
-      // Allows content to move on touch.
-      document.addEventListener('touchmove', function (event) {
-        event.stopPropagation()
-      }, false)
+      document.addEventListener('touchmove', function(event) {
+        console.log('asd')
+        if (!event.target.closest('.scrollable')) {
+          event.preventDefault();
+        }
+      }, { passive: false });*/
     </script>
 
   </body>

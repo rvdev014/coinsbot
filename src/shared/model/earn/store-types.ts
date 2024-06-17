@@ -33,12 +33,14 @@ export interface ITask {
     title: string
     title_ru: string
     title_en: string
-    img: string
+    img: string | null
     url: string
-    channel_id: string
+    channel_id: string | null
     type: 'owner' | 'partner' | 'other'
     coins: number
-    active: boolean
+    count: number
+    hours: number | null
+    active?: boolean
     is_external: boolean
     created_at: string
     updated_at: string

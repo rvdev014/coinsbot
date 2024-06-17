@@ -11,6 +11,7 @@
 
 // styles scroll bars
 ::-webkit-scrollbar {
+    //width: 5px;
     width: 0;
 }
 
@@ -27,20 +28,12 @@ img {
     user-select: none;
 }
 
-html {
-    height: 100%;
-}
-
 html, body {
     height: 100%;
     color: #fff!important;
     background: var(--Orlando-orlando-100, #1C1C1D)!important;
     overflow: hidden;
-}
-
-body {
-    touch-action: none !important;
-    scroll-behavior: smooth;
+    touch-action: none!important;
 }
 
 #root {

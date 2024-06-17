@@ -65,6 +65,7 @@ export interface IUserData {
 }
 
 export interface ILevel {
+    id: number
     title: string
     title_ru: string
     title_en: string

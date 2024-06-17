@@ -4,12 +4,14 @@ import {Outlet, useLocation} from "react-router-dom";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {BottomMenu} from "../../bottom-menu";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
+import cl from "classnames";
+import useEventListener from "../../../shared/hooks/useEventListener.ts";
 
 export const MainLayout = () => {
 
     const isAppLoading = useAppStore(state => state.isAppLoading)
     const initTelegram = useAppStore(state => state.initTelegram)
-    const layoutRef = React.useRef<HTMLDivElement>(null)
+    const scrollableRef = React.useRef<any>(null)
 
     useEffect(() => {
         initTelegram();
@@ -26,36 +28,57 @@ export const MainLayout = () => {
         }
     }, [location]);
 
-    useEffect(() => {
-        if (!layoutRef.current) return;
+    const handleTouchStart = (e: any) => {
+        const scrollable = scrollableRef.current;
+        scrollable.startY = e.touches[0].pageY;
+        scrollable.startScrollTop = scrollable.scrollTop;
+    };
 
-        const layout = layoutRef.current;
-        console.log('layout', layout)
+    const handleTouchMove = (e: any) => {
 
-        function scrollHandler() {
-            console.log('layout.scrollTop', layout.scrollTop)
-            if (layout.scrollTop === 0) {
-                layout.scrollTop = 1; // Prevent bounce effect when reaching the top
-            }
-            if (layout.scrollTop + layout.offsetHeight === layout.scrollHeight) {
-                layout.scrollTop = layout.scrollTop - 1; // Prevent bounce effect when reaching the bottom
-            }
+        if (e.target.closest('#tapper')) return;
+
+        const scrollable = scrollableRef.current;
+        const distance = e.touches[0].pageY - scrollable.startY;
+        const isTop = scrollable.scrollTop <= 0;
+        const isBottom = (scrollable.scrollHeight - scrollable.scrollTop - 1) <= scrollable.clientHeight;
+
+        if ((isTop && distance > 0) || (isBottom && distance < 0)) {
+            // e.preventDefault();
+            scrollable.style.transform = `translateY(${distance / 16}px)`;
         }
+    };
 
-        /*layout.addEventListener('scroll', scrollHandler);
-
-        return () => {
-            layout.removeEventListener('scroll', scrollHandler);
-        };*/
-    }, [layoutRef.current]);
+    const handleTouchEnd = () => {
+        const scrollable = scrollableRef.current;
+        scrollable.style.transition = 'transform 0.3s ease';
+        scrollable.style.transform = 'translateY(0px)';
+        setTimeout(() => {
+            scrollable.style.transition = '';
+        }, 300);
+    };
 
     if (isAppLoading) {
-        return <Loader withText={true} size='xl' styles={{marginTop: '30px'}}/>
+        return (
+            <div className={styles.bg}>
+                <Loader withText={true} size='xl' styles={{marginTop: '0'}}/>
+            </div>
+        )
     }
 
     return (
-        <div id='layoutWrapper' className={styles.wrapper} ref={layoutRef}>
-            <div className={styles.content}>
+        <div
+            id='layoutWrapper'
+            className={cl(styles.wrapper)}
+            // ref={scrollableRef}
+        >
+            <div
+                className={cl(styles.content, 'scrollable')}
+                ref={scrollableRef}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
                 <Outlet/>
             </div>
             <BottomMenu/>

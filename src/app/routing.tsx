@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Route, Routes, useLocation} from "react-router-dom";
+import React from 'react';
+import {Route, Routes} from "react-router-dom";
 import {CustomRouter} from "./router/custom-router.tsx";
 import {MainLayout} from "../widgets/main-layout";
 import {history} from "./router/router-history.ts";

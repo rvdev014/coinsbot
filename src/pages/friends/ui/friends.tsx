@@ -11,6 +11,7 @@ import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 import {motion} from "framer-motion";
+import {createPortal} from "react-dom";
 
 export const FriendsPage = () => {
     const userId = useUserStore(state => state.user_id);
@@ -65,12 +66,14 @@ export const FriendsPage = () => {
         }
     }
 
+    console.log('document.getElementById(\'layoutWrapper\')', document.getElementById('layoutWrapper'))
+
     return (
         <div className={styles.wrapper}>
 
             <motion.div
-                initial={{ x: 20 }}
-                animate={{ x: 0 }}
+                initial={{x: 20}}
+                animate={{x: 0}}
                 className={cl(styles.mainBlock, 'gradientWrapper')}
             >
                 <h2 className={styles.title}>{t('invite_frens')}</h2>
@@ -97,8 +100,8 @@ export const FriendsPage = () => {
             </motion.div>
 
             <motion.div
-                initial={{ x: -20 }}
-                animate={{ x: 0 }}
+                initial={{x: -20}}
+                animate={{x: 0}}
                 className={styles.infoBlocks}
             >
                 <div className={cl(styles.infoBlock, 'gradientWrapper')}>
@@ -126,8 +129,8 @@ export const FriendsPage = () => {
                 condition={referrals?.total_count > 0}
                 emptyContent={
                     <motion.div
-                        initial={{ x: 20 }}
-                        animate={{ x: 0 }}
+                        initial={{x: 20}}
+                        animate={{x: 0}}
                         className={styles.friendsEmptyList}
                     >
                         {t('no_invited_friends')}
@@ -135,8 +138,8 @@ export const FriendsPage = () => {
                 }
             >
                 <motion.div
-                    initial={{ x: 20 }}
-                    animate={{ x: 0 }}
+                    initial={{x: 20}}
+                    animate={{x: 0}}
                     className={styles.friendsWrapper}
                 >
 
@@ -190,22 +193,26 @@ export const FriendsPage = () => {
             {/*    </div>*/}
             {/*}*/}
 
-            <div className={styles.inviteFriendBtnWrapper}>
-                <motion.button
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}
-                >
-                    {t('invite_fren')}
-                    <span
-                        className='gradient'
-                        style={{
-                            boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                            bottom: '-30px'
-                        }}
-                    />
-                </motion.button>
-            </div>
+            {createPortal(
+                <div className={styles.inviteFriendBtnWrapper}>
+                    <motion.button
+                        initial={{opacity: 0, y: 30}}
+                        animate={{opacity: 1, y: 0}}
+                        className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}
+                    >
+                        {t('invite_fren')}
+                        <span
+                            className='gradient'
+                            style={{
+                                boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
+                                bottom: '-30px'
+                            }}
+                        />
+                    </motion.button>
+                </div>,
+                // @ts-ignore
+                document.getElementById('root')
+            )}
 
 
         </div>
