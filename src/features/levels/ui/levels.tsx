@@ -9,9 +9,10 @@ import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IUserData} from "../../../shared/model/user/store-types.ts";
 import cl from "classnames";
 import {levelsImgData} from "../model/utils.ts";
-import {motion} from "framer-motion";
+import {motion, useAnimate} from "framer-motion";
 
 export const Levels = () => {
+    const [scope, animate] = useAnimate();
 
     const userId = useUserStore(state => state.id);
     const userLevel = useUserStore(state => state.level);

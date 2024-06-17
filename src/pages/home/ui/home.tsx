@@ -13,10 +13,13 @@ import 'react-circular-progressbar/dist/styles.css';
 import cl from "classnames";
 import {Balance} from "../../../shared/ui/balance/balance.tsx";
 import {motion} from "framer-motion";
+import {Popup} from "../../../shared/ui/popup/popup.tsx";
+import {PerHourPopup} from "../../../features/per-hour-popup";
 
 export const HomePage = () => {
 
     const tapperRef = React.useRef<HTMLButtonElement>(null);
+    const [collectedPopup, setCollectedPopup] = React.useState(true);
 
     const onTap = useExchangeStore(state => state.onTap);
 
@@ -80,104 +83,116 @@ export const HomePage = () => {
     }
 
     return (
-        <div className={styles.wrapper}>
+        <>
 
-            <motion.div
-                initial={{x: -20}}
-                animate={{x: 0}}
-                className={styles.header}
-            >
-
-                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                    <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
-                    <Flex className={styles.headerInfo_info}>
-                        <img src="/img/coin-level.png" alt="Coin"/>
-                        <Text>+{coinsPerTap}</Text>
-                    </Flex>
-                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
-                </div>
-
-                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                    <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
-                    <Flex className={styles.headerInfo_info}>
-                        <Balance value={getRemainCoins(coins)} width='9px' spaceWidth='2px'></Balance>
-                    </Flex>
-                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
-                </div>
-
-                <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                    <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
-                    <Flex className={styles.headerInfo_info}>
-                        <Text>+{formatPrice(coinsPerHour)}</Text>
-                    </Flex>
-                    <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
-                </div>
-
-            </motion.div>
-
-            <div className={styles.mainContent}>
-
-                <div className={styles.levelWrapper}>
-                    <motion.div initial={{x: 20}} animate={{x: 0}} className={styles.balance}>
-                        <img src="/img/coin-level.png" alt="Coin"/>
-                        <Balance
-                            value={coins}
-                            className={styles.balanceNumber}
-                            classNameWrapper={styles.balanceNumberWrapper}
-                        ></Balance>
-                    </motion.div>
-                    <motion.div initial={{x: -20}} animate={{x: 0}}>
-                        <Link to='/levels'>
-                            <Flex className={styles.level} alignItems='center'>
-                                <Flex className={styles.level_info}>
-                                    <Text>{level?.title}</Text>
-                                    <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
-                                </Flex>
-                                <div className={styles.level_btn}>
-                                    <img src="/img/arrow.png" alt="Arrow"/>
-                                </div>
-                            </Flex>
-                        </Link>
-                    </motion.div>
-                </div>
+            <div className={styles.wrapper}>
 
                 <motion.div
-                    initial={{scale: 1.1}}
-                    animate={{scale: 1}}
-                    className={styles.tapWrapper}
-                    id='tapper'
+                    initial={{x: -20}}
+                    animate={{x: 0}}
+                    className={styles.header}
                 >
-                    <CircularProgressbarWithChildren
-                        value={getProgress(true)}
-                        strokeWidth={2}
-                        styles={buildStyles({
-                            textColor: "transparent",
-                            pathColor: level?.color ?? '#B9B9B9',
-                            trailColor: "transparent"
-                        })}
-                    >
-                        <button
-                            className={styles.tapper}
-                            style={{
-                                background: `radial-gradient(circle, ${level?.color ?? '#B9B9B9'} -50%, #272727 100%)`,
-                                boxShadow: `0 0 40px 0 ${hexToRgb(level?.color ?? '#B9B9B9', 0.6)}`,
-                            }}
-                            ref={tapperRef}
-                            onTouchEnd={tapper}
-                        >
-                            <img
-                                draggable={false}
-                                src={`/img/levels/level-${level?.step ?? 1}.png`}
-                                alt="Tapper"
-                            />
-                        </button>
-                    </CircularProgressbarWithChildren>
+
+                    <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                        <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
+                        <Flex className={styles.headerInfo_info}>
+                            <img src="/img/coin-level.png" alt="Coin"/>
+                            <Text>+{coinsPerTap}</Text>
+                        </Flex>
+                        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
+                    </div>
+
+                    <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                        <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
+                        <Flex className={styles.headerInfo_info}>
+                            <Balance value={getRemainCoins(coins)} width='9px' spaceWidth='2px'></Balance>
+                        </Flex>
+                        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
+                    </div>
+
+                    <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                        <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
+                        <Flex className={styles.headerInfo_info}>
+                            <Text>+{formatPrice(coinsPerHour)}</Text>
+                        </Flex>
+                        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
+                    </div>
+
                 </motion.div>
 
-                <EnergyInfo/>
+                <div className={styles.mainContent}>
+
+                    <div className={styles.levelWrapper}>
+                        <motion.div initial={{x: 20}} animate={{x: 0}} className={styles.balance}>
+                            <img src="/img/coin-level.png" alt="Coin"/>
+                            <Balance
+                                value={coins}
+                                className={styles.balanceNumber}
+                                classNameWrapper={styles.balanceNumberWrapper}
+                            ></Balance>
+                        </motion.div>
+                        <motion.div initial={{x: -20}} animate={{x: 0}}>
+                            <Link to='/levels'>
+                                <Flex className={styles.level} alignItems='center'>
+                                    <Flex className={styles.level_info}>
+                                        <Text>{level?.title}</Text>
+                                        <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
+                                    </Flex>
+                                    <div className={styles.level_btn}>
+                                        <img src="/img/arrow.png" alt="Arrow"/>
+                                    </div>
+                                </Flex>
+                            </Link>
+                        </motion.div>
+                    </div>
+
+                    <motion.div
+                        initial={{scale: 1.1}}
+                        animate={{scale: 1}}
+                        className={styles.tapWrapper}
+                        id='tapper'
+                    >
+                        <CircularProgressbarWithChildren
+                            value={getProgress(true)}
+                            strokeWidth={2}
+                            styles={buildStyles({
+                                textColor: "transparent",
+                                pathColor: level?.color ?? '#B9B9B9',
+                                trailColor: "transparent"
+                            })}
+                        >
+                            <button
+                                className={styles.tapper}
+                                style={{
+                                    background: `radial-gradient(circle, ${level?.color ?? '#B9B9B9'} -50%, #272727 100%)`,
+                                    boxShadow: `0 0 40px 0 ${hexToRgb(level?.color ?? '#B9B9B9', 0.6)}`,
+                                }}
+                                ref={tapperRef}
+                                onTouchEnd={tapper}
+                            >
+                                <img
+                                    draggable={false}
+                                    src={`/img/levels/level-${level?.step ?? 1}.png`}
+                                    alt="Tapper"
+                                />
+                            </button>
+                        </CircularProgressbarWithChildren>
+                    </motion.div>
+
+                    <EnergyInfo/>
+
+                </div>
 
             </div>
 
-        </div>
+            <Popup
+                isOpen={collectedPopup}
+                onClose={() => setCollectedPopup(false)}
+                isClose={false}
+            >
+                <PerHourPopup onClaim={() => setCollectedPopup(false)}></PerHourPopup>
+            </Popup>
+
+        </>
     );
 };

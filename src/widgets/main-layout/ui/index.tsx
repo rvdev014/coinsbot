@@ -5,13 +5,18 @@ import {useAppStore} from "../../../shared/model/app-store.ts";
 import {BottomMenu} from "../../bottom-menu";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import cl from "classnames";
-import useEventListener from "../../../shared/hooks/useEventListener.ts";
+import {motion, useAnimation} from "framer-motion";
 
 export const MainLayout = () => {
 
     const isAppLoading = useAppStore(state => state.isAppLoading)
     const initTelegram = useAppStore(state => state.initTelegram)
     const scrollableRef = React.useRef<any>(null)
+    const stateRef = React.useRef<any>({
+        lastY: 0,
+        lastMoveTime: 0,
+        velocity: 0,
+    });
 
     useEffect(() => {
         initTelegram();
@@ -29,24 +34,43 @@ export const MainLayout = () => {
     }, [location]);
 
     const handleTouchStart = (e: any) => {
-        const scrollable = scrollableRef.current;
-        scrollable.startY = e.touches[0].pageY;
-        scrollable.startScrollTop = scrollable.scrollTop;
+        const state = stateRef.current;
+
+        state.isTouching = true;
+        state.startY = e.touches[0].pageY;
+        state.scrollTop = scrollableRef.current.scrollTop;
+        state.lastY = e.touches[0].pageY;
+        state.lastMoveTime = Date.now();
+        state.velocity = 0;
     };
 
     const handleTouchMove = (e: any) => {
 
-        if (e.target.closest('#tapper')) return;
+        // if (e.target.closest('#tapper')) return;
 
         const scrollable = scrollableRef.current;
-        const distance = e.touches[0].pageY - scrollable.startY;
+        const state = stateRef.current;
+
+        const currentY = e.touches[0].pageY;
+        const distance = currentY - state.startY;
+        const currentTime = Date.now();
+        const deltaTime = currentTime - state.lastMoveTime;
+
         const isTop = scrollable.scrollTop <= 0;
         const isBottom = (scrollable.scrollHeight - scrollable.scrollTop - 1) <= scrollable.clientHeight;
 
         if ((isTop && distance > 0) || (isBottom && distance < 0)) {
-            // e.preventDefault();
             scrollable.style.transform = `translateY(${distance / 16}px)`;
         }
+
+        scrollableRef.current.scrollTop = state.scrollTop - distance;
+
+        if (deltaTime > 0) {
+            state.velocity = (currentY - state.lastY) / deltaTime;
+        }
+
+        state.lastY = currentY;
+        state.lastMoveTime = currentTime;
     };
 
     const handleTouchEnd = () => {

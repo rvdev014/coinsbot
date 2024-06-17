@@ -43,7 +43,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             }
 
             // Per second balance update
-            /*if (!get().coinsTimeout) {
+            if (!get().coinsTimeout) {
                 set({
                     coinsTimeout: setInterval(async () => {
                         const userState = get();
@@ -56,7 +56,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                         }
                     }, 1000)
                 });
-            }*/
+            }
         },
 
         setInitialStore: async (store, withEnergy = false) => {

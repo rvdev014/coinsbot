@@ -17,6 +17,7 @@ import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {boostImgData} from "../model/utils.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {motion} from "framer-motion";
+import {Balance} from "../../../shared/ui/balance/balance.tsx";
 
 export const Boost = () => {
 
@@ -56,7 +57,7 @@ export const Boost = () => {
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
                                 <img src={boostImgData.coinIconLg} alt="Coin"/>
-                                <span className={styles.balance_number}>{formatPrice(coins)}</span>
+                                <Balance value={coins} className={styles.balanceNumber}></Balance>
                             </Flex>
                         )}
                     </UserCoins>
