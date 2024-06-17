@@ -19,10 +19,10 @@ import {PerHourPopup} from "../../../features/per-hour-popup";
 export const HomePage = () => {
 
     const tapperRef = React.useRef<HTMLButtonElement>(null);
-    const [collectedPopup, setCollectedPopup] = React.useState(true);
 
     const onTap = useExchangeStore(state => state.onTap);
 
+    const isCollectedPopup = useUserStore(state => state.isCollectedPopup);
     const coins = useUserStore(state => state.coins);
     const level = useUserStore(state => state.level);
     const nextLevel = useUserStore(state => state.next_level);
@@ -185,12 +185,8 @@ export const HomePage = () => {
 
             </div>
 
-            <Popup
-                isOpen={collectedPopup}
-                onClose={() => setCollectedPopup(false)}
-                isClose={false}
-            >
-                <PerHourPopup onClaim={() => setCollectedPopup(false)}></PerHourPopup>
+            <Popup isOpen={isCollectedPopup}>
+                <PerHourPopup onClaim={() => useUserStore.setState({isCollectedPopup: false})}></PerHourPopup>
             </Popup>
 
         </>

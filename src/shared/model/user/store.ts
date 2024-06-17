@@ -7,6 +7,7 @@ import i18next from "i18next";
 import {subscribeWithSelector} from "zustand/middleware";
 
 const initialStore = {
+    isCollectedPopup: false,
     energyTimeout: null
 } as IUserStore;
 
@@ -20,6 +21,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 const user = await MainApi.userPerHour(userId, params);
                 if (user) {
                     get().setInitialStore({...user}, true);
+                    set({isCollectedPopup: user.collected_coins > 0});
                     get().initInterval();
                 }
             } catch (e) {

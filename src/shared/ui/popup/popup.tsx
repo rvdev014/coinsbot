@@ -7,19 +7,23 @@ import {boostImgData} from "../../../features/boost/model/utils.ts";
 
 interface IProps {
     isOpen: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     children: React.ReactNode;
-    isClose?: boolean;
 }
 
 export const Popup: FC<IProps> = ({isOpen, onClose, children, ...props}) => {
     return (
         <div>
-            <Drawer placement='bottom' onClose={onClose} isOpen={isOpen} closeOnOverlayClick={props.isClose}>
+            <Drawer
+                placement='bottom'
+                onClose={onClose ? onClose : () => {}}
+                isOpen={isOpen}
+                closeOnOverlayClick={!!onClose}
+            >
                 <DrawerOverlay/>
                 <DrawerContent className={cl(styles.wrapper, 'gradientWrapper')}>
                     {children}
-                    {props.isClose && (
+                    {onClose && (
                         <button className={styles.close} onClick={onClose}>
                             <img src={boostImgData.closeIcon} alt="Close"/>
                         </button>

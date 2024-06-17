@@ -2,6 +2,7 @@ import {IBonus} from "../earn/store-types.ts";
 import {BoostType, IBoostInfo} from "../../../features/boost/model/store-types.ts";
 
 export interface IUserStore extends IUserData {
+    isCollectedPopup: boolean;
     energyTimeout: number | null;
     coinsTimeout: number | null;
 
