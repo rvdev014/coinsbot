@@ -51,81 +51,113 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
 
         fetchTasks() {
 
-            const tasks: ITask[] = [
-                {
-                    "id": 1,
-                    "title_ru": "Подпишись на канал",
-                    "title_en": "Subscribe to channel",
-                    "title": "Subscribe to channel",
-                    "img": null,
-                    "url": "https://t.me/ClydeTap_Announcment",
-                    "channel_id": "-1002193815738",
-                    "coins": 30000,
-                    "count": 2147000000,
-                    "hours": null,
-                    "is_external": false,
-                    "type": "owner",
-                    "created_at": "2024-06-11 20:40:16Z",
-                    "updated_at": "2024-06-16 13:17:53Z"
-                },
-                {
-                    "id": 3,
-                    "title_ru": "Подпишись на twitter",
-                    "title_en": "Subscribe to twitter",
-                    "title": "Subscribe to twitter",
-                    "img": null,
-                    "url": "https://x.com/TapClyde",
-                    "channel_id": null,
-                    "coins": 30000,
-                    "count": 2147000000,
-                    "hours": null,
-                    "is_external": true,
-                    "type": "owner",
-                    "created_at": "2024-06-13 19:19:13Z",
-                    "updated_at": "2024-06-16 13:17:44Z"
-                },
-                {
-                    "id": 4,
-                    "title_ru": "Bodypump запусти бота и нажми play ",
-                    "title_en": "Bodypump launch the bot and press play",
-                    "title": "Bodypump launch the bot and press play",
-                    "img": null,
-                    "url": "https://t.me/Bodypump_app_bot?start=3019488d-6d51-4153-b641-4369446e133d",
-                    "channel_id": null,
-                    "coins": 20000,
-                    "count": 2147000000,
-                    "hours": null,
-                    "is_external": false,
-                    "type": "partner",
-                    "created_at": "2024-06-16 14:50:32Z",
-                    "updated_at": "2024-06-16 13:17:44Z"
-                },
-                {
-                    "id": 5,
-                    "title_ru": "Подпишись на канал Bodypump ",
-                    "title_en": "Subscribe to Bodypump channel",
-                    "title": "Subscribe to Bodypump channel",
-                    "img": null,
-                    "url": "https://t.me/bodypump_app",
-                    "channel_id": "-1002000103964",
-                    "coins": 20000,
-                    "count": 2147000000,
-                    "hours": null,
-                    "is_external": false,
-                    "type": "partner",
-                    "created_at": "2024-06-16 15:00:47Z",
-                    "updated_at": "2024-06-16 13:17:52Z"
-                }
-            ]
+            // const tasks: ITask[] = [
+            //     {
+            //         "id": 1,
+            //         "title_ru": "Подпишись на канал",
+            //         "title_en": "Subscribe to channel",
+            //         "title": "Subscribe to channel",
+            //         "img": null,
+            //         "url": "https://t.me/ClydeTap_Announcment",
+            //         "channel_id": "-1002193815738",
+            //         "coins": 30000,
+            //         "count": 2147000000,
+            //         "hours": null,
+            //         "is_external": false,
+            //         "type": "owner",
+            //         "created_at": "2024-06-11 20:40:16Z",
+            //         "updated_at": "2024-06-16 13:17:53Z"
+            //     },
+            //     {
+            //         "id": 3,
+            //         "title_ru": "Подпишись на twitter",
+            //         "title_en": "Subscribe to twitter",
+            //         "title": "Subscribe to twitter",
+            //         "img": null,
+            //         "url": "https://x.com/TapClyde",
+            //         "channel_id": null,
+            //         "coins": 30000,
+            //         "count": 2147000000,
+            //         "hours": null,
+            //         "is_external": true,
+            //         "type": "owner",
+            //         "created_at": "2024-06-13 19:19:13Z",
+            //         "updated_at": "2024-06-16 13:17:44Z"
+            //     },
+            //     {
+            //         "id": 4,
+            //         "title_ru": "Bodypump запусти бота и нажми play ",
+            //         "title_en": "Bodypump launch the bot and press play",
+            //         "title": "Bodypump launch the bot and press play",
+            //         "img": null,
+            //         "url": "https://t.me/Bodypump_app_bot?start=3019488d-6d51-4153-b641-4369446e133d",
+            //         "channel_id": null,
+            //         "coins": 20000,
+            //         "count": 2147000000,
+            //         "hours": null,
+            //         "is_external": false,
+            //         "type": "partner",
+            //         "created_at": "2024-06-16 14:50:32Z",
+            //         "updated_at": "2024-06-16 13:17:44Z"
+            //     },
+            //     {
+            //         "id": 5,
+            //         "title_ru": "Подпишись на канал Bodypump ",
+            //         "title_en": "Subscribe to Bodypump channel",
+            //         "title": "Subscribe to Bodypump channel",
+            //         "img": null,
+            //         "url": "https://t.me/bodypump_app",
+            //         "channel_id": "-1002000103964",
+            //         "coins": 20000,
+            //         "count": 2147000000,
+            //         "hours": null,
+            //         "is_external": false,
+            //         "type": "partner",
+            //         "created_at": "2024-06-16 15:00:47Z",
+            //         "updated_at": "2024-06-16 13:17:52Z"
+            //     },
+            //     {
+            //         "id": 6,
+            //         "title_ru": "brrrrren запусти бота и нажми play",
+            //         "title_en": "brrrrren launch the bot and press play",
+            //         "title": "brrrrren launch the bot and press play",
+            //         "img": null,
+            //         "url": "https://t.me/brrrrrgamebot?start=6672f7c5f71ee7d1c896634c",
+            //         "channel_id": null,
+            //         "coins": 20000,
+            //         "count": 100000,
+            //         "hours": null,
+            //         "is_external": false,
+            //         "type": "partner",
+            //         "created_at": "2024-06-16 14:50:32Z",
+            //         "updated_at": "2024-06-16 13:17:44Z"
+            //     },
+            //     {
+            //         "id": 7,
+            //         "title_ru": "Подпишись на канал brrrrren ",
+            //         "title_en": "Subscribe to brrrrren channel",
+            //         "title": "Subscribe to brrrrren channel",
+            //         "img": null,
+            //         "url": "https://t.me/brrrrren",
+            //         "channel_id": "-1001990947315",
+            //         "coins": 20000,
+            //         "count": 100000,
+            //         "hours": null,
+            //         "is_external": false,
+            //         "type": "partner",
+            //         "created_at": "2024-06-16 15:00:47Z",
+            //         "updated_at": "2024-06-16 13:17:52Z"
+            //     }
+            // ]
+            //
+            // const tasksOwner = tasks.filter(task => task.type === 'owner');
+            // const tasksPartner = tasks.filter(task => task.type === 'partner');
+            //
+            // set({tasks, tasksOwner, tasksPartner});
+            //
+            // return Promise.resolve();
 
-            const tasksOwner = tasks.filter(task => task.type === 'owner');
-            const tasksPartner = tasks.filter(task => task.type === 'partner');
-
-            set({tasks, tasksOwner, tasksPartner});
-
-            return Promise.resolve();
-
-            /*set({isTasksLoading: true});
+            set({isTasksLoading: true});
             return MainApi.getTasks()
                 .then((tasks) => {
                     const tasksOwner = tasks.filter(task => task.type === 'owner');
@@ -135,7 +167,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 })
                 .finally(() => {
                     set({isTasksLoading: false});
-                });*/
+                });
         },
 
         fetchBonuses(withoutLoading: boolean | null) {
