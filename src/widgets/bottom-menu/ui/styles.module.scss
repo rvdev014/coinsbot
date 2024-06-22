@@ -21,9 +21,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    position: relative;
 
     &.active {
       background: #1C1C1C;
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      right: calc(50% - 25px);
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50%;
     }
 
     .menuItem_text {

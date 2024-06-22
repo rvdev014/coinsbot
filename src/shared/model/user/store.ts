@@ -7,6 +7,7 @@ import i18next from "i18next";
 import {subscribeWithSelector} from "zustand/middleware";
 
 const initialStore = {
+    tasks_active: false,
     isCollectedPopup: false,
     energyTimeout: null
 } as IUserStore;

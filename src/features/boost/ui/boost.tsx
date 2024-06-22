@@ -21,7 +21,6 @@ import {Balance} from "../../../shared/ui/balance/balance.tsx";
 
 export const Boost = () => {
 
-    // const coins = useUserStore(state => state.coins);
     const boostData = useUserStore(state => state.boost);
     const popupType = useBoostStore(state => state.popupType);
     const onBoosterClick = useBoostStore(state => state.onBoosterClick);
@@ -83,10 +82,8 @@ export const Boost = () => {
                     <p className={styles.title}>{t('boosters')}</p>
                     <Flex className={styles.balance} justifyContent='space-between' gap={'11px'}>
 
-                        <Flex
+                        <div
                             className={cl(styles.card, 'gradientWrapper')}
-                            alignItems='center'
-                            flex={1}
                             onClick={() => onBoosterClick('restore_energy')}
                         >
                             <img src={boostImgData.energyIconLg} alt="Energy"/>
@@ -103,12 +100,10 @@ export const Boost = () => {
                                     left: 0
                                 }}
                             />
-                        </Flex>
+                        </div>
 
-                        <Flex
+                        <div
                             className={cl(styles.card, 'gradientWrapper')}
-                            alignItems='center'
-                            flex={1}
                             onClick={() => onBoosterClick('energy_turbo')}
                         >
                             <img src={boostImgData.boostIconLg} alt="Boost"/>
@@ -125,13 +120,13 @@ export const Boost = () => {
                                     left: 0
                                 }}
                             />
-                        </Flex>
+                        </div>
 
                     </Flex>
                 </motion.div>
 
                 <motion.div
-                    initial={{ x: 20 }}
+                    initial={{ x: -20 }}
                     animate={{ x: 0 }}
                     className={styles.boosters}
                 >

@@ -122,29 +122,38 @@
 }
 
 .taskItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   padding: 16px 26px 16px 16px;
   border-radius: 12px;
   background: #262626;
-  height: 80px;
+  //height: 80px;
   margin-bottom: 8px;
 }
 
 .taskItem_left {
+  display: flex;
+  align-items: center;
 
   .taskIcon {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 13px;
-    width: 48px;
-    height: 48px;
+    min-width: 45px;
+    width: 45px;
+    height: 45px;
     border-radius: 8px;
     background: #1C1C1C;
 
     img {
-      width: 35px;
-      height: 35px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      //width: 35px;
+      //height: 35px;
     }
 
     p {
@@ -188,4 +197,6 @@
 }
 
 .taskArrow {
+  margin-left: 10px;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
 }

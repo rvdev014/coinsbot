@@ -3,9 +3,12 @@ import styles from './styles.module.scss';
 import {Flex, Text} from "@chakra-ui/react";
 import {Link, useLocation} from "react-router-dom";
 import {t} from "i18next";
+import {useUserStore} from "../../../shared/model/user/store.ts";
 
 export const BottomMenu = () => {
     const location = useLocation();
+
+    const tasksActive = useUserStore(state => state.tasks_active);
 
     function isActive(path: string) {
         return location.pathname === path;
@@ -19,8 +22,11 @@ export const BottomMenu = () => {
                     <Text className={styles.menuItem_text}>{t('tap')}</Text>
                 </Link>
                 <Link to='/tasks' className={`${styles.menuItem} ${isActive('/tasks') ? styles.active : ''}`}>
+                    {tasksActive && <span className={styles.badge}/>}
                     <img src="/img/task-icon.png" alt="Tap"/>
-                    <Text className={styles.menuItem_text}>{t('tasks')}</Text>
+                    <Text className={styles.menuItem_text}>
+                        {t('tasks')}
+                    </Text>
                 </Link>
                 <Link to='/friends' className={`${styles.menuItem} ${isActive('/friends') ? styles.active : ''}`}>
                     <img src="/img/frens-icon.png" alt="Tap"/>

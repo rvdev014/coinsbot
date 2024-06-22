@@ -41,8 +41,11 @@ export const DailyPopup: FC<IProps> = ({bonuses}) => {
                     <div className={styles.daysList}>
                         {bonuses?.map((bonus, index) => {
 
-                            const isComplete = (!isDayBonusLast && userDayBonus) ? (userDayBonus.day >= bonus.day) : false;
                             const isActive = activeDayBonus ? (activeDayBonus.day === bonus.day) : false;
+                            let isComplete = userDayBonus ? (userDayBonus.day >= bonus.day) : false;
+                            if (isDayBonusLast && activeDayBonus) {
+                                isComplete = false;
+                            }
 
                             return (
                                 <div

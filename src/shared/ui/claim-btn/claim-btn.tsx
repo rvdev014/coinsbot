@@ -23,7 +23,7 @@ export const ClaimBtn: FC<IProps> = (
     return (
         <button className='claimBtn gradientWrapper' onClick={!loading ? onClick : () => {}}>
             {loading ? <Spinner color='#fff' size='md'/> : props.children}
-            <span className='gradient' style={{boxShadow: `0 0 100px 50px rgba(153, 214, 23, 0.5)`}}/>
+            <span className='gradient' style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.5)`, bottom: '-30px'}}/>
         </button>
     );
 };

@@ -64,6 +64,7 @@ export interface IUserData {
     boost: {
         [key in BoostType]: IBoostInfo
     }
+    tasks_active: boolean
 }
 
 export interface ILevel {

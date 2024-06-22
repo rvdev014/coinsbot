@@ -91,46 +91,46 @@ export const EarnPage = () => {
                                     <p>{t('owner_tasks')}</p>
                                 </div>
 
-                                {tasksOwner.map((task, index) => {
-                                    const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
-                                    return (
-                                        <Flex
-                                            key={task.id}
-                                            className={styles.taskItem}
-                                            justifyContent='space-between'
-                                            alignItems='center'
-                                            onClick={isCompleted ? () => {
-                                            } : () => onTaskClick(task)}
-                                        >
+                                <ul>
+                                    {tasksOwner.map((task, index) => {
+                                        const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
+                                        return (
+                                            <li
+                                                key={task.id}
+                                                className={styles.taskItem}
+                                                onClick={isCompleted ? () => {
+                                                } : () => onTaskClick(task)}
+                                            >
 
-                                            <Flex className={styles.taskItem_left}>
-                                                <div className={styles.taskIcon}>
-                                                    <img
-                                                        src={earnImgData.taskTg}
-                                                        // src={task.img ?? earnImgData.taskTg}
-                                                        // @ts-ignore
-                                                        // onError={(e) => e.target.src = earnImgData.taskTg}
-                                                        alt="Task tg"
-                                                    />
-                                                </div>
-                                                <div className={styles.taskInfo}>
-                                                    <p className={styles.taskName}>{task.title}</p>
-                                                    <Flex className={styles.taskPrice} alignItems='center'>
-                                                        <img src={earnImgData.coinIcon} alt="Coin"/>
-                                                        <span>{formatPrice(task.coins)}</span>
-                                                    </Flex>
-                                                </div>
-                                            </Flex>
+                                                <Flex className={styles.taskItem_left}>
+                                                    <div className={styles.taskIcon}>
+                                                        <img
+                                                            src={earnImgData.taskTg}
+                                                            // src={task.img ?? earnImgData.taskTg}
+                                                            // @ts-ignore
+                                                            // onError={(e) => e.target.src = earnImgData.taskTg}
+                                                            alt="Task tg"
+                                                        />
+                                                    </div>
+                                                    <div className={styles.taskInfo}>
+                                                        <p className={styles.taskName}>{task.title}</p>
+                                                        <Flex className={styles.taskPrice} alignItems='center'>
+                                                            <img src={earnImgData.coinIcon} alt="Coin"/>
+                                                            <span>{formatPrice(task.coins)}</span>
+                                                        </Flex>
+                                                    </div>
+                                                </Flex>
 
-                                            {isCompleted
-                                                ?
-                                                <Text>&#10003;</Text>
-                                                :
-                                                <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+                                                {isCompleted
+                                                    ?
+                                                    <Text className={styles.taskArrow}>&#10003;</Text>
+                                                    :
+                                                    <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
 
-                                        </Flex>
-                                    )
-                                })}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
 
                             </div>
                         </ConditionBlock>
@@ -157,10 +157,9 @@ export const EarnPage = () => {
                                             <Flex className={styles.taskItem_left}>
                                                 <div className={styles.taskIcon}>
                                                     <img
-                                                        src={earnImgData.taskTg}
-                                                        // src={task.img ?? earnImgData.taskTg}
+                                                        src={task.img ?? earnImgData.taskTg}
                                                         // @ts-ignore
-                                                        // onError={(e) => e.target.src = earnImgData.taskTg}
+                                                        onError={(e) => e.target.src = earnImgData.taskTg}
                                                         alt="Task tg"
                                                     />
                                                 </div>
@@ -175,7 +174,7 @@ export const EarnPage = () => {
 
                                             {isCompleted
                                                 ?
-                                                <Text>&#10003;</Text>
+                                                <Text className={styles.taskArrow}>&#10003;</Text>
                                                 :
                                                 <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
 

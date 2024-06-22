@@ -60,7 +60,7 @@ export const MainLayout = () => {
         const isBottom = (scrollable.scrollHeight - scrollable.scrollTop - 1) <= scrollable.clientHeight;
 
         if ((isTop && distance > 0) || (isBottom && distance < 0)) {
-            scrollable.style.transform = `translateY(${distance / 16}px)`;
+            // scrollable.style.transform = `translateY(${distance / 16}px)`;
         }
 
         scrollableRef.current.scrollTop = state.scrollTop - distance;
@@ -76,7 +76,7 @@ export const MainLayout = () => {
     const handleTouchEnd = () => {
         const scrollable = scrollableRef.current;
         scrollable.style.transition = 'transform 0.3s ease';
-        scrollable.style.transform = 'translateY(0px)';
+        // scrollable.style.transform = 'translateY(0px)';
         setTimeout(() => {
             scrollable.style.transition = '';
         }, 300);

@@ -1,12 +1,16 @@
+@import "./assets/scss/fonts.scss";
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter Tight", sans-serif;
+    //font-family: "Inter Tight", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     cursor: default!important;
+    z-index: 1;
 }
 
 // styles scroll bars
@@ -34,6 +38,7 @@ html, body {
     background: var(--Orlando-orlando-100, #1C1C1D)!important;
     overflow: hidden;
     touch-action: none!important;
+    scroll-behavior: smooth!important;
 }
 
 #root {
@@ -81,7 +86,7 @@ a:focus, button:focus {
         position: absolute;
         bottom: 0;
         left: calc(50% - 1px);
-        z-index: 999;
+        z-index: 0;
         display: block;
         width: 1px;
         height: 1px;

@@ -27,7 +27,7 @@ export const PerHourPopup: FC<IProps> = ({onClaim}) => {
             </div>
 
             <ClaimBtn onClick={onClaim}>
-                {t('thanks')}
+                {t('thanks')} <span className={styles.heart}>❤️</span>
             </ClaimBtn>
 
         </div>

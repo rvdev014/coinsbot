@@ -14,11 +14,12 @@ import {motion, useAnimate} from "framer-motion";
 export const Levels = () => {
     const [scope, animate] = useAnimate();
 
+    const currentUser = useUserStore(state => state);
+
     const userId = useUserStore(state => state.id);
     const userLevel = useUserStore(state => state.level);
 
     const rank = useLevelStore(state => state.rank);
-    const currentUser = useUserStore(state => state);
     const level = useLevelStore(state => state.currentLevel);
     const users = useLevelStore(state => state.users);
     const isLoading = useLevelStore(state => state.isLoading);
