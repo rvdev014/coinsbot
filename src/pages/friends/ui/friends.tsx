@@ -81,11 +81,11 @@ export const FriendsPage = () => {
                 <p className={styles.text}>{t('you_have_earned')}</p>
                 <LoaderBlock loading={isLoading} height='90px'>
                     <Flex className={styles.earnedBalance} alignItems='center'>
-                        <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
+                        <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                         <span>{formatPrice(referrals?.total_coins ?? 0)}</span>
                     </Flex>
                     <Flex className={styles.friendsInfo} alignItems='center'>
-                        <img src="https://ds1h6bsdosamj.cloudfront.net/img/friends-icon.png" alt="Friends"/>
+                        <img src="https://web.clydetap.site/img/friends-icon.png" alt="Friends"/>
                         <p>{referrals?.total_count ?? 0} <span>{t('friends')}</span></p>
                     </Flex>
                 </LoaderBlock>
@@ -108,7 +108,7 @@ export const FriendsPage = () => {
                     <h3 className={styles.infoBlock_title}>{t('regular_user')}</h3>
                     <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
                     <Flex className={styles.earnedBalance} alignItems='center'>
-                        <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
+                        <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                         <span>+10 000</span>
                     </Flex>
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
@@ -117,7 +117,7 @@ export const FriendsPage = () => {
                     <h3 className={styles.infoBlock_title}>Telegram Premium</h3>
                     <h3 className={styles.infoBlock_text}>{t('for_u_and_fren')}</h3>
                     <Flex className={styles.earnedBalance} alignItems='center'>
-                        <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
+                        <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                         <span>+20 000</span>
                     </Flex>
                     <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(117, 70, 251, 0.5)`}}/>
@@ -172,7 +172,7 @@ export const FriendsPage = () => {
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <span className={styles.userLevel}>{user?.level?.title_en}</span>
-                                                    <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
+                                                    <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                                                     <span>{formatPrice(user?.coins)}</span>
                                                 </Flex>
                                             </div>
