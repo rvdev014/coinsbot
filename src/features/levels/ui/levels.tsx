@@ -45,7 +45,7 @@ export const Levels = () => {
                     onClick={() => onSlide('prev')}
                     disabled={(level.step === 1 || isStatsLoading)}
                 >
-                    <img src="/img/arrow-left.png" alt="Left"/>
+                    <img src="https://ds1h6bsdosamj.cloudfront.net/img/arrow-left.png" alt="Left"/>
                 </button>
 
                 <div
@@ -73,7 +73,7 @@ export const Levels = () => {
                     onClick={() => onSlide('next')}
                     disabled={(level.step === useUserStore.getState().last_level?.step || isStatsLoading)}
                 >
-                    <img src="/img/arrow-right.png" alt="Right"/>
+                    <img src="https://ds1h6bsdosamj.cloudfront.net/img/arrow-right.png" alt="Right"/>
                 </button>
             </motion.div>
 
@@ -127,7 +127,7 @@ export const Levels = () => {
                                                             {renderUserName(user)}
                                                         </p>
                                                         <Flex className={styles.userBalance} alignItems='center'>
-                                                            <img src="/img/coin-level.png" alt="Coin"/>
+                                                            <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
                                                             <span>{formatPrice(user.coins)}</span>
                                                         </Flex>
                                                     </div>
@@ -155,7 +155,7 @@ export const Levels = () => {
                                                         {renderUserName(user)}
                                                     </p>
                                                     <Flex className={styles.userBalance} alignItems='center'>
-                                                        <img src="/img/coin-level.png" alt="Coin"/>
+                                                        <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
                                                         <span>{formatPrice(user.coins)}</span>
                                                     </Flex>
                                                 </div>
@@ -189,7 +189,7 @@ export const Levels = () => {
                                                     {renderUserName(currentUser)}
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
-                                                    <img src="/img/coin-level.png" alt="Coin"/>
+                                                    <img src="https://ds1h6bsdosamj.cloudfront.net/img/coin-level.png" alt="Coin"/>
                                                     <span>{formatPrice(currentUser.coins)}</span>
                                                 </Flex>
                                             </div>
