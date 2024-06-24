@@ -1,8 +1,8 @@
 export const earnImgData = {
-    coinLevel: '/img/coin-level.png',
-    coinIcon: '/img/coin-level.png',
-    coinIconLg: '/img/coin-level.png',
-    arrow: '/img/arrow.png',
-    taskTg: '/img/task-tg.png',
-    taskTgLg: '/img/task-tg-lg.png',
+    coinLevel: 'https://web.clydetap.site/img/coin-level.png',
+    coinIcon: 'https://web.clydetap.site/img/coin-level.png',
+    coinIconLg: 'https://web.clydetap.site/img/coin-level.png',
+    arrow: 'https://web.clydetap.site/img/arrow.png',
+    taskTg: 'https://web.clydetap.site/img/task-tg.png',
+    taskTgLg: 'https://web.clydetap.site/img/task-tg-lg.png',
 };

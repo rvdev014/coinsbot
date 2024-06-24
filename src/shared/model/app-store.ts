@@ -2,7 +2,6 @@ import {create} from "zustand";
 import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
 import {preloadImages, showError} from "../utils/other.ts";
-import {history} from "../../app/router/router-history.ts";
 import {APP_ENV} from "../consts.ts";
 import {boostImgData} from "../../features/boost/model/utils.ts";
 import {earnImgData} from "./earn/utils.ts";
@@ -49,7 +48,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
                     preloadImages([
                         ...Object.values(boostImgData),
                         ...Object.values(earnImgData),
-                        // ...Object.values(levelsImgData),
+                        ...Object.values(levelsImgData),
                     ] as any)
                 ];
 

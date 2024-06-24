@@ -96,7 +96,7 @@ export const HomePage = () => {
                     <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                         <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
                         <Flex className={styles.headerInfo_info}>
-                            <img src="/img/coin-level.png" alt="Coin"/>
+                            <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                             <Text>+{coinsPerTap}</Text>
                         </Flex>
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
@@ -124,7 +124,7 @@ export const HomePage = () => {
 
                     <div className={styles.levelWrapper}>
                         <motion.div initial={{x: 20}} animate={{x: 0}} className={styles.balance}>
-                            <img src="/img/coin-level.png" alt="Coin"/>
+                            <img src="https://web.clydetap.site/img/coin-level.png" alt="Coin"/>
                             <Balance
                                 value={coins}
                                 className={styles.balanceNumber}
@@ -139,7 +139,7 @@ export const HomePage = () => {
                                         <Text>{level?.step ?? '1'}<span>/{lastLevel?.step ?? '15'}</span></Text>
                                     </Flex>
                                     <div className={styles.level_btn}>
-                                        <img src="/img/arrow.png" alt="Arrow"/>
+                                        <img src="https://web.clydetap.site/img/arrow.png" alt="Arrow"/>
                                     </div>
                                 </Flex>
                             </Link>
@@ -172,7 +172,7 @@ export const HomePage = () => {
                             >
                                 <img
                                     draggable={false}
-                                    src={`/img/levels/level-${level?.step ?? 1}.png`}
+                                    src={`https://web.clydetap.site/img/levels/level-${level?.step ?? 1}.png`}
                                     alt="Tapper"
                                 />
                             </button>

@@ -22,7 +22,7 @@ export const EnergyInfo = () => {
                 animate={{ x: 0 }}
                 className={styles.energy}
             >
-                <img src="/img/energy-icon.png" alt="Energy"/>
+                <img src="https://web.clydetap.site/img/energy-icon.png" alt="Energy"/>
                 <Flex alignItems='center'>
                     <Balance value={energy} width='9px' spaceWidth='1px'/>
                     <span style={{margin: '0 3px'}}>/</span>
