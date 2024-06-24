@@ -20,18 +20,18 @@ export const BottomMenu = () => {
         <div className={styles.bottomMenuWrapper}>
             <Flex className={styles.bottomMenu} justifyContent='space-between' gap='4px'>
                 <Link to='/' className={`${styles.menuItem} ${isActive('/') ? styles.active : ''}`}>
-                    <img src="https://web.clydetap.site/img/tap-icon.png" alt="Tap"/>
+                    <img src="/img/tap-icon.png" alt="Tap"/>
                     <Text className={styles.menuItem_text}>{t('tap')}</Text>
                 </Link>
                 <Link to='/tasks' className={`${styles.menuItem} ${isActive('/tasks') ? styles.active : ''}`}>
                     {tasksActive && <span className={styles.badge}/>}
-                    <img src="https://web.clydetap.site/img/task-icon.png" alt="Tap"/>
+                    <img src="/img/task-icon.png" alt="Tap"/>
                     <Text className={styles.menuItem_text}>
                         {t('tasks')}
                     </Text>
                 </Link>
                 <Link to='/friends' className={`${styles.menuItem} ${isActive('/friends') ? styles.active : ''}`}>
-                    <img src="https://web.clydetap.site/img/frens-icon.png" alt="Tap"/>
+                    <img src="/img/frens-icon.png" alt="Tap"/>
                     <Text className={styles.menuItem_text}>{t('frens')}</Text>
                 </Link>
                 <div className={styles.settingsItem}>

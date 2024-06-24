@@ -17,6 +17,7 @@ export interface IEarnStore {
     isOpenDaily: boolean;
 
     init(): Promise<void>;
+    initialized: boolean;
     reInit(): Promise<void>;
     fetchTasks(): Promise<void>;
     fetchBonuses(withoutLoading: boolean | null): Promise<void>;

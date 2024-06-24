@@ -23,7 +23,7 @@ export const QrCode = () => {
             <AbsoluteCenter bg='' color='white' axis='both'>
                 <div className={styles.qrcode_block}>
                     <Text>{t('play_on_your_mobile')}</Text>
-                    <img className={styles.qrcode_img} src="https://web.clydetap.site/img/qrcode.png" alt={t('qr_code')}/>
+                    <img className={styles.qrcode_img} src="/img/qrcode.png" alt={t('qr_code')}/>
 
                     <div className={styles.qrcode_info}>
                         <Text onClick={copyUrl} className={styles.qrcode_copy}>

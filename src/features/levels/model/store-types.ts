@@ -8,6 +8,7 @@ export interface ILevelStore extends ILevelData {
     currentLevel: ILevel,
 
     init(): Promise<void>;
+    initialized: boolean;
     fetchStats(userId: number, step: number): Promise<void>;
     onSlide(type: 'prev' | 'next'): void;
     reset(): void;

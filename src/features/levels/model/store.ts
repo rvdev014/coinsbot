@@ -7,6 +7,8 @@ import {ILevel} from "../../../shared/model/user/store-types.ts";
 import {levelsData, levelsImgData} from "./utils.ts";
 
 const initialStore = {
+    initialized: false,
+
     isLoading: false,
     isStatsLoading: false,
     levelsData: [] as ILevel[],
@@ -18,7 +20,7 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
         ...initialStore,
 
         init: async () => {
-            set({isLoading: true});
+            set({isLoading: true, initialized: true});
             try {
                 const userId = useUserStore.getState().user_id;
                 const userLang = useUserStore.getState().language_code;

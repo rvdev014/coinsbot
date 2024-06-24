@@ -8,6 +8,8 @@ import {getDayDiffFromNow} from "../../utils/date.ts";
 import {earnImgData} from "./utils.ts";
 
 const initialStore = {
+    initialized: false,
+
     tasks: [] as ITask[],
     tasksOwner: [] as ITask[],
     tasksPartner: [] as ITask[],
@@ -45,7 +47,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             } catch (e) {
                 showError()
             } finally {
-                set({isLoading: false});
+                set({isLoading: false, initialized: true});
             }
         },
 

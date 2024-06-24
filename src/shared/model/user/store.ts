@@ -39,10 +39,15 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 if (user) {
                     await get().setInitialStore({...user}, true);
                     get().initInterval();
-                    await Promise.allSettled([
-                        useEarnStore.getState().reInit(),
-                        useLevelStore.getState().init()
-                    ])
+
+                    const promises = [];
+                    if (useEarnStore.getState().initialized) {
+                        promises.push(useEarnStore.getState().reInit());
+                    }
+                    if (useLevelStore.getState().initialized) {
+                        promises.push(useLevelStore.getState().init());
+                    }
+                    await Promise.allSettled(promises)
                 }
             } catch (e) {
                 showError();
