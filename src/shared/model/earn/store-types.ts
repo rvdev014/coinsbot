@@ -16,7 +16,8 @@ export interface IEarnStore {
     isCheckingTaskLoading: boolean;
     isOpenDaily: boolean;
 
-    initEarn(): void;
+    init(): Promise<void>;
+    reInit(): Promise<void>;
     fetchTasks(): Promise<void>;
     fetchBonuses(withoutLoading: boolean | null): Promise<void>;
     onClaimClick(): void;

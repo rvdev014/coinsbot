@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {Flex} from "@chakra-ui/react";
 import {formatNumber, formatPrice, getFirstLetter, hexToRgb, renderUserName} from "../../../shared/utils/other.ts";
-import {t} from "i18next";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {useLevelStore} from "../model/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
@@ -10,14 +9,17 @@ import {IUserData} from "../../../shared/model/user/store-types.ts";
 import cl from "classnames";
 import {levelsImgData} from "../model/utils.ts";
 import {motion, useAnimate} from "framer-motion";
+import {useTranslation} from "react-i18next";
+import {UserCoins} from "../../user-coins";
 
 export const Levels = () => {
-    const [scope, animate] = useAnimate();
+    const {t} = useTranslation();
 
-    const currentUser = useUserStore(state => state);
+    const firstName = useUserStore(state => state.first_name);
+    const lastName = useUserStore(state => state.last_name);
+    const username = useUserStore(state => state.username);
 
     const userId = useUserStore(state => state.id);
-    const userLevel = useUserStore(state => state.level);
 
     const rank = useLevelStore(state => state.rank);
     const level = useLevelStore(state => state.currentLevel);
@@ -29,15 +31,15 @@ export const Levels = () => {
 
     useEffect(() => {
         initLevels();
-    }, [userLevel]);
+    }, [initLevels]);
 
     if (!level) return;
 
     return (
         <div className={styles.wrapper}>
             <motion.div
-                initial={{ x: 20 }}
-                animate={{ x: 0 }}
+                initial={{x: 20}}
+                animate={{x: 0}}
                 className={styles.slider}
             >
                 <button
@@ -78,8 +80,8 @@ export const Levels = () => {
             </motion.div>
 
             <motion.div
-                initial={{ x: -20 }}
-                animate={{ x: 0 }}
+                initial={{x: -20}}
+                animate={{x: 0}}
                 className={styles.levelInfo}
             >
                 <h2 className={styles.levelTitle}>{level.title}</h2>
@@ -87,8 +89,8 @@ export const Levels = () => {
             </motion.div>
 
             <motion.div
-                initial={{ x: 20 }}
-                animate={{ x: 0 }}
+                initial={{x: 20}}
+                animate={{x: 0}}
                 className={styles.usersWrapper}
             >
                 <div className={styles.usersList}>
@@ -182,15 +184,25 @@ export const Levels = () => {
                                         <Flex className={styles.userItem_left}>
                                             <div className={styles.userAvatar}>
                                                 {/*<img src="/img/asd.png" alt="Avatar"/>*/}
-                                                <p>{getFirstLetter(currentUser) ?? 'AA'}</p>
+                                                <p>{getFirstLetter({
+                                                    first_name: firstName,
+                                                    last_name: lastName,
+                                                    username: username
+                                                } as IUserData) ?? 'AA'}</p>
                                             </div>
                                             <div className={styles.userInfo}>
                                                 <p className={styles.userName}>
-                                                    {renderUserName(currentUser)}
+                                                    {renderUserName({
+                                                        first_name: firstName,
+                                                        last_name: lastName,
+                                                        username: username
+                                                    } as IUserData)}
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <img src="/img/coin-level.png" alt="Coin"/>
-                                                    <span>{formatPrice(currentUser.coins)}</span>
+                                                    <UserCoins>
+                                                        {({coins}) => <span>{formatPrice(coins)}</span>}
+                                                    </UserCoins>
                                                 </Flex>
                                             </div>
                                         </Flex>
@@ -203,7 +215,7 @@ export const Levels = () => {
                             <Flex className={styles.userItem} justifyContent='space-between' alignItems='center'>
                                 <Flex className={styles.userItem_left}>
                                     <div className={styles.userInfo}>
-                                        <p className={styles.userName}>{t('be_first')}</p>
+                                        <p className={styles.beFirstText}>{t('be_first')}</p>
                                     </div>
                                 </Flex>
                             </Flex>}

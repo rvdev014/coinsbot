@@ -8,7 +8,6 @@ export const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
     (config) => {
-        console.log('i18next', i18next?.language)
         config.headers['Accept-Language'] = i18next?.language ?? 'en';
         return config;
     },

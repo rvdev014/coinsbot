@@ -1,21 +1,19 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo} from 'react';
 import styles from "./popups.module.scss";
 import {Flex} from "@chakra-ui/react";
-import cl from "classnames";
-import {t} from "i18next";
 import {useUserStore} from "../../../../shared/model/user/store.ts";
-import {dateGreaterThan} from "../../../../shared/utils/date.ts";
 import {Timer} from "../../../../shared/ui/timer/timer.tsx";
 import {ClaimBtn} from "../../../../shared/ui/claim-btn/claim-btn.tsx";
 import {useBoostStore} from "../../model/store.ts";
 import {boostImgData} from "../../model/utils.ts";
+import {useTranslation} from "react-i18next";
 
 interface IProps {
     onUpgrade: () => void;
 }
 
 export const RestoreEnergyPopup: FC<IProps> = ({onUpgrade}) => {
-
+    const {t} = useTranslation();
     // const [disabled, setDisabled] = useState<boolean>(false);
     const isSubmitLoading = useBoostStore(state => state.isSubmitLoading);
     const isClaimDisabled = useBoostStore(state => state.isRestoreEnergyClaimDisabled);

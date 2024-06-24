@@ -1,18 +1,18 @@
 import React, {FC} from 'react';
 import styles from "./style.module.scss";
 import {Flex} from "@chakra-ui/react";
-import {t} from "i18next";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
 import {boostImgData} from "../../boost/model/utils.ts";
+import {useTranslation} from "react-i18next";
 
 interface IProps {
     onClaim: () => void;
 }
 
 export const PerHourPopup: FC<IProps> = ({onClaim}) => {
-
+    const {t} = useTranslation();
     const collectedCoins = useUserStore(state => state.collected_coins);
 
     return (

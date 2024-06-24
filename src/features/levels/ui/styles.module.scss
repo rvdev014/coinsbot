@@ -56,6 +56,14 @@
   }
 }
 
+.beFirstText {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+
 .usersWrapper {
   margin-top: 36px;
 }
@@ -100,7 +108,11 @@
     line-height: 19.36px;
     letter-spacing: -0.03em;
     text-align: left;
-    max-width: 270px;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
   }
 
   .userBalance {

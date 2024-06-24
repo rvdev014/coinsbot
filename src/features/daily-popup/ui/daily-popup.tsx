@@ -7,15 +7,15 @@ import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IBonus} from "../../../shared/model/earn/store-types.ts";
-import {t} from "i18next";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
+import {useTranslation} from "react-i18next";
 
 interface IProps {
     bonuses: IBonus[] | null;
 }
 
 export const DailyPopup: FC<IProps> = ({bonuses}) => {
-
+    const {t} = useTranslation();
     const userDayBonus = useUserStore(state => state.day_bonus);
     const isBonusesLoading = useEarnStore(state => state.isBonusesLoading);
     const activeDayBonus = useEarnStore(state => state.active_day_bonus);

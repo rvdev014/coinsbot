@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 import {Flex, Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 import {useUserStore} from "../../../shared/model/user/store.ts";
-import {t} from "i18next";
 import {EnergyInfo} from "./energy-info.tsx";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
 import {formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
@@ -15,9 +14,10 @@ import {Balance} from "../../../shared/ui/balance/balance.tsx";
 import {motion} from "framer-motion";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {PerHourPopup} from "../../../features/per-hour-popup";
+import {useTranslation} from "react-i18next";
 
 export const HomePage = () => {
-
+    const {t} = useTranslation();
     const tapperRef = React.useRef<HTMLButtonElement>(null);
 
     const onTap = useExchangeStore(state => state.onTap);
@@ -105,7 +105,7 @@ export const HomePage = () => {
                     <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                         <span className={styles.headerInfo_text}>{t('coins_for_level_up')}</span>
                         <Flex className={styles.headerInfo_info}>
-                            <Balance value={getRemainCoins(coins)} width='9px' spaceWidth='2px'></Balance>
+                            <Balance value={getRemainCoins(coins)} width='9px' spaceWidth='2px'/>
                         </Flex>
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
                     </div>
@@ -129,7 +129,7 @@ export const HomePage = () => {
                                 value={coins}
                                 className={styles.balanceNumber}
                                 classNameWrapper={styles.balanceNumberWrapper}
-                            ></Balance>
+                            />
                         </motion.div>
                         <motion.div initial={{x: -20}} animate={{x: 0}}>
                             <Link to='/levels'>

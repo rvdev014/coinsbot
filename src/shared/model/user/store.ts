@@ -5,6 +5,8 @@ import {showError, success} from "../../utils/other.ts";
 import {dateGreaterThan, getDayDiffFromNow} from "../../utils/date.ts";
 import i18next from "i18next";
 import {subscribeWithSelector} from "zustand/middleware";
+import {useEarnStore} from "../earn/store.ts";
+import {useLevelStore} from "../../../features/levels/model/store.ts";
 
 const initialStore = {
     tasks_active: false,
@@ -27,6 +29,23 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 }
             } catch (e) {
                 showError()
+            }
+        },
+
+        changeLang: async (params) => {
+            try {
+                if (!get().user_id) return;
+                const user = await MainApi.userPerHour(get().user_id, params);
+                if (user) {
+                    await get().setInitialStore({...user}, true);
+                    get().initInterval();
+                    await Promise.allSettled([
+                        useEarnStore.getState().reInit(),
+                        useLevelStore.getState().init()
+                    ])
+                }
+            } catch (e) {
+                showError();
             }
         },
 
@@ -88,10 +107,11 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 success('Congratulations! You have reached a new level');
             }
 
-            i18next.changeLanguage(store.language_code);
+            await i18next.changeLanguage(store.language_code);
 
             set({
                 ...store,
+                language_code: store.language_code,
                 coins_per_tap: coinsPerTap,
                 coins_per_hour: coinsPerHour,
                 energy_per_second: energyPerSecond,

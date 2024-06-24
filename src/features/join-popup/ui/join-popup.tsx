@@ -1,15 +1,13 @@
 import React, {FC, useEffect, useRef} from 'react';
 import styles from "./styles.module.scss";
-import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {Flex} from "@chakra-ui/react";
 import {ITask} from "../../../shared/model/earn/store-types.ts";
 import {formatPrice} from "../../../shared/utils/other.ts";
-import cl from "classnames";
-import {t} from "i18next";
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
 import {earnImgData} from "../../../shared/model/earn/utils.ts";
+import {useTranslation} from "react-i18next";
 
 interface IProps {
     task: ITask | null;
@@ -17,6 +15,7 @@ interface IProps {
 }
 
 export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
+    const {t} = useTranslation();
     const tasksOpenedUrl = useEarnStore(state => state.tasksOpenedUrl);
     const isSubmitLoading = useEarnStore(state => state.isSubmitLoading);
     const timeout = useRef<number | null>(null);

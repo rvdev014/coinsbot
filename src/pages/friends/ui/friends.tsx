@@ -5,15 +5,16 @@ import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {formatPrice, getFirstLetter, renderUserName, showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
-import {t} from "i18next";
 import {BOT_USERNAME} from "../../../shared/consts.ts";
 import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 import {motion} from "framer-motion";
 import {createPortal} from "react-dom";
+import {useTranslation} from "react-i18next";
 
 export const FriendsPage = () => {
+    const {t} = useTranslation();
     const userId = useUserStore(state => state.user_id);
 
     const isLoading = useReferralStore(state => state.loading);
@@ -33,7 +34,6 @@ export const FriendsPage = () => {
         };
 
         fetchData();
-
     }, [userId]);
 
     useEffect(() => {

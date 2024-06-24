@@ -5,7 +5,6 @@ import {formatPrice, preloadImages} from "../../../shared/utils/other.ts";
 import {useBoostStore} from "../model/store.ts";
 import {UserCoins} from "../../user-coins";
 import cl from "classnames";
-import {t} from "i18next";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {RestoreEnergyPopup} from "./popups/restore-energy-popup.tsx";
 import {EnergyTurboPopup} from "./popups/energy-turbo-popup.tsx";
@@ -18,8 +17,10 @@ import {boostImgData} from "../model/utils.ts";
 import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {motion} from "framer-motion";
 import {Balance} from "../../../shared/ui/balance/balance.tsx";
+import {useTranslation} from "react-i18next";
 
 export const Boost = () => {
+    const {t} = useTranslation();
 
     const boostData = useUserStore(state => state.boost);
     const popupType = useBoostStore(state => state.popupType);
@@ -56,7 +57,7 @@ export const Boost = () => {
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
                                 <img src={boostImgData.coinIconLg} alt="Coin"/>
-                                <Balance value={coins} className={styles.balanceNumber}></Balance>
+                                <Balance value={coins} className={styles.balanceNumber}/>
                             </Flex>
                         )}
                     </UserCoins>

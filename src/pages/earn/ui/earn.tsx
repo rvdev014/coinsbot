@@ -4,19 +4,18 @@ import {Flex, Text} from "@chakra-ui/react";
 import {DailyPopup} from "../../../features/daily-popup";
 import {JoinPopup} from "../../../features/join-popup";
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
-import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {formatPrice} from "../../../shared/utils/other.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
-import {t} from "i18next";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {earnImgData} from "../../../shared/model/earn/utils.ts";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 
 import {motion} from "framer-motion";
+import {useTranslation} from "react-i18next";
 
 export const EarnPage = () => {
-
+    const {t} = useTranslation();
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
 
     const tasksOwner = useEarnStore(state => state.tasksOwner);
@@ -30,12 +29,12 @@ export const EarnPage = () => {
     const onTaskClick = useEarnStore(state => state.onTaskClick);
     const onCompleteTask = useEarnStore(state => state.onCompleteTask);
     const onTaskClose = useEarnStore(state => state.onTaskClose);
-    const initEarn = useEarnStore(state => state.initEarn);
+    const initEarn = useEarnStore(state => state.init);
     const isTasksLoading = useEarnStore(state => state.isTasksLoading);
 
     useEffect(() => {
         initEarn();
-    }, []);
+    }, [initEarn]);
 
     return (
         <>
@@ -44,25 +43,25 @@ export const EarnPage = () => {
 
                 <div className={styles.header}>
                     <motion.img
-                        initial={{ y: -20 }}
-                        animate={{ y: 0 }}
+                        initial={{y: -20}}
+                        animate={{y: 0}}
                         className={styles.headerCoinIcon} src={earnImgData.coinLevel}
                         alt="Coin level"
                     />
                     <motion.p
-                        initial={{ x: -20 }}
-                        animate={{ x: 0 }}
+                        initial={{x: -20}}
+                        animate={{x: 0}}
                         className={styles.title}
                     >{t('earn_more_coins')}</motion.p>
                     <motion.p
-                        initial={{ x: 20 }}
-                        animate={{ x: 0 }}
+                        initial={{x: 20}}
+                        animate={{x: 0}}
                         className={styles.bonusTitle}
                     >+{formatPrice(totalBonusCoins ?? 0)}</motion.p>
 
                     <motion.button
-                        initial={{ x: -20 }}
-                        animate={{ x: 0 }}
+                        initial={{x: -20}}
+                        animate={{x: 0}}
                         className={styles.dailyBtn}
                         onClick={onDailyClick}
                     >
@@ -79,8 +78,8 @@ export const EarnPage = () => {
 
                 <LoaderBlock loading={isTasksLoading}>
                     <motion.div
-                        initial={{ x: -20 }}
-                        animate={{ x: 0 }}
+                        initial={{x: -20}}
+                        animate={{x: 0}}
                         className={styles.tasksWrapper}
                     >
 
@@ -125,7 +124,8 @@ export const EarnPage = () => {
                                                     ?
                                                     <Text className={styles.taskArrow}>&#10003;</Text>
                                                     :
-                                                    <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+                                                    <img className={styles.taskArrow} src={earnImgData.arrow}
+                                                         alt="Arrow"/>}
 
                                             </li>
                                         )

@@ -47,4 +47,11 @@
       margin-top: 8px;
     }
   }
+
+  .settingsItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0.7;
+  }
 }
