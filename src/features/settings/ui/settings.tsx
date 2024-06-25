@@ -1,15 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import {
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Select
-} from "@chakra-ui/react";
+import {Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Select} from "@chakra-ui/react";
 import cl from "classnames";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
 import {useUserStore} from "../../../shared/model/user/store.ts";
@@ -66,7 +57,7 @@ export const Settings = () => {
             >
                 <ModalOverlay/>
                 <ModalContent className={cl(styles.wrapper, 'gradientWrapper')}>
-                    <ModalHeader className={styles.header}>{t('Settings')}</ModalHeader>
+                    <ModalHeader className={styles.header}>{t('settings')}</ModalHeader>
                     {/*<ModalCloseButton/>*/}
                     <img
                         className={styles.closeIcon}

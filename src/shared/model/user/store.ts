@@ -23,7 +23,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 if (!userId) return;
                 const user = await MainApi.userPerHour(userId, params);
                 if (user) {
-                    get().setInitialStore({...user}, true);
+                    await get().setInitialStore({...user}, true);
                     set({isCollectedPopup: user.collected_coins > 0});
                     get().initInterval();
                 }
