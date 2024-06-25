@@ -40,14 +40,8 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                     await get().setInitialStore({...user}, true);
                     get().initInterval();
 
-                    const promises = [];
-                    if (useEarnStore.getState().initialized) {
-                        promises.push(useEarnStore.getState().reInit());
-                    }
-                    if (useLevelStore.getState().initialized) {
-                        promises.push(useLevelStore.getState().init());
-                    }
-                    await Promise.allSettled(promises)
+                    useEarnStore.getState().changeTasks();
+                    useLevelStore.getState().changeLevelsData();
                 }
             } catch (e) {
                 showError();
@@ -125,7 +119,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             });
         },
 
-        async updateLevel() {
+        updateLevel: async () => {
             try {
                 const user = await MainApi.userPerHour(get().user_id);
                 if (user) {

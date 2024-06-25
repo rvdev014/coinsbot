@@ -6,8 +6,8 @@ export interface IFriendsStore {
     total_coins: number;
     list: IList[];
 
-    init(userId: number | string): Promise<void>;
-    reset(): void;
+    init: (userId: number | string) => Promise<void>;
+    reset: () => void;
 }
 
 export interface IList {

@@ -33,55 +33,6 @@ export const MainLayout = () => {
         }
     }, [location]);
 
-    const handleTouchStart = (e: any) => {
-        const state = stateRef.current;
-
-        state.isTouching = true;
-        state.startY = e.touches[0].pageY;
-        state.scrollTop = scrollableRef.current.scrollTop;
-        state.lastY = e.touches[0].pageY;
-        state.lastMoveTime = Date.now();
-        state.velocity = 0;
-    };
-
-    const handleTouchMove = (e: any) => {
-
-        // if (e.target.closest('#tapper')) return;
-
-        const scrollable = scrollableRef.current;
-        const state = stateRef.current;
-
-        const currentY = e.touches[0].pageY;
-        const distance = currentY - state.startY;
-        const currentTime = Date.now();
-        const deltaTime = currentTime - state.lastMoveTime;
-
-        const isTop = scrollable.scrollTop <= 0;
-        const isBottom = (scrollable.scrollHeight - scrollable.scrollTop - 1) <= scrollable.clientHeight;
-
-        if ((isTop && distance > 0) || (isBottom && distance < 0)) {
-            // scrollable.style.transform = `translateY(${distance / 16}px)`;
-        }
-
-        scrollableRef.current.scrollTop = state.scrollTop - distance;
-
-        if (deltaTime > 0) {
-            state.velocity = (currentY - state.lastY) / deltaTime;
-        }
-
-        state.lastY = currentY;
-        state.lastMoveTime = currentTime;
-    };
-
-    const handleTouchEnd = () => {
-        const scrollable = scrollableRef.current;
-        scrollable.style.transition = 'transform 0.3s ease';
-        // scrollable.style.transform = 'translateY(0px)';
-        setTimeout(() => {
-            scrollable.style.transition = '';
-        }, 300);
-    };
-
     if (isAppLoading) {
         return (
             <div className={styles.bg}>
@@ -91,18 +42,8 @@ export const MainLayout = () => {
     }
 
     return (
-        <div
-            id='layoutWrapper'
-            className={cl(styles.wrapper)}
-            // ref={scrollableRef}
-        >
-            <div
-                className={cl(styles.content, 'scrollable')}
-                ref={scrollableRef}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-            >
+        <div id='layoutWrapper' className={styles.wrapper}>
+            <div className={styles.content}>
                 <Outlet/>
             </div>
             <BottomMenu/>

@@ -20,6 +20,6 @@ export interface IBoostStore {
 
     checkRestoreEnergyClaimDisabled: () => void;
 
-    init(): Promise<void>;
-    reset(): void;
+    init: () => Promise<void>;
+    reset: () => void;
 }

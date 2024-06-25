@@ -7,8 +7,6 @@ import {ILevel} from "../../../shared/model/user/store-types.ts";
 import {levelsData, levelsImgData} from "./utils.ts";
 
 const initialStore = {
-    initialized: false,
-
     isLoading: false,
     isStatsLoading: false,
     levelsData: [] as ILevel[],
@@ -20,23 +18,21 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
         ...initialStore,
 
         init: async () => {
-            set({isLoading: true, initialized: true});
+            set({isLoading: true});
             try {
                 const userId = useUserStore.getState().user_id;
-                const userLang = useUserStore.getState().language_code;
                 if (!get().currentLevel) {
                     const currentLevel = useUserStore.getState().level;
                     set({currentLevel});
                 }
 
+                const userLang = useUserStore.getState().language_code;
                 const levelsDataMapped = levelsData.map(level => ({
                     ...level,
                     title: userLang === 'ru' ? level.title_ru : level.title_en
-                }))
-                set({
-                    levelsData: levelsDataMapped,
-                    currentLevel: levelsDataMapped.find(level => level.step === get().currentLevel.step),
-                });
+                }));
+
+                get().setLevelsData(levelsDataMapped);
 
                 const cacheExists = get().levelsCache.find(level => level.level.step === get().currentLevel.step);
                 if (cacheExists) {
@@ -57,7 +53,26 @@ export const useLevelStore = create<ILevelStore>((set, get) => {
             }
         },
 
-        fetchStats(userId, step) {
+        setLevelsData: (levelsData: ILevel[]) => {
+            set({
+                levelsData: levelsData,
+                currentLevel: levelsData.find(level => level.step === get().currentLevel.step),
+            });
+        },
+
+        changeLevelsData: () => {
+            if (get().levelsData.length === 0) return;
+
+            const userLang = useUserStore.getState().language_code;
+            const levelsDataMapped = levelsData.map(level => ({
+                ...level,
+                title: userLang === 'ru' ? level.title_ru : level.title_en
+            }));
+
+            get().setLevelsData(levelsDataMapped)
+        },
+
+        fetchStats: (userId, step) => {
             set({isStatsLoading: true})
             return CoinsApi.getLevelsStats(userId, step)
                 .then(data => set({

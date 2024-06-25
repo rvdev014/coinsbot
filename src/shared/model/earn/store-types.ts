@@ -16,17 +16,17 @@ export interface IEarnStore {
     isCheckingTaskLoading: boolean;
     isOpenDaily: boolean;
 
-    init(): Promise<void>;
-    initialized: boolean;
-    reInit(): Promise<void>;
-    fetchTasks(): Promise<void>;
-    fetchBonuses(withoutLoading: boolean | null): Promise<void>;
-    onClaimClick(): void;
-    onTaskClick(task: ITask): void;
-    onCompleteTask(task: ITask): void;
-    onDailyClick(): void;
-    onTaskClose(): void;
-    reset(): void;
+    init: () => Promise<void>;
+    fetchTasks: () => Promise<void>;
+    fetchBonuses: (withoutLoading: boolean | null) => Promise<void>;
+    setTasks: (tasks: ITask[]) => void;
+    changeTasks: () => void;
+    onClaimClick: () => void;
+    onTaskClick: (task: ITask) => void;
+    onCompleteTask: (task: ITask) => void;
+    onDailyClick: () => void;
+    onTaskClose: () => void;
+    reset: () => void;
 }
 
 

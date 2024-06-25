@@ -107,17 +107,11 @@ export const Levels = () => {
                                     if (user.id === userId) {
                                         return (
                                             <Flex
-                                                className={styles.userItem}
+                                                className={cl(styles.userItem, styles.userItem_sticky)}
                                                 justifyContent='space-between'
                                                 alignItems='center'
                                                 key={index}
-                                                style={{
-                                                    position: 'sticky',
-                                                    top: '0',
-                                                    bottom: '0',
-                                                    zIndex: 999,
-                                                    border: `1px solid ${level.color}`,
-                                                }}
+                                                style={{border: `1px solid ${level.color}`}}
                                             >
                                                 <Flex className={styles.userItem_left}>
                                                     <div className={styles.userAvatar}>
@@ -170,16 +164,10 @@ export const Levels = () => {
 
                                 {rank > 100 && (
                                     <Flex
-                                        className={styles.userItem}
+                                        className={cl(styles.userItem, styles.userItem_sticky)}
                                         justifyContent='space-between'
                                         alignItems='center'
-                                        style={{
-                                            position: 'sticky',
-                                            top: '0',
-                                            bottom: '0',
-                                            zIndex: 999,
-                                            border: `1px solid ${level.color}`,
-                                        }}
+                                        style={{border: `1px solid ${level.color}`}}
                                     >
                                         <Flex className={styles.userItem_left}>
                                             <div className={styles.userAvatar}>

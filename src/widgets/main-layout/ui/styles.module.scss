@@ -12,13 +12,7 @@
 }
 
 .content {
-  max-width: 500px;
+  min-height: 100%;
   margin: 0 auto;
-  padding: 8px 14px;
-  height: calc(100vh - 64px - 10px);
-  overflow-x: hidden;
-  overflow-y: auto;
-  touch-action: none;
-  //will-change: transform;
-  -webkit-overflow-scrolling: touch;
+  padding: 8px 14px 64px 14px;
 }

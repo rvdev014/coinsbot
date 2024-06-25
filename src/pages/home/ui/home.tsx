@@ -33,7 +33,6 @@ export const HomePage = () => {
     const energyLimit = useUserStore(state => state.energy_limit);
 
     function tapper(event: React.TouchEvent<HTMLButtonElement>) {
-        event.preventDefault();
         if (!tapperRef.current || !coinsPerHour || useUserStore.getState().energy < coinsPerTap) return;
 
         // @ts-ignore
@@ -155,6 +154,7 @@ export const HomePage = () => {
                         <CircularProgressbarWithChildren
                             value={getProgress(true)}
                             strokeWidth={2}
+                            className={styles.tapProgress}
                             styles={buildStyles({
                                 textColor: "transparent",
                                 pathColor: level?.color ?? '#B9B9B9',

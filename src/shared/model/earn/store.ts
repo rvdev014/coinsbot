@@ -8,8 +8,6 @@ import {getDayDiffFromNow} from "../../utils/date.ts";
 import {earnImgData} from "./utils.ts";
 
 const initialStore = {
-    initialized: false,
-
     tasks: [] as ITask[],
     tasksOwner: [] as ITask[],
     tasksPartner: [] as ITask[],
@@ -30,7 +28,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
     return {
         ...initialStore,
 
-        async init() {
+        init: async () => {
             // for prevent double fetching
             if (get().tasks.length > 0 && get().bonuses.length > 0) return;
 
@@ -47,30 +45,43 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             } catch (e) {
                 showError()
             } finally {
-                set({isLoading: false, initialized: true});
+                set({isLoading: false});
             }
         },
 
-        async reInit() {
-            get().reset();
-            await get().init();
-        },
-
-        fetchTasks() {
+        fetchTasks: () => {
             set({isTasksLoading: true});
             return MainApi.getTasks()
                 .then((tasks) => {
-                    const tasksOwner = tasks.filter(task => task.type === 'owner');
-                    const tasksPartner = tasks.filter(task => task.type === 'partner');
-
-                    set({tasks, tasksOwner, tasksPartner});
+                    if (tasks) {
+                        get().setTasks(tasks)
+                    }
                 })
                 .finally(() => {
                     set({isTasksLoading: false});
                 });
         },
 
-        fetchBonuses(withoutLoading: boolean | null) {
+        setTasks: (tasks) => {
+            const tasksOwner = tasks.filter(task => task.type === 'owner');
+            const tasksPartner = tasks.filter(task => task.type === 'partner');
+
+            set({tasks, tasksOwner, tasksPartner});
+        },
+
+        changeTasks: () => {
+            if (get().tasks.length === 0) return;
+
+            const userLang = useUserStore.getState().language_code;
+            const tasks = get().tasks.map(task => ({
+                ...task,
+                title: userLang === 'ru' ? task.title_ru : task.title_en
+            }));
+
+            get().setTasks(tasks);
+        },
+
+        fetchBonuses: (withoutLoading: boolean | null) => {
 
             const bonuses = [
                 {
@@ -262,11 +273,11 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 });*/
         },
 
-        onDailyClick() {
+        onDailyClick: () => {
             set({isOpenDaily: true})
         },
 
-        async onClaimClick() {
+        onClaimClick: async () => {
             const activeDayBonus = get().active_day_bonus;
             if (!activeDayBonus) return;
 
@@ -286,7 +297,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             }
         },
 
-        async onCompleteTask(task: ITask) {
+        onCompleteTask: async (task: ITask) => {
 
             set({isSubmitLoading: true});
             try {
@@ -306,11 +317,11 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             }
         },
 
-        onTaskClick(task: ITask) {
+        onTaskClick: (task: ITask) => {
             set({selectedTask: task});
         },
 
-        onTaskClose() {
+        onTaskClose: () => {
             set({selectedTask: null});
         },
 

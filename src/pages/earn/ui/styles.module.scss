@@ -93,6 +93,10 @@
 
 .tasksList {
   margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .tasksTitle {
