@@ -45,11 +45,11 @@ export const useAppStore = create<IAppStore>((set, get) => {
                         referral: tgDataUnsafe?.start_param,
                     }),
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    preloadImages([
+                    /*preloadImages([
                         ...Object.values(boostImgData),
                         ...Object.values(earnImgData),
                         ...Object.values(levelsImgData),
-                    ] as any)
+                    ] as any)*/
                 ];
 
                 await Promise.allSettled(promises);

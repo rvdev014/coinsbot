@@ -34,7 +34,9 @@ img {
 html, body {
     height: 100%;
     color: #fff!important;
+    overflow-x: hidden;
     background: var(--Orlando-orlando-100, #1C1C1D)!important;
+    scrollbar-width: none;
 }
 
 #root {

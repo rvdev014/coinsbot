@@ -70,10 +70,9 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                         const userState = get();
                         const coinsPerSecond = userState.coins_per_hour / 5400;
                         let coins = Math.ceil(userState.coins + coinsPerSecond);
-                        set({coins});
-
                         if (coins >= userState.next_level?.coins) {
-                            get().updateLevel();
+                            set({coins: userState.next_level?.coins});
+                            await get().updateLevel();
                         }
                     }, 1000)
                 });
@@ -123,7 +122,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
             try {
                 const user = await MainApi.userPerHour(get().user_id);
                 if (user) {
-                    get().setInitialStore({...user});
+                    await get().setInitialStore({...user});
                 }
             } catch (e) {
                 showError('Error updating level')

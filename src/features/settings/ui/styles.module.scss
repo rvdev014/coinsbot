@@ -7,10 +7,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 30px!important;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.body {
+  padding: 20px!important;
 }
 
 .label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 5px;
 }
@@ -23,7 +34,6 @@
   background: #2D2D2D!important;
 
   option {
-    max-width: 200px!important;
     background: #2D2D2D!important;
   }
 }
@@ -35,10 +45,11 @@
 }
 
 .saveBtn {
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45px!important;
+  height: 56px!important;
   font-size: 18px!important;
   font-weight: 500!important;
 }

@@ -16,6 +16,8 @@ import {useUserStore} from "../../../shared/model/user/store.ts";
 import {showError} from "../../../shared/utils/other.ts";
 import {useTranslation} from "react-i18next";
 
+import closeIcon from "../../../assets/img/close.png";
+
 export const Settings = () => {
     const {t} = useTranslation();
 
@@ -65,18 +67,30 @@ export const Settings = () => {
                 <ModalOverlay/>
                 <ModalContent className={cl(styles.wrapper, 'gradientWrapper')}>
                     <ModalHeader className={styles.header}>{t('Settings')}</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody>
+                    {/*<ModalCloseButton/>*/}
+                    <img
+                        className={styles.closeIcon}
+                        src={closeIcon}
+                        onClick={onClose}
+                        alt="close"
+                    />
+                    <ModalBody className={styles.body}>
                         <p className={styles.label}>{t('change_lang')}</p>
                         <Select
                             className={styles.select}
                             value={lang}
                             onChange={onChangeLang}
-                            size='md'
+                            size='lg'
                         >
                             <option value='en'>{t('english')}</option>
                             <option value='ru'>{t('russian')}</option>
                         </Select>
+                        <ClaimBtn
+                            onClick={onSave}
+                            loading={loading}
+                            disabled={!changed}
+                            className={styles.saveBtn}
+                        >{t('save')}</ClaimBtn>
                     </ModalBody>
 
                     <span
@@ -86,14 +100,6 @@ export const Settings = () => {
                             boxShadow: `0 0 100px 50px rgba(251, 189, 70, 0.5)`
                         }}
                     />
-                    <ModalFooter>
-                        <ClaimBtn
-                            onClick={onSave}
-                            loading={loading}
-                            disabled={!changed}
-                            className={styles.saveBtn}
-                        >{t('save')}</ClaimBtn>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

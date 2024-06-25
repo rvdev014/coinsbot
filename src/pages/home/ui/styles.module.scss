@@ -117,6 +117,7 @@
     align-items: center;
     border-radius: 50%;
     background: radial-gradient(circle, rgb(116 116 116) 0%, rgb(0, 0, 0) 100%);
+    touch-action: none!important;
     //box-shadow: 10px 10px 80px 0px rgba(#1E51B4, 0.5);
 
     &:active img {
@@ -160,18 +161,23 @@
 
 
 @media (max-height: 670px) {
+  .balance {
+    margin-bottom: 7px;
+  }
+
   .balance .balanceNumber {
-    font-size: 36px;
+    font-size: 42px;
   }
 
   .tapWrapper {
     margin-top: 15px;
-    height: 260px!important;
+    width: 100%!important;
+    height: 280px!important;
   }
 
   .tapProgress {
-    width: 260px!important;
-    height: 260px!important;
+    width: 100%!important;
+    height: 280px!important;
   }
 
   .footer {

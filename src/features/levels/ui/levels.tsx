@@ -12,6 +12,8 @@ import {motion, useAnimate} from "framer-motion";
 import {useTranslation} from "react-i18next";
 import {UserCoins} from "../../user-coins";
 
+import levelImg from '../../../assets/img/levels/level-1.png';
+
 export const Levels = () => {
     const {t} = useTranslation();
 
@@ -60,7 +62,8 @@ export const Levels = () => {
                 >
                     <img
                         onLoad={e => e.currentTarget.style.display = 'block'}
-                        src={levelsImgData[`level${level.step}`]}
+                        src={levelImg}
+                        // src={levelsImgData[`level${level.step}`]}
                         style={{
                             width: level.step > 7 ? '100%' : `180px`,
                             height: level.step > 7 ? '100%' : `180px`,
