@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 
 interface IProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     src: string;
     alt?: string;
 }
 
-export const Image: FC<IProps> = ({src, ...props}) => {
+export const Image: FC<IProps> = memo(({src, ...props}) => {
     return (
         <picture>
             <source type="image/avif"/>
@@ -18,4 +18,4 @@ export const Image: FC<IProps> = ({src, ...props}) => {
             />
         </picture>
     );
-};
+});
