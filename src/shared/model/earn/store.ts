@@ -287,7 +287,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 if (user) {
                     set({isOpenDaily: false});
                     success('Bonus claimed successfully!')
-                    useUserStore.getState().setInitialStore({...user});
+                    await useUserStore.getState().setInitialStore({...user});
                     await get().fetchBonuses(true);
                 }
             } catch (e) {

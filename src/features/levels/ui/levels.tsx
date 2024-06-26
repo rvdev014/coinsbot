@@ -62,8 +62,8 @@ export const Levels = () => {
                 >
                     <img
                         onLoad={e => e.currentTarget.style.display = 'block'}
-                        src={levelImg}
-                        // src={levelsImgData[`level${level.step}`]}
+                        // src={levelImg}
+                        src={levelsImgData[`level${level.step}`]}
                         style={{
                             width: level.step > 7 ? '100%' : `180px`,
                             height: level.step > 7 ? '100%' : `180px`,
