@@ -7,8 +7,8 @@ import {motion} from "framer-motion";
 import {Balance} from "../../../shared/ui/balance/balance.tsx";
 import {useTranslation} from "react-i18next";
 
-import energyIcon from '../../../assets/img/energy-icon.png';
-import turboIcon from '../../../assets/img/turbo-lg.png';
+import EnergyIcon from '../../../assets/img/paw-icon.svg?react';
+import TurboIcon from '../../../assets/img/rocket-icon.svg?react';
 
 export const EnergyInfo = () => {
     const {t} = useTranslation();
@@ -23,7 +23,7 @@ export const EnergyInfo = () => {
                 animate={{x: 0}}
                 className={styles.energy}
             >
-                <img src={energyIcon} alt="Energy"/>
+                <EnergyIcon/>
                 <Flex alignItems='center'>
                     <Balance value={energy} width='9px' spaceWidth='1px'/>
                     <span style={{margin: '0 3px'}}>/</span>
@@ -36,7 +36,7 @@ export const EnergyInfo = () => {
                     animate={{x: 0}}
                     className={styles.boost}
                 >
-                    <img src={turboIcon} alt="Boost"/>
+                    <TurboIcon/>
                     <Text>{t('boost')}</Text>
                 </motion.div>
             </Link>

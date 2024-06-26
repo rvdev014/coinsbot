@@ -1,11 +1,11 @@
 import {create} from "zustand";
 import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
-import {preloadImages, showError} from "../utils/other.ts";
+import {showError} from "../utils/other.ts";
 import {APP_ENV} from "../consts.ts";
-import {boostImgData} from "../../features/boost/model/utils.ts";
-import {earnImgData} from "./earn/utils.ts";
-import {levelsImgData} from "../../features/levels/model/utils.ts";
+// import {boostImgData} from "../../features/boost/model/utils.ts";
+// import {earnImgData} from "./earn/utils.ts";
+// import {levelsImgData} from "../../features/levels/model/utils.ts";
 
 const initialStore = {
     isAppLoading: true,

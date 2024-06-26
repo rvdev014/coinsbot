@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import {Flex, Text} from "@chakra-ui/react";
+import {Flex, Image, Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {EnergyInfo} from "./energy-info.tsx";
@@ -18,7 +18,6 @@ import {useTranslation} from "react-i18next";
 
 import coinLevelIcon from "../../../assets/img/coin-level.png";
 import arrowIcon from "../../../assets/img/arrow.png";
-import {Image} from "../../../shared/ui/image/image.tsx";
 
 export const HomePage = () => {
     const {t} = useTranslation();
