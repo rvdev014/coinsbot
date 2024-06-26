@@ -304,7 +304,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 const userId = useUserStore.getState().user_id;
                 const user = await CoinsApi.taskComplete(userId, task.id);
                 if (user) {
-                    useUserStore.getState().setInitialStore({...user});
+                    await useUserStore.getState().setInitialStore({...user});
                     set({selectedTask: null});
                     await get().fetchTasks();
                     success('Task completed successfully!')

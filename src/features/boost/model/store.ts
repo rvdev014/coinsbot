@@ -24,7 +24,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
                 const user  = await CoinsApi.restoreEnergy(userId);
                 if (user) {
                     set({popupType: null})
-                    useUserStore.getState().setInitialStore({...user}, true)
+                    await useUserStore.getState().setInitialStore({...user}, true)
                     get().checkRestoreEnergyClaimDisabled();
 
                     success('Energy restored successfully.')
@@ -49,7 +49,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             try {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.turboEnergyUpdate(userId, 500)
-                useUserStore.getState().setInitialStore({...user})
+                await useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Turbo energy upgraded successfully.')
                 history.push('/')
@@ -65,7 +65,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             try {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.coinsPerTapUpdate(userId, 500)
-                useUserStore.getState().setInitialStore({...user})
+                await useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Coins per tap upgraded successfully.')
                 history.push('/')
@@ -81,7 +81,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             try {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.multiTapUpdate(userId, 500)
-                useUserStore.getState().setInitialStore({...user})
+                await useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Multi tap upgraded successfully.')
                 history.push('/')
@@ -97,7 +97,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             try {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.miningUpdate(userId, 500)
-                useUserStore.getState().setInitialStore({...user})
+                await useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Mining started successfully.')
                 history.push('/')
@@ -113,7 +113,7 @@ export const useBoostStore = create<IBoostStore>((set, get) => {
             try {
                 const userId = useUserStore.getState().user_id;
                 const user  = await CoinsApi.energyLimitUpdate(userId, 500)
-                useUserStore.getState().setInitialStore({...user})
+                await useUserStore.getState().setInitialStore({...user})
                 set({popupType: null})
                 success('Energy limit upgraded successfully.')
                 history.push('/')
