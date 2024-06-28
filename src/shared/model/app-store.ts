@@ -2,7 +2,7 @@ import {create} from "zustand";
 import {IAppStore, ITgDataUnsafe} from "./app-store-types.ts";
 import {useUserStore} from "./user/store.ts";
 import {showError} from "../utils/other.ts";
-import {APP_ENV} from "../consts.ts";
+import {APP_ENV, USER_ID} from "../consts.ts";
 // import {boostImgData} from "../../features/boost/model/utils.ts";
 // import {earnImgData} from "./earn/utils.ts";
 // import {levelsImgData} from "../../features/levels/model/utils.ts";
@@ -31,7 +31,7 @@ export const useAppStore = create<IAppStore>((set, get) => {
             }*/
 
             try {
-                const userId = tgDataUnsafe?.user?.id ?? (APP_ENV !== 'production' ? 355919981 : 0);
+                const userId = tgDataUnsafe?.user?.id ?? (APP_ENV !== 'production' ? USER_ID : 0);
 
                 const promises = [
                     useUserStore.getState().init(userId, {
