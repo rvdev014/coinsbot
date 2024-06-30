@@ -73,6 +73,8 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                         if (coins >= userState.next_level?.coins) {
                             set({coins: userState.next_level?.coins});
                             await get().updateLevel();
+                        } else {
+                            set({coins});
                         }
                     }, 1000)
                 });
