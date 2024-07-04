@@ -1,5 +1,5 @@
 export interface IExchangeStore {
-    tappedCoins: number;
+    tapped: number;
 
     onTap: () => void;
     onTapEnd: () => void;

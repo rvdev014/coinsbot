@@ -7,7 +7,7 @@ import {showError} from "../../utils/other.ts";
 import {dateGreaterThan} from "../../utils/date.ts";
 
 const initialStore = {
-    tappedCoins: 0,
+    tapped: 0,
 } as IExchangeStore;
 
 export const useExchangeStore = create<IExchangeStore>((set, get) => {
@@ -31,7 +31,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             }
 
             useUserStore.setState({coins, energy});
-            set({tappedCoins: get().tappedCoins + coinsPerTap});
+            set({tapped: get().tapped + 1});
 
             get().onTapEnd();
         },
@@ -39,10 +39,14 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
         onTapEnd: debounce(async () => {
             try {
                 const userStore = useUserStore.getState();
-                const tappedCoins = get().tappedCoins;
-                set({tappedCoins: 0});
-                if (tappedCoins > 0) {
-                    const user = await CoinsApi.updateCoins(userStore.user_id, tappedCoins, userStore.energy);
+                const tapped = get().tapped;
+                if (tapped >= 100) {
+                    set({tapped: 0});
+                    const user = await CoinsApi.updateCoins(
+                        userStore.user_id,
+                        tapped * userStore.coins_per_tap,
+                        userStore.energy
+                    );
                     if (user) {
                         await useUserStore.getState().setInitialStore({...user});
                     }
