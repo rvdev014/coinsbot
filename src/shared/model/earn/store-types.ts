@@ -37,6 +37,7 @@ export interface ITask {
     title_en: string
     img: string | null
     url: string
+    countries: string
     channel_id: string | null
     type: 'owner' | 'partner' | 'other'
     coins: number
