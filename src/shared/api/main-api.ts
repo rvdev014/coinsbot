@@ -17,7 +17,7 @@ export const MainApi = {
         return response.data?.data;
     },
     async getTasks() {
-        const response = await apiInstance.get<{ data: ITask[] }>('/tasks?bosya=1');
+        const response = await apiInstance.get<{ data: ITask[] }>('/tasks');
         return response.data?.data;
     },
     async getReferrals(userId: string | number) {
