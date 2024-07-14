@@ -13,12 +13,15 @@ import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block
 
 import {motion} from "framer-motion";
 import {useTranslation} from "react-i18next";
+import {ITask} from "../../../shared/model/earn/store-types.ts";
+import {InvitePopup} from "../../../features/invite-popup";
 
 export const EarnPage = () => {
     const {t} = useTranslation();
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
 
     const tasksOwner = useEarnStore(state => state.tasksOwner);
+    const tasksInvite = useEarnStore(state => state.tasksInvite);
     const tasksPartner = useEarnStore(state => state.tasksPartner);
     const userTasks = useUserStore(state => state.tasks);
     const userLang = useUserStore(state => state.language_code);
@@ -36,6 +39,66 @@ export const EarnPage = () => {
     useEffect(() => {
         initEarn();
     }, [initEarn]);
+
+    function taskMap(tasks: ITask[], title: string) {
+        console.log(tasks?.length)
+        return (
+            <ConditionBlock condition={tasks?.length > 0}>
+                <div className={styles.tasksList}>
+
+                <div className={styles.tasksTitle}>
+                    <p>{title}</p>
+                </div>
+
+                <ul>
+                    {tasks?.map((task, index) => {
+
+                        if (!task || task?.countries && userLang && !task?.countries?.includes(userLang)) {
+                            return (<></>)
+                        }
+
+                        const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
+
+                        return (
+                            <li
+                                key={index}
+                                className={styles.taskItem}
+                                onClick={isCompleted ? () => {} : () => onTaskClick(task)}
+                            >
+
+                                <Flex className={styles.taskItem_left}>
+                                    <div className={styles.taskIcon + ' ' + (task.type === 'partner' ? styles.taskIconBg : '')}>
+                                        <img
+                                            // src={earnImgData.taskTg}
+                                            src={task.img ?? earnImgData.taskTg}
+                                            // onError={(e) => e.target.src = earnImgData.taskTg}
+                                            alt="Task tg"
+                                        />
+                                    </div>
+                                    <div className={styles.taskInfo}>
+                                        <p className={styles.taskName}>{task.title}</p>
+                                        <Flex className={styles.taskPrice} alignItems='center'>
+                                            <img src={earnImgData.coinIcon} alt="Coin"/>
+                                            <span>{formatPrice(task.coins)}</span>
+                                        </Flex>
+                                    </div>
+                                </Flex>
+
+                                {isCompleted
+                                    ?
+                                    <Text className={styles.taskArrow}>&#10003;</Text>
+                                    :
+                                    <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
+
+                            </li>
+                        )
+                    })}
+                </ul>
+
+            </div>
+            </ConditionBlock>
+        )
+    }
 
     return (
         <>
@@ -83,118 +146,12 @@ export const EarnPage = () => {
                         animate={{x: 0}}
                         className={styles.tasksWrapper}
                     >
-
-                        <ConditionBlock condition={tasksOwner.length > 0}>
-                            <div className={styles.tasksList}>
-
-                                <div className={styles.tasksTitle}>
-                                    <p>{t('owner_tasks')}</p>
-                                </div>
-
-                                <ul>
-                                    {tasksOwner.map((task, index) => {
-                                        const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
-
-                                        if (task?.countries && userLang && !task?.countries?.includes(userLang)) {
-                                            return (<></>)
-                                        }
-
-                                        return (
-                                            <li
-                                                key={task.id}
-                                                className={styles.taskItem}
-                                                onClick={isCompleted ? () => {
-                                                } : () => onTaskClick(task)}
-                                            >
-
-                                                <Flex className={styles.taskItem_left}>
-                                                    <div className={styles.taskIcon}>
-                                                        <img
-                                                            src={earnImgData.taskTg}
-                                                            // src={task.img ?? earnImgData.taskTg}
-                                                            // @ts-ignore
-                                                            // onError={(e) => e.target.src = earnImgData.taskTg}
-                                                            alt="Task tg"
-                                                        />
-                                                    </div>
-                                                    <div className={styles.taskInfo}>
-                                                        <p className={styles.taskName}>{task.title}</p>
-                                                        <Flex className={styles.taskPrice} alignItems='center'>
-                                                            <img src={earnImgData.coinIcon} alt="Coin"/>
-                                                            <span>{formatPrice(task.coins)}</span>
-                                                        </Flex>
-                                                    </div>
-                                                </Flex>
-
-                                                {isCompleted
-                                                    ?
-                                                    <Text className={styles.taskArrow}>&#10003;</Text>
-                                                    :
-                                                    <img className={styles.taskArrow} src={earnImgData.arrow}
-                                                         alt="Arrow"/>}
-
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-
-                            </div>
-                        </ConditionBlock>
-
-                        <ConditionBlock condition={tasksPartner.length > 0}>
-                            <div className={styles.tasksList}>
-
-                                <div className={styles.tasksTitle}>
-                                    <p>{t('partner_tasks')}</p>
-                                </div>
-
-                                {tasksPartner.map((task, index) => {
-                                    const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
-                                    return (
-                                        <Flex
-                                            key={task.id}
-                                            className={styles.taskItem}
-                                            justifyContent='space-between'
-                                            alignItems='center'
-                                            onClick={isCompleted ? () => {
-                                            } : () => onTaskClick(task)}
-                                        >
-
-                                            <Flex className={styles.taskItem_left}>
-                                                <div className={styles.taskIcon}>
-                                                    <img
-                                                        src={task.img ?? earnImgData.taskTg}
-                                                        // @ts-ignore
-                                                        onError={(e) => e.target.src = earnImgData.taskTg}
-                                                        alt="Task tg"
-                                                    />
-                                                </div>
-                                                <div className={styles.taskInfo}>
-                                                    <p className={styles.taskName}>{task.title}</p>
-                                                    <Flex className={styles.taskPrice} alignItems='center'>
-                                                        <img src={earnImgData.coinIcon} alt="Coin"/>
-                                                        <span>{formatPrice(task.coins)}</span>
-                                                    </Flex>
-                                                </div>
-                                            </Flex>
-
-                                            {isCompleted
-                                                ?
-                                                <Text className={styles.taskArrow}>&#10003;</Text>
-                                                :
-                                                <img className={styles.taskArrow} src={earnImgData.arrow} alt="Arrow"/>}
-
-                                        </Flex>
-                                    )
-                                })}
-
-                            </div>
-                        </ConditionBlock>
-
+                        {taskMap(tasksOwner,   t('owner_tasks'))}
+                        {taskMap(tasksInvite,  t('invite_tasks'))}
+                        {taskMap(tasksPartner, t('partner_tasks'))}
                     </motion.div>
                 </LoaderBlock>
             </div>
-
 
             <Popup isOpen={isOpenDaily} onClose={() => useEarnStore.setState({isOpenDaily: false})}>
                 <DailyPopup bonuses={bonuses}/>
@@ -202,6 +159,13 @@ export const EarnPage = () => {
 
             <Popup isOpen={selectedTask !== null} onClose={onTaskClose}>
                 <JoinPopup
+                    task={selectedTask}
+                    onCompleteTask={onCompleteTask}
+                />
+            </Popup>
+
+            <Popup isOpen={selectedTask !== null && selectedTask?.type?.includes('invite_')} onClose={onTaskClose}>
+                <InvitePopup
                     task={selectedTask}
                     onCompleteTask={onCompleteTask}
                 />

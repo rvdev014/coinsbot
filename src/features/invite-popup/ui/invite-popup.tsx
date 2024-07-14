@@ -1,46 +1,21 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC} from 'react';
 import styles from "./styles.module.scss";
 import {Flex} from "@chakra-ui/react";
-import {ITask} from "../../../shared/model/earn/store-types.ts";
-import {formatPrice} from "../../../shared/utils/other.ts";
 import {useEarnStore} from "../../../shared/model/earn/store.ts";
-import {useAppStore} from "../../../shared/model/app-store.ts";
+import {formatPrice} from "../../../shared/utils/other.ts";
+import {ITask} from "../../../shared/model/earn/store-types.ts";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
-import {earnImgData} from "../../../shared/model/earn/utils.ts";
 import {useTranslation} from "react-i18next";
+import {earnImgData} from "../../../shared/model/earn/utils.ts";
 
 interface IProps {
     task: ITask | null;
     onCompleteTask: (task: ITask) => void;
 }
 
-export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
+export const InvitePopup: FC<IProps> = ({task, onCompleteTask}) => {
     const {t} = useTranslation();
-    const tasksOpenedUrl = useEarnStore(state => state.tasksOpenedUrl);
     const isSubmitLoading = useEarnStore(state => state.isSubmitLoading);
-    const timeout = useRef<number | null>(null);
-
-    useEffect(() => {
-        return () => {
-            if (timeout.current) {
-                clearTimeout(timeout.current);
-            }
-        }
-    }, []);
-
-    function onSubscribeClick(task: ITask) {
-        if (task.is_external) {
-            useAppStore.getState().webApp?.openLink(task.url);
-        } else {
-            useAppStore.getState().webApp?.openTelegramLink(task.url);
-        }
-
-        timeout.current = setTimeout(() => {
-            useEarnStore.setState({
-                tasksOpenedUrl: [...tasksOpenedUrl, task.id]
-            });
-        }, 1000);
-    }
 
     if (!task) return null;
 
@@ -48,7 +23,7 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
         <div className={styles.content}>
             <img
                 className={styles.taskIcon}
-                src={earnImgData.taskTgLg}
+                src={task.img ?? earnImgData.taskTg}
                 // src={task.img ?? earnImgData.taskTg}
                 // onError={(e) => e.target.src = earnImgData.taskTgLg}
                 alt="Task tg"
@@ -63,15 +38,11 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
                 <span>+{formatPrice(task.coins)}</span>
             </Flex>
 
-            {tasksOpenedUrl.includes(task.id)
-                ?
+            {
                 <ClaimBtn loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
                     {t('complete_task')}
                 </ClaimBtn>
-                :
-                <ClaimBtn onClick={() => onSubscribeClick(task)}>
-                    {t('subscribe')}
-                </ClaimBtn>}
+            }
 
         </div>
     );

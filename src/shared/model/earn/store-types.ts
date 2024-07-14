@@ -1,6 +1,7 @@
 export interface IEarnStore {
     tasks: ITask[];
     tasksOwner: ITask[];
+    tasksInvite: ITask[];
     tasksPartner: ITask[];
     bonuses: IBonus[];
     selectedTask: ITask | null;
@@ -18,7 +19,7 @@ export interface IEarnStore {
 
     init: () => Promise<void>;
     fetchTasks: () => Promise<void>;
-    fetchBonuses: (withoutLoading: boolean | null) => Promise<void>;
+    fetchBonuses: () => Promise<void>;
     setTasks: (tasks: ITask[]) => void;
     changeTasks: () => void;
     onClaimClick: () => void;
@@ -35,6 +36,9 @@ export interface ITask {
     title: string
     title_ru: string
     title_en: string
+    desc: string
+    desc_ru: string
+    desc_en: string
     img: string | null
     url: string
     countries: string

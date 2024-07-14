@@ -11,6 +11,7 @@ const initialStore = {
     tasks: [] as ITask[],
     tasksOwner: [] as ITask[],
     tasksPartner: [] as ITask[],
+    tasksInvite: [] as ITask[],
     tasksOpenedUrl: [] as number[],
     bonuses: [] as IBonus[],
     selectedTask: null,
@@ -38,7 +39,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                 const promises = [
                     preloadImages(Object.values(earnImgData)),
                     get().fetchTasks(),
-                    get().fetchBonuses(false),
+                    get().fetchBonuses(),
                 ];
 
                 await Promise.allSettled(promises);
@@ -63,10 +64,15 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
         },
 
         setTasks: (tasks) => {
+            const userTasks = useUserStore.getState().tasks;
+
             const tasksOwner = tasks.filter(task => task.type === 'owner');
             const tasksPartner = tasks.filter(task => task.type === 'partner');
+            const tasksInvite = tasks.filter(task => task.type.includes('invite_') && !userTasks.some(item => item.id === task.id));
+            const tasksInviteCompleted = tasks.filter(task => task.type.includes('invite_') && userTasks.some(item => item.id === task.id));
 
-            set({tasks, tasksOwner, tasksPartner});
+            // console.log(tasksInvite, userTasks)
+            set({tasks, tasksOwner, tasksPartner, tasksInvite: [...tasksInvite[0] ? [tasksInvite[0]] : [], ...tasksInviteCompleted]});
         },
 
         changeTasks: () => {
@@ -81,7 +87,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             get().setTasks(tasks);
         },
 
-        fetchBonuses: (withoutLoading: boolean | null) => {
+        fetchBonuses: () => {
 
             const bonuses = [
                 {
@@ -288,7 +294,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                     set({isOpenDaily: false});
                     success('Bonus claimed successfully!')
                     await useUserStore.getState().setInitialStore({...user});
-                    await get().fetchBonuses(true);
+                    await get().fetchBonuses();
                 }
             } catch (e) {
                 showError()
@@ -309,8 +315,8 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
                     await get().fetchTasks();
                     success('Task completed successfully!')
                 }
-            } catch (e) {
-                showError('Checking failed! Task is not completed!');
+            } catch (e: any) {
+                showError(e?.response?.data?.message ?? 'Checking failed! Task is not completed!');
                 set({tasksOpenedUrl: get().tasksOpenedUrl.filter(id => id !== task.id)});
             } finally {
                 set({isSubmitLoading: false});

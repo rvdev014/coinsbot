@@ -150,7 +150,6 @@
     width: 45px;
     height: 45px;
     border-radius: 8px;
-    background: #1C1C1C;
 
     img {
       width: 100%;
@@ -169,6 +168,10 @@
       color: #787880;
     }
   }
+}
+
+.taskIconBg {
+  background: #1C1C1C;
 }
 
 .taskInfo {
