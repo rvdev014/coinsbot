@@ -10,7 +10,7 @@ export const CoinsApi = {
     async updateCoins(userId: string|number, coins: number, energy: number) {
         const response = await apiInstance.post<{data: IUserData}>(
             `/user/${userId}/taped`,
-            {coins, energy}
+            {coins}
         );
         return response.data?.data;
     },

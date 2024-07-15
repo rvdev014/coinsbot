@@ -40,7 +40,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             try {
                 const userStore = useUserStore.getState();
                 const tapped = get().tapped;
-                if (tapped >= 100) {
+                if (tapped >= 30) {
                     set({tapped: 0});
                     const user = await CoinsApi.updateCoins(
                         userStore.user_id,
@@ -54,7 +54,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
             } catch (e) {
                 showError()
             }
-        }, 1000),
+        }, 300),
 
         reset: () => set(initialStore),
     }
