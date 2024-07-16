@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Routing from "./app/routing.tsx";
 import {ChakraProvider} from '@chakra-ui/react'
 import './App.scss'
@@ -10,8 +10,13 @@ import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n";
 import {APP_ENV} from "./shared/consts.ts";
 import {history} from "./app/router/router-history.ts";
+import {initGA} from "./google/init.ts";
 
 function App() {
+
+    useEffect(() => {
+        initGA();
+    }, []);
 
     const userAgent = navigator.userAgent.toLowerCase();
     const isPhone = userAgent.includes("mobile") || userAgent.includes("android") || userAgent.includes("iphone");
