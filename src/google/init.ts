@@ -2,7 +2,7 @@
 export const initGA = () => {
     const script = document.createElement('script');
     script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`; // Замените на ваш Tracking ID
+    script.src = `https://www.googletagmanager.com/gtag/js?id=G-PY4TZRR9PB`; // Замените на ваш Tracking ID
     document.head.appendChild(script);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
