@@ -23,7 +23,13 @@ function App() {
     tg.enableClosingConfirmation();
     tg.expand()
 
-    if ((!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown') && APP_ENV === 'production') {
+    tg.onEvent('backButtonClicked', function() {
+        history.push('/');
+    });
+
+    if ((!isPhone || tg?.platform === 'tdesktop' || tg?.platform === 'web' || tg?.platform === 'unknown')
+        && APP_ENV === 'production' && ![355919981, 542918091].includes(tg?.initDataUnsafe?.user?.id)
+    ) {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.content}>
@@ -32,10 +38,6 @@ function App() {
             </div>
         );
     }
-
-    tg.onEvent('backButtonClicked', function() {
-        history.push('/');
-    });
 
     // const users = [
     //     6301910166,

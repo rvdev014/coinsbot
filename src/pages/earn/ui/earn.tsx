@@ -41,7 +41,6 @@ export const EarnPage = () => {
     }, [initEarn]);
 
     function taskMap(tasks: ITask[], title: string) {
-        console.log(tasks?.length)
         return (
             <ConditionBlock condition={tasks?.length > 0}>
                 <div className={styles.tasksList}>
@@ -157,7 +156,7 @@ export const EarnPage = () => {
                 <DailyPopup bonuses={bonuses}/>
             </Popup>
 
-            <Popup isOpen={selectedTask !== null} onClose={onTaskClose}>
+            <Popup isOpen={selectedTask !== null && !selectedTask?.type?.includes('invite_')} onClose={onTaskClose}>
                 <JoinPopup
                     task={selectedTask}
                     onCompleteTask={onCompleteTask}
