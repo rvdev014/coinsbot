@@ -51,6 +51,7 @@ export interface IUserData {
     bonus_day_ready: boolean,
     turbo: string,
     tap_at: string,
+    country: string,
     energy_turbo_at: string,
     restore_energy_at: string,
     last_coins_per_hour_at: string,
