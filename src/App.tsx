@@ -10,12 +10,14 @@ import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n";
 import {APP_ENV} from "./shared/consts.ts";
 import {history} from "./app/router/router-history.ts";
-import {initGA} from "./google/init.ts";
+import {initGA} from "./assets/js/google.ts";
+import {adsGram} from "./assets/js/ads-gram.ts";
 
 function App() {
 
     useEffect(() => {
         initGA();
+        adsGram();
     }, []);
 
     const userAgent = navigator.userAgent.toLowerCase();
