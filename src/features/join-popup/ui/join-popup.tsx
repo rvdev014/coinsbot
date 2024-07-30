@@ -65,11 +65,11 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
 
             {tasksOpenedUrl.includes(task.id)
                 ?
-                <ClaimBtn loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
+                <ClaimBtn isAds={false} loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
                     {t('complete_task')}
                 </ClaimBtn>
                 :
-                <ClaimBtn onClick={() => onSubscribeClick(task)}>
+                <ClaimBtn isAds={false} onClick={() => onSubscribeClick(task)}>
                     {t('subscribe')}
                 </ClaimBtn>}
 

@@ -11,10 +11,11 @@ interface IProps {
     onClick: () => void;
     children: ReactNode;
     className?: string;
+    isAds?: boolean;
 }
 
 export const ClaimBtn: FC<IProps> = (
-    {disabled, disabledContent, loading, onClick, ...props}
+    {disabled, disabledContent, loading, onClick, isAds = true, ...props}
 ) => {
     if (disabled) {
         return (
@@ -23,6 +24,10 @@ export const ClaimBtn: FC<IProps> = (
     }
 
     const showAds = () => {
+        if (!isAds) {
+            return onClick;
+        }
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         // eslint-disable-next-line react-hooks/rules-of-hooks,react-hooks/exhaustive-deps

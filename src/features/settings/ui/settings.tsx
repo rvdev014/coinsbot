@@ -77,6 +77,7 @@ export const Settings = () => {
                             <option value='ru'>{t('russian')}</option>
                         </Select>
                         <ClaimBtn
+                            isAds={false}
                             onClick={onSave}
                             loading={loading}
                             disabled={!changed}

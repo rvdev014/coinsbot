@@ -38,11 +38,9 @@ export const InvitePopup: FC<IProps> = ({task, onCompleteTask}) => {
                 <span>+{formatPrice(task.coins)}</span>
             </Flex>
 
-            {
-                <ClaimBtn loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
-                    {t('complete_task')}
-                </ClaimBtn>
-            }
+            <ClaimBtn isAds={false} loading={isSubmitLoading} onClick={() => onCompleteTask(task)}>
+                {t('complete_task')}
+            </ClaimBtn>
 
         </div>
     );
