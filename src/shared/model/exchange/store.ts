@@ -43,9 +43,15 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => {
 
                 set({tapped: 0});
 
+                let coins = tapped * userStore.coins_per_tap;
+
+                if (coins > (userStore?.energy_limit * 2)) {
+                    coins = 0
+                }
+
                 const user = await CoinsApi.updateCoins(
                     userStore.user_id,
-                    tapped * userStore.coins_per_tap,
+                    coins,
                     userStore.energy
                 );
 
