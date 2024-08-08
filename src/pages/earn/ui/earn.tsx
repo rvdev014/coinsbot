@@ -25,6 +25,7 @@ export const EarnPage = () => {
     const tasksPartner = useEarnStore(state => state.tasksPartner);
     const userTasks = useUserStore(state => state.tasks);
     const country = useUserStore(state => state.country);
+    const languageCode = useUserStore(state => state.language_code);
     const bonuses = useEarnStore(state => state.bonuses);
     const totalBonusCoins = useEarnStore(state => state.totalBonusCoins);
     const selectedTask = useEarnStore(state => state.selectedTask);
@@ -52,8 +53,15 @@ export const EarnPage = () => {
                 <ul>
                     {tasks?.map((task, index) => {
 
-                        if (!task || task?.countries && country && !task?.countries?.includes(country)) {
-                            return (<></>)
+                        const countryExists = task?.countries?.includes(country);
+                        const languageExists = task?.countries?.includes(languageCode);
+
+                        if (!task || task?.countries && country && !countryExists) {
+
+                            if (!languageExists) {
+                                return (<></>)
+                            }
+
                         }
 
                         const isCompleted = userTasks?.some(userTask => userTask.id === task.id);
