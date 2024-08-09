@@ -9,6 +9,9 @@ export const apiInstance = axios.create({
 apiInstance.interceptors.request.use(
     (config) => {
         config.headers['Accept-Language'] = i18next?.language ?? 'en';
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        config.headers['init-data'] = window?.Telegram?.WebApp?.initData;
         return config;
     },
     (error) => {
