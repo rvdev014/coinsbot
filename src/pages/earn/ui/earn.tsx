@@ -74,7 +74,8 @@ export const EarnPage = () => {
                             >
 
                                 <Flex className={styles.taskItem_left}>
-                                    <div className={styles.taskIcon + ' ' + (task.type === 'partner' ? styles.taskIconBg : '')}>
+                                    {/*<div className={styles.taskIcon + ' ' + (task.type === 'partner' ? styles.taskIconBg : '')}>*/}
+                                    <div className={styles.taskIcon}>
                                         <img
                                             // src={earnImgData.taskTg}
                                             src={task.img ?? earnImgData.taskTg}
