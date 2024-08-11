@@ -60,7 +60,7 @@ export interface IUserData {
     level: ILevel
     next_level: ILevel
     last_level: ILevel
-    tasks: any[]
+    tasks: { id: number }[]
     day_bonus: IBonus | null
     active_day_bonus: IBonus | null
     boost: {

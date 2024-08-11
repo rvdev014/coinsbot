@@ -42,6 +42,8 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
         }, 1000);
     }
 
+    console.log('task', task)
+
     if (!task) return null;
 
     return (

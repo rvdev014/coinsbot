@@ -1,0 +1,1 @@
+export {PuzzlesPage} from './ui/puzzles.tsx';

@@ -5,13 +5,12 @@ import {useReferralStore} from "../../../shared/model/friends/store.ts";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {formatPrice, getFirstLetter, renderUserName, showError} from "../../../shared/utils/other.ts";
 import cl from "classnames";
-import {BOT_USERNAME} from "../../../shared/consts.ts";
-import {useAppStore} from "../../../shared/model/app-store.ts";
 import {ConditionBlock} from "../../../shared/ui/condition-block/condition-block.tsx";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block.tsx";
 import {motion} from "framer-motion";
 import {createPortal} from "react-dom";
 import {useTranslation} from "react-i18next";
+import {useInviteFriends} from "../../../shared/hooks/useInviteFriends";
 
 export const FriendsPage = () => {
     const {t} = useTranslation();
@@ -19,6 +18,8 @@ export const FriendsPage = () => {
 
     const isLoading = useReferralStore(state => state.loading);
     const referrals = useReferralStore();
+
+    const {onInviteFriend} = useInviteFriends();
 
     useEffect(() => {
 
@@ -38,33 +39,6 @@ export const FriendsPage = () => {
 
     useEffect(() => {
     }, [referrals]);
-
-    const onInviteFriend = async () => {
-        try {
-            const referralLink = `https://t.me/${BOT_USERNAME}/clyde?startapp=${userId}`; // Your referral link
-            const messages: any = {
-                en: `Join me and earn Wclyde with me!
-
-💵10k Wclayde as a first-time gift
-💰20k Wclayde if you have Telegram Premium`,
-                ru: `Присоединяйся ко мне и зарабатывай Wclyde вместе со мной!
-
-💵10 тысяч Wclayde в подарок на первое посещение
-💰20 тысяч Wclayde, если у тебя Telegram Premium`
-            }
-
-
-            const message = messages[useUserStore.getState().language_code ?? 'en'];
-
-            useAppStore.getState().webApp?.openTelegramLink(
-                `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`
-            );
-            // window.location.href = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
-            // useAppStore.getState().webApp?.switchInlineQuery('Join us! https://t.me/cryptokawasbot?start=542918091', ["users", "groups", "channels"])
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     console.log('document.getElementById(\'layoutWrapper\')', document.getElementById('layoutWrapper'))
 
@@ -196,8 +170,17 @@ export const FriendsPage = () => {
             {createPortal(
                 <div className={styles.inviteFriendBtnWrapper}>
                     <motion.button
-                        initial={{opacity: 0, y: 30}}
-                        animate={{opacity: 1, y: 0}}
+                        animate={{
+                            y: 0,
+                            scale: [0.98, 1.02, 0.98],
+                            repeatDur: 1,
+                        }}
+                        transition={{
+                            duration: 1.5, // Duration of the animation cycle
+                            repeat: Infinity, // Repeat the animation infinitely
+                            repeatType: "loop", // Loop the animation
+                            ease: "easeInOut" // Easing function
+                        }}
                         className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}
                     >
                         {t('invite_fren')}

@@ -6,6 +6,7 @@ import {history} from "./router/router-history.ts";
 import {HomePage} from "../pages/home";
 import {EarnPage} from "../pages/earn";
 import {FriendsPage} from "../pages/friends";
+import {PuzzlesPage} from "../pages/puzzles";
 import {Levels} from "../features/levels";
 import {Boost} from "../features/boost";
 
@@ -19,6 +20,7 @@ const Routing = () => {
                     <Route path="/friends" element={<FriendsPage/>}/>
                     <Route path="/levels" element={<Levels/>}/>
                     <Route path="/boost" element={<Boost/>}/>
+                    <Route path="/puzzles" element={<PuzzlesPage/>}/>
                 </Route>
             </Routes>
         </CustomRouter>

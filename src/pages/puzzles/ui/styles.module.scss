@@ -1,0 +1,217 @@
+.wrapper {
+  background: #262626;
+  padding: 15px 24px;
+  border-radius: 24px;
+  margin-bottom: calc(64px + 5px);
+}
+
+.titleBlock {
+  text-align: center;
+  margin-bottom: 18px;
+
+  h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  p {
+    color: #9F9F9F;
+    font-size: 16px;
+  }
+}
+
+.infoBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  background: #1C1C1C;
+  border-radius: 12px;
+  margin-bottom: 16px;
+
+  .infoBlockLeft {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 35px;
+      height: 35px;
+      margin-right: 14px;
+    }
+  }
+
+  .infoBlockRight {
+    img {
+      width: 7px;
+    }
+  }
+}
+
+.infoBlockHr {
+  width: 120px;
+  background: #323232;
+  border-color: #323232;
+  margin: 0 auto 16px auto;
+}
+
+.puzzlesBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.puzzles {
+  width: 252px;
+  height: 252px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  .puzzle {
+    width: calc(252px / 2 + 19px);
+    margin-right: -19px;
+
+    &.nonCollected {
+      opacity: 0.3;
+    }
+
+    &.empty {
+      opacity: 0.3;
+    }
+
+    &:nth-child(even) {
+      margin-right: 0;
+      margin-left: -19px;
+    }
+
+    &:nth-child(1) {
+      margin-bottom: -19px;
+    }
+
+    &:nth-child(2) {
+      margin-bottom: -19px;
+    }
+
+    &:nth-child(3) {
+      margin-top: -19px;
+      margin-bottom: -19px;
+    }
+
+    &:nth-child(4) {
+      margin-top: -19px;
+      margin-bottom: -19px;
+    }
+
+    &:nth-child(5) {
+      margin-top: -19px;
+    }
+
+    &:nth-child(6) {
+      margin-top: -19px;
+    }
+  }
+}
+
+.puzzlesDesc {
+  font-size: 16px;
+  color: #9F9F9F;
+  margin-bottom: 16px;
+}
+
+.conditions {
+  width: 100%;
+  max-height: 72px;
+  overflow: hidden;
+
+  &.expanded {
+    max-height: unset;
+  }
+
+  .condition {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .conditionLabel {
+    font-size: 16px;
+  }
+
+  .conditionRight {
+    display: flex;
+    align-items: center;
+
+    span {
+      color: #7C7C7C;
+      margin-left: 5px;
+      margin-right: 8px;
+    }
+
+    img {
+      width: 22px;
+    }
+  }
+}
+
+.expand {
+  display: flex;
+  align-items: center;
+
+  &.expanded {
+    img {
+      transform: rotate(180deg);
+    }
+  }
+
+  p {
+    margin-right: 10px;
+    font-size: 15px;
+    color: #9F9F9F;
+  }
+}
+
+.taskBtn {
+  margin-bottom: 17px;
+}
+
+.startTaskBtn {
+  width: 100%;
+  padding: 7px 15px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #17D686 0%, #0C7046 100%);
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.inviteFriendBtnWrapper {
+  position: fixed;
+  bottom: calc(64px + 5px);
+  right: 14px;
+  max-width: calc(500px - 28px);
+  width: calc(100% - 28px);
+  height: 56px;
+  z-index: 999;
+}
+
+.inviteFriendBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #17D686 0%, #0C7046 100%);
+
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29.04px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}

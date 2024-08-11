@@ -51,6 +51,8 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
         },
 
         fetchTasks: () => {
+            if (get().tasks.length > 0) return;
+
             set({isTasksLoading: true});
             return MainApi.getTasks()
                 .then((tasks) => {

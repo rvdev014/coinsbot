@@ -72,5 +72,20 @@
   "save": "Save",
   "error_ads": "Advertising error, please try later",
 
+  "what_new_coin": "What’s the new Coin?",
+  "piece": "Piece",
+  "start_task": "Start task",
+  "puzzle_collected": "Puzzle collected",
+  "expand": "Expand",
+
+  "new_coin_title": "Meet Listing <br/>Golden coin",
+  "new_coin_desc_1": "All major news about the project will be published there. Keep up to date with the latest information",
+  "new_coin_desc_2": "To start earning Golden coins – open Puzzle Game and invite friends!",
+
+  "open_puzzle": "Open Puzzle to Earn",
+
+  "unlock_puzzle": "Unlock Puzzle",
+  "unlock_puzzle_desc": "To earn Golden Coins automatically without tapping and get additional prizes",
+
   "upgrade": "Upgrade"
 }

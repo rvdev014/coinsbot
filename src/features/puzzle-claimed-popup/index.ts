@@ -1,0 +1,1 @@
+export {PuzzleClaimedPopup} from './ui/puzzle-claimed-popup';

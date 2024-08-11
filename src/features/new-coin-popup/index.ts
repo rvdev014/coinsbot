@@ -1,0 +1,1 @@
+export {NewCoinPopup} from './ui/new-coin-popup.tsx'
