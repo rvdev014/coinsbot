@@ -3,7 +3,7 @@ export interface IPuzzlesStore {
     isInfoPopup: boolean;
     setInfoPopup: (value: boolean) => void;
     loadingLevelId: number;
-    init: () => void;
+    init: (force?: boolean) => void;
     currentPuzzle: IPuzzle | null;
     userPuzzleLevels: IPuzzleLevel[];
     claimedPuzzleLevel: IPuzzleLevel | null;

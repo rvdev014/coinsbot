@@ -31,8 +31,8 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
     return {
         ...initialStore,
 
-        init: async () => {
-            if (get().currentPuzzle) return;
+        init: async (force) => {
+            if (!force && get().currentPuzzle) return;
 
             set({isLoading: true});
             try {
@@ -67,7 +67,7 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                     useUserStore.getState().user_id,
                     puzzleLevel
                 );
-                await get().init();
+                await get().init(true);
                 get().setClaimedPuzzleLevel(puzzleLevel);
             } catch (e) {
                 showError()
