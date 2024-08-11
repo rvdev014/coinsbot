@@ -13,7 +13,6 @@ import {useUserStore} from "../../../shared/model/user/store";
 import {PuzzleClaimedPopup} from "../../../features/puzzle-claimed-popup";
 import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
-import {useInviteFriends} from "../../../shared/hooks/useInviteFriends";
 import {useTranslation} from "react-i18next";
 import {NewCoinPopup} from "../../../features/new-coin-popup";
 
@@ -41,8 +40,6 @@ export const PuzzlesPage = () => {
     const onTaskClick = useEarnStore(state => state.onTaskClick);
     const onTaskClose = useEarnStore(state => state.onTaskClose);
     const onCompleteTask = useEarnStore(state => state.onCompleteTask);
-
-    const {onInviteFriend} = useInviteFriends();
 
     function expandConditions() {
         setExpandedConditions(prev => !prev)
@@ -72,8 +69,9 @@ export const PuzzlesPage = () => {
         return <img className={styles.puzzle} src={puzzleImg} alt={`puzzle ${level}`}/>
     }
 
-    function renderCondition(puzzleLevel, isPuzzleCollected) {
+    function renderCondition(puzzleLevel, isPuzzleCollected, currentPuzzle) {
         const isTask = puzzleLevel.condition_type === 'task';
+        const refCount = currentPuzzle.referrals_count > puzzleLevel.condition ? puzzleLevel.condition : currentPuzzle.referrals_count ?? 0;
 
         if (isPuzzleCollected) {
             return (
@@ -82,7 +80,7 @@ export const PuzzlesPage = () => {
                         ?
                         <span>{t('puzzle_collected')}</span>
                         :
-                        <p>{puzzleLevel.frens_count ?? puzzleLevel.condition}/{puzzleLevel.condition}<span>{t('friends')}</span></p>}
+                        <p>{refCount}/{puzzleLevel.condition}<span>{t('friends')}</span></p>}
                     <img src="/img/puzzles/complete-icon.png" alt="complete"/>
                 </>
             )
@@ -119,7 +117,7 @@ export const PuzzlesPage = () => {
 
         return (
             <>
-                <p>{puzzleLevel.frens_count ?? 0}/{puzzleLevel.condition}<span>{t('friends')}</span></p>
+                <p>{refCount}/{puzzleLevel.condition}<span>{t('friends')}</span></p>
                 <img src="/img/puzzles/friends-icon.png" alt="friends"/>
             </>
         )
@@ -178,7 +176,7 @@ export const PuzzlesPage = () => {
                                     <div key={puzzleLevel.level} className={styles.condition}>
                                         <p className={styles.conditionLabel}>{t('piece')} #{puzzleLevel.level}</p>
                                         <div className={styles.conditionRight}>
-                                            {renderCondition(puzzleLevel, isPuzzleCollected)}
+                                            {renderCondition(puzzleLevel, isPuzzleCollected, currentPuzzle)}
                                         </div>
                                     </div>
                                 )
@@ -195,37 +193,6 @@ export const PuzzlesPage = () => {
                 </LoaderBlock>
 
             </div>
-
-            {/*<ClaimBtn isAds={false} className={styles.taskBtn}>Invite friends</ClaimBtn>*/}
-            {createPortal(
-                <div className={styles.inviteFriendBtnWrapper}>
-                    <motion.button
-                        animate={{
-                            y: 0,
-                            scale: [0.98, 1.02, 0.98],
-                            repeatDur: 1,
-                        }}
-                        transition={{
-                            duration: 1.5, // Duration of the animation cycle
-                            repeat: Infinity, // Repeat the animation infinitely
-                            repeatType: "loop", // Loop the animation
-                            ease: "easeInOut" // Easing function
-                        }}
-                        className={cl(styles.inviteFriendBtn, 'gradientWrapper')} onClick={onInviteFriend}
-                    >
-                        {t('invite_fren')}
-                        <span
-                            className='gradient'
-                            style={{
-                                boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.61)`,
-                                bottom: '-30px'
-                            }}
-                        />
-                    </motion.button>
-                </div>,
-                // @ts-ignore
-                document.getElementById('root')
-            )}
 
             <Popup isOpen={isInfoPopup} onClose={() => setInfoPopup(false)}>
                 <NewCoinPopup

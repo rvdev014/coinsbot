@@ -19,6 +19,7 @@ export interface IPuzzle {
     title: string
     img: string
     g_coins_per_hour: number
+    referrals_count: number
     active: boolean
     is_complete: boolean
     created_at: string
