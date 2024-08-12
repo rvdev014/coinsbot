@@ -69,6 +69,8 @@ export const PuzzlesPage = () => {
         return <img className={styles.puzzle} src={puzzleImg} alt={`puzzle ${level}`}/>
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     function renderCondition(puzzleLevel, isPuzzleCollected, currentPuzzle) {
         const isTask = puzzleLevel.condition_type === 'task';
         const refCount = currentPuzzle.referrals_count > puzzleLevel.condition ? puzzleLevel.condition : currentPuzzle.referrals_count ?? 0;

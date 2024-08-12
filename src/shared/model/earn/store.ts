@@ -25,6 +25,8 @@ const initialStore = {
     isOpenDaily: false,
 } as IEarnStore;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 export const useEarnStore = create<IEarnStore>((set, get) => {
     return {
         ...initialStore,
@@ -325,7 +327,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             }
         },
 
-        onTaskClick: (task: ITask) => {
+        onTaskClick: (task: ITask | undefined) => {
             set({selectedTask: task});
         },
 

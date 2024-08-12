@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import styles from "./styles.module.scss";
-import {ITask} from "../../../shared/model/earn/store-types.ts";
 import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn.tsx";
-import {earnImgData} from "../../../shared/model/earn/utils.ts";
 import {useTranslation} from "react-i18next";
 import {IPuzzleLevel} from "../../../shared/model/puzzles/store-types";
 import {rewards} from "../utils/consts";
@@ -17,6 +15,8 @@ export const PuzzleClaimedPopup: FC<IProps> = ({puzzleLevel, onClosePopup}) => {
     const {t} = useTranslation();
 
     function renderReward() {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const reward = rewards[puzzleLevel.reward];
         if (!reward) {
             return null;

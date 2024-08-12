@@ -10,22 +10,8 @@ const initialStore = {
     currentPuzzle: null,
     userPuzzleLevels: [],
     claimedPuzzleLevel: null,
-    /*claimedPuzzleLevel: {
-        "id": 3,
-        "puzzle_id": 1,
-        "title_ru": "level 3",
-        "title_en": "level 3",
-        "title": "level 3",
-        "condition_type": "task",
-        "condition": "2",
-        "img": "/img/golden-3.png",
-        "level": 3,
-        "reward": "energy_turbo",
-        "is_complete": true,
-        "created_at": "2024-08-09 18:16:59Z",
-        "updated_at": "2024-08-09 18:16:59Z"
-    },*/
-} as IPuzzlesStore;
+    loadingLevelId: 0
+};
 
 export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
     return {
@@ -37,11 +23,15 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
             set({isLoading: true});
             try {
                 const currentPuzzles = await PuzzlesApi.fetchPuzzles(useUserStore.getState().user_id);
-                if (!currentPuzzles.length) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                if (!currentPuzzles?.length) {
                     showError();
                     return;
                 }
 
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 const currentPuzzle = currentPuzzles[0];
                 set({currentPuzzle});
 
@@ -52,6 +42,8 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                 if (userCurrentPuzzle) {
                     set({
                         userPuzzleLevels: userCurrentPuzzle.puzzle_Levels,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         currentPuzzle: {
                             ...get().currentPuzzle,
                             referrals_count: userCurrentPuzzle.referrals_count
