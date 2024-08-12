@@ -72,6 +72,7 @@ export const PuzzlesPage = () => {
     function renderCondition(puzzleLevel, isPuzzleCollected, currentPuzzle) {
         const isTask = puzzleLevel.condition_type === 'task';
         const refCount = currentPuzzle.referrals_count > puzzleLevel.condition ? puzzleLevel.condition : currentPuzzle.referrals_count ?? 0;
+        const isClaiming = loadingLevelId === puzzleLevel.id;
 
         if (isPuzzleCollected) {
             return (
@@ -91,7 +92,6 @@ export const PuzzlesPage = () => {
             const taskCompleted = userTasks.some(t => t.id === task?.id)
 
             if (taskCompleted) {
-                const isClaiming = loadingLevelId === puzzleLevel.id;
                 return (
                     <button
                         className={cl(styles.startTaskBtn, 'gradientWrapper')}
@@ -110,6 +110,19 @@ export const PuzzlesPage = () => {
                     onClick={() => onTaskClick(task)}
                 >
                     {t('start_task')}
+                    <span className='gradient' style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.5)`, bottom: '-30px'}}/>
+                </button>
+            )
+        }
+
+        if (refCount >= puzzleLevel.condition) {
+            return (
+                <button
+                    className={cl(styles.startTaskBtn, 'gradientWrapper')}
+                    onClick={() => onClaimPuzzle(puzzleLevel)}
+                    disabled={isClaiming}
+                >
+                    {isClaiming ? <Spinner color='#fff' size='sm'/> : 'Claim puzzle'}
                     <span className='gradient' style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.5)`, bottom: '-30px'}}/>
                 </button>
             )

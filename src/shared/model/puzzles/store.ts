@@ -50,7 +50,13 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                     currentPuzzle.id
                 );
                 if (userCurrentPuzzle) {
-                    set({userPuzzleLevels: userCurrentPuzzle.puzzle_Levels});
+                    set({
+                        userPuzzleLevels: userCurrentPuzzle.puzzle_Levels,
+                        currentPuzzle: {
+                            ...get().currentPuzzle,
+                            referrals_count: userCurrentPuzzle.referrals_count
+                        }
+                    });
                 }
 
             } catch (e) {
