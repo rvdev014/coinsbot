@@ -50,7 +50,7 @@ export const JoinPopup: FC<IProps> = ({task, onCompleteTask}) => {
         <div className={styles.content}>
             <img
                 className={styles.taskIcon}
-                src={earnImgData.taskTgLg}
+                src={task.img ?? earnImgData.taskTg}
                 // src={task.img ?? earnImgData.taskTg}
                 // onError={(e) => e.target.src = earnImgData.taskTgLg}
                 alt="Task tg"

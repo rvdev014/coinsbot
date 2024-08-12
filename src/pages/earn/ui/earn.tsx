@@ -41,7 +41,25 @@ export const EarnPage = () => {
         initEarn();
     }, [initEarn]);
 
+    function sortTasksByCondition(arr1: ITask[], arr2: { id: number }[]): ITask[] {
+        // Фильтруем элементы, которых нет во втором массиве
+        const notInSecondArray = arr1.filter(task1 =>
+            !arr2.some(task2 => task2.id === task1.id)
+        );
+
+        // Фильтруем элементы, которые есть во втором массиве
+        const inSecondArray = arr1.filter(task1 =>
+            arr2.some(task2 => task2.id === task1.id)
+        );
+
+        // Объединяем массивы: сначала элементы, которых нет во втором массиве
+        return [...notInSecondArray, ...inSecondArray];
+    }
+
     function taskMap(tasks: ITask[], title: string) {
+
+        tasks = sortTasksByCondition(tasks, userTasks);
+
         return (
             <ConditionBlock condition={tasks?.length > 0}>
                 <div className={styles.tasksList}>
