@@ -1,0 +1,107 @@
+.wrapper {
+
+}
+
+.tabs {
+  height: 40px;
+  background: #262626;
+  border-radius: 12px;
+  margin: 20px 0;
+  padding: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+
+  .tab {
+    font-size: 12px;
+    color: #737373;
+    padding: 8px 6px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.active {
+      border-radius: 8px;
+      color: #fff;
+      background: #1C1C1C;
+    }
+  }
+}
+
+.cardsWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+}
+
+
+.card {
+  padding: 10px;
+  border-radius: 12px;
+  background: #262626;
+
+  hr {
+    margin: 10px 0;
+    border: 1px solid #1C1C1C;
+  }
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+
+  .cardImg {
+    margin-right: 10px;
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.cardInfo {
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .reward {
+    font-size: 14px;
+    color: #737373;
+    margin: 8px 0 5px 0;
+  }
+}
+
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .cardLevel {
+    font-size: 14px;
+    line-height: 14px;
+    color: #7C7C7C;
+    margin-right: 8px;
+    padding-right: 8px;
+    border-right: 1px solid #7C7C7C;
+  }
+}
+
+.cardCost {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 14px;
+  }
+}

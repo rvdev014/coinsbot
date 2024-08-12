@@ -100,7 +100,7 @@ export const PuzzlesPage = () => {
                         onClick={() => onClaimPuzzle(puzzleLevel)}
                         disabled={isClaiming}
                     >
-                        {isClaiming ? <Spinner color='#fff' size='sm'/> : 'Claim puzzle'}
+                        {isClaiming ? <Spinner color='#fff' size='sm'/> : t('claim_puzzle')}
                         <span className='gradient' style={{boxShadow: `0 0 50px 50px rgba(153, 214, 23, 0.5)`, bottom: '-30px'}}/>
                     </button>
                 )

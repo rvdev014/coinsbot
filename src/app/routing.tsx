@@ -7,6 +7,7 @@ import {HomePage} from "../pages/home";
 import {EarnPage} from "../pages/earn";
 import {FriendsPage} from "../pages/friends";
 import {PuzzlesPage} from "../pages/puzzles";
+import {MinePage} from "../pages/mine";
 import {Levels} from "../features/levels";
 import {Boost} from "../features/boost";
 
@@ -21,6 +22,7 @@ const Routing = () => {
                     <Route path="/levels" element={<Levels/>}/>
                     <Route path="/boost" element={<Boost/>}/>
                     <Route path="/puzzles" element={<PuzzlesPage/>}/>
+                    <Route path="/mine" element={<MinePage/>}/>
                 </Route>
             </Routes>
         </CustomRouter>
