@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 import cl from "classnames";
-import {ClaimBtn} from "../../../shared/ui/claim-btn/claim-btn";
 import {usePuzzlesStore} from "../../../shared/model/puzzles/store";
-import {Loader} from "../../../shared/ui/loader/loader";
 import {Spinner} from "@chakra-ui/react";
 import {JoinPopup} from "../../../features/join-popup";
 import {Popup} from "../../../shared/ui/popup/popup";
@@ -11,13 +9,13 @@ import {useEarnStore} from "../../../shared/model/earn/store";
 import {LoaderBlock} from "../../../shared/ui/loader-block/loader-block";
 import {useUserStore} from "../../../shared/model/user/store";
 import {PuzzleClaimedPopup} from "../../../features/puzzle-claimed-popup";
-import {createPortal} from "react-dom";
-import {motion} from "framer-motion";
 import {useTranslation} from "react-i18next";
 import {NewCoinPopup} from "../../../features/new-coin-popup";
+import {useParams} from "react-router-dom";
 
 export const PuzzlesPage = () => {
     const {t} = useTranslation();
+    const puzzleId = useParams().id;
     const [expandedConditions, setExpandedConditions] = useState(false)
 
     const init = usePuzzlesStore(state => state.init)
@@ -46,9 +44,9 @@ export const PuzzlesPage = () => {
     }
 
     useEffect(() => {
-        init();
+        init(puzzleId);
         fetchTasks();
-    }, [init])
+    }, [init, puzzleId])
 
     function renderPuzzle(level: number) {
         if (!currentPuzzle) {

@@ -9,7 +9,7 @@
   "be_first": "Be the first to reach this ranking and inspire others to achieve new heights.",
 
   "coins_per_tap": "Coins per tap",
-  "coins_per_hour": "Coins per 1.5 hours",
+  "coins_per_hour": "Coins per hour",
   "coins_for_level_up": "Coins for level up",
   "boost": "Boost",
 
@@ -88,6 +88,8 @@
 
   "unlock_puzzle": "Unlock Puzzle",
   "unlock_puzzle_desc": "To earn Golden Coins automatically without tapping and get additional prizes",
+
+  "card_desc": "Increases the number of coins you can earn per tap",
 
   "upgrade": "Upgrade"
 }

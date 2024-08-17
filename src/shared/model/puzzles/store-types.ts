@@ -3,7 +3,12 @@ export interface IPuzzlesStore {
     isInfoPopup: boolean;
     setInfoPopup: (value: boolean) => void;
     loadingLevelId: number;
-    init: (force?: boolean) => void;
+    onPuzzleInit: (puzzle: IPuzzle) => Promise<void>;
+    init: (puzzleId: number | string, force?: boolean) => void;
+    fetchPuzzles: () => Promise<void>;
+    fetchMyPuzzles: (puzzle_id?: number) => Promise<void>;
+    puzzles: IPuzzle[];
+    userPuzzles: IPuzzle[];
     currentPuzzle: IPuzzle | null;
     userPuzzleLevels: IPuzzleLevel[];
     claimedPuzzleLevel: IPuzzleLevel | null;

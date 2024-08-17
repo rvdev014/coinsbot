@@ -8,11 +8,9 @@ import {Loader} from "../../../shared/ui/loader/loader.tsx";
 import {IUserData} from "../../../shared/model/user/store-types.ts";
 import cl from "classnames";
 import {levelsImgData} from "../model/utils.ts";
-import {motion, useAnimate} from "framer-motion";
+import {motion} from "framer-motion";
 import {useTranslation} from "react-i18next";
 import {UserCoins} from "../../user-coins";
-
-import levelImg from '../../../assets/img/levels/level-1.png';
 
 export const Levels = () => {
     const {t} = useTranslation();

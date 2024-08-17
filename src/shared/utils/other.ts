@@ -52,13 +52,13 @@ export const formatNumber = (num: any) => {
             num = 0
             break
         case num < 1000000:
-            num =  (num / 1000).toFixed(0) + 'K'
+            num =  num % 1000 === 0 ? (num / 1000).toFixed(0) + 'K' : (num / 1000).toFixed(1) + 'K'
             break
         case num >= 1000000 && num < 1000000000:
-            num =  (num / 1000000).toFixed(0) + 'M'
+            num =  num % 1000000 === 0 ? (num / 1000000).toFixed(0) + 'M' : (num / 1000000).toFixed(1) + 'M'
             break
         case num >= 1000000000:
-            num =  (num / 1000000000).toFixed(0) + 'B+'
+            num =  num % 1000000000 === 0 ? (num / 1000000000).toFixed(0) + 'B' : (num / 1000000000).toFixed(1) + 'B'
             break
         default:
             num?.toString()
@@ -69,7 +69,11 @@ export const formatNumber = (num: any) => {
 
 export function formatPrice(amount: number): string {
     if (!amount) return '0';
-    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return Math.round(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+export function increaseByPercent(value: number, percent: number): number {
+    return value + (value * percent / 100);
 }
 
 const {toast} = createStandaloneToast()

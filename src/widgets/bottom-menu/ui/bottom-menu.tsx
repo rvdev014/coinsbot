@@ -34,9 +34,13 @@ export const BottomMenu = () => {
                     <img src="/img/frens-icon.png" alt="Tap"/>
                     <Text className={styles.menuItem_text}>{t('frens')}</Text>
                 </Link>
-                <Link to='/puzzles' className={`${styles.menuItem} ${isActive('/puzzles') ? styles.active : ''}`}>
+                {/*<Link to='/puzzles' className={`${styles.menuItem} ${isActive('/puzzles') ? styles.active : ''}`}>
                     <img src="/img/puzzles-icon.png" alt="Tap"/>
                     <Text className={styles.menuItem_text}>{t('puzzles')}</Text>
+                </Link>*/}
+                <Link to='/mine' className={`${styles.menuItem} ${isActive('/mine') ? styles.active : ''}`}>
+                    <img src="/img/mine-icon.png" alt="Mine"/>
+                    <Text className={styles.menuItem_text}>Mine</Text>
                 </Link>
                 <div className={styles.settingsItem}>
                     <Settings/>

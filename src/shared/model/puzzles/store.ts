@@ -7,6 +7,8 @@ import {PuzzlesApi} from "../../api/puzzles-api";
 const initialStore = {
     isLoading: false,
     isInfoPopup: false,
+    puzzles: [],
+    userPuzzles: [],
     currentPuzzle: null,
     userPuzzleLevels: [],
     claimedPuzzleLevel: null,
@@ -17,22 +19,54 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
     return {
         ...initialStore,
 
-        init: async (force) => {
-            if (!force && get().currentPuzzle) return;
-
+        onPuzzleInit: async (currentPuzzle) => {
             set({isLoading: true});
             try {
-                const currentPuzzles = await PuzzlesApi.fetchPuzzles(useUserStore.getState().user_id);
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                if (!currentPuzzles?.length) {
-                    showError();
-                    return;
+                set({
+                    currentPuzzle,
+                    userPuzzleLevels: currentPuzzle.puzzle_Levels
+                })
+
+                const userCurrentPuzzle = await PuzzlesApi.fetchMyPuzzleById(
+                    useUserStore.getState().user_id,
+                    currentPuzzle.id
+                );
+                if (userCurrentPuzzle) {
+                    set({
+                        userPuzzleLevels: userCurrentPuzzle.puzzle_Levels,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
+                        currentPuzzle: {
+                            ...get().currentPuzzle,
+                            referrals_count: userCurrentPuzzle.referrals_count
+                        }
+                    });
+                }
+            } catch (e) {
+                showError()
+            } finally {
+                set({isLoading: false});
+            }
+        },
+
+        init: async (puzzleId, force) => {
+            set({isLoading: true});
+            try {
+                if (!get().puzzles?.length) {
+                    await get().fetchPuzzles();
+                    const puzzles = get().puzzles;
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
+                    if (!puzzles?.length) {
+                        showError();
+                        return;
+                    }
                 }
 
+                const puzzles = get().puzzles;
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
-                const currentPuzzle = currentPuzzles[0];
+                const currentPuzzle = puzzles.find(puzzle => puzzle.id == puzzleId);
                 set({currentPuzzle});
 
                 const userCurrentPuzzle = await PuzzlesApi.fetchMyPuzzleById(
@@ -52,9 +86,38 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                 }
 
             } catch (e) {
+                console.error(e);
                 showError()
             } finally {
                 set({isLoading: false});
+            }
+        },
+
+        fetchPuzzles: async () => {
+            try {
+                const puzzles = await PuzzlesApi.fetchPuzzles(useUserStore.getState().user_id);
+                if (!puzzles?.length) {
+                    showError();
+                    return;
+                }
+
+                set({puzzles});
+            } catch (e) {
+                showError()
+            }
+        },
+
+        fetchMyPuzzles: async () => {
+            try {
+                const puzzles = await PuzzlesApi.fetchMyPuzzles(useUserStore.getState().user_id);
+                if (!puzzles?.length) {
+                    showError();
+                    return;
+                }
+
+                set({userPuzzles: puzzles});
+            } catch (e) {
+                showError()
             }
         },
 

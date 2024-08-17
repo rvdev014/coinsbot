@@ -21,7 +21,7 @@ const Routing = () => {
                     <Route path="/friends" element={<FriendsPage/>}/>
                     <Route path="/levels" element={<Levels/>}/>
                     <Route path="/boost" element={<Boost/>}/>
-                    <Route path="/puzzles" element={<PuzzlesPage/>}/>
+                    <Route path="/puzzles/:id" element={<PuzzlesPage/>}/>
                     <Route path="/mine" element={<MinePage/>}/>
                 </Route>
             </Routes>

@@ -37,6 +37,8 @@ export interface IUserData {
     logo: string,
     language_code: string,
     coins: number,
+    g_coins: number,
+    g_coins_per_hour: number,
     collected_coins: number,
     energy: number,
     profit: number,
