@@ -69,6 +69,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 11px;
+  margin-top: 16px;
   margin-bottom: 16px;
 }
 
@@ -150,6 +151,7 @@
     font-size: 14px;
     color: #737373;
     margin-bottom: 5px;
+    text-align: center;
   }
 }
 

@@ -41,7 +41,7 @@ export const EarnPage = () => {
         initEarn();
     }, [initEarn]);
 
-    function sortTasksByCondition(arr1: ITask[], arr2: { id: number }[]): ITask[] {
+    function sortTasksByCondition(arr1: ITask[], arr2: { id: number | string }[]): ITask[] {
         // Фильтруем элементы, которых нет во втором массиве
         const notInSecondArray = arr1.filter(task1 =>
             !arr2.some(task2 => task2.id === task1.id)

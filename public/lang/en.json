@@ -11,6 +11,7 @@
   "coins_per_tap": "Coins per tap",
   "coins_per_hour": "Coins per hour",
   "coins_for_level_up": "Coins for level up",
+  "g_coins_per_hour": "Golden per hour",
   "boost": "Boost",
 
   "your_balance": "Your balance",
@@ -90,6 +91,7 @@
   "unlock_puzzle_desc": "To earn Golden Coins automatically without tapping and get additional prizes",
 
   "card_desc": "Increases the number of coins you can earn per tap",
+  "complete_card_task": "Complete task:",
 
   "upgrade": "Upgrade"
 }

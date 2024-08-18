@@ -16,7 +16,7 @@ export const PuzzlesApi = {
         return response.data?.data;
     },
 
-    async fetchPuzzles(user_id?: string|number) {
+    async fetchPuzzles(user_id?: string|number): Promise<IPuzzle> {
         const response = await apiInstance.get<{ data: IPuzzle }>(`/puzzles`, {
             params: {user_id}
         });
@@ -26,7 +26,7 @@ export const PuzzlesApi = {
         const response = await apiInstance.get(`/user/${userId}/my-puzzles`);
         return response.data?.data;
     },
-    async fetchMyPuzzleById(userId: string|number, puzzleId: string|number) {
+    async fetchMyPuzzleById(userId: string|number, puzzleId: string|number|undefined) {
         const response = await apiInstance.get(`/user/${userId}/my-puzzles/${puzzleId}`);
         return response.data?.data;
     },

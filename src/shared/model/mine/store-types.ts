@@ -1,3 +1,5 @@
+import {IPuzzle} from "../puzzles/store-types.ts";
+
 export interface IMineStore {
     isLoading: boolean;
     isLoadingPuzzles: boolean;
@@ -24,7 +26,7 @@ export interface IMineStore {
 export interface IMineCategory {
     id: number
     active: boolean
-    parent_id: any
+    parent_id: number | string | undefined
     title: string
     title_en: string
     title_ru: string
@@ -34,7 +36,7 @@ export interface IMineCategory {
 }
 
 export interface IMineCard extends IUserCard {
-    id: number
+    id: number | string
     active: boolean
     category_id: number
     depend_level: number
@@ -49,27 +51,28 @@ export interface IMineCard extends IUserCard {
     title: string
     title_en: string
     title_ru: string
-    sub_title_en: any
-    sub_title_ru: any
-    desc: any
-    desc_en: any
-    desc_ru: any
-    img: any
+    sub_title: string | undefined
+    sub_title_en: string | undefined
+    sub_title_ru: string | undefined
+    desc: string | undefined
+    desc_en: string | undefined
+    desc_ru: string | undefined
+    img: string | undefined
     created_at: string
     updated_at: string
-    puzzle: any
+    puzzle: IPuzzle
 }
 
 export interface IUserCard {
-    id: number
+    id: number | string
     level: number
     profit: number
     next_price: number
     next_profit: number
     user_id: number
-    card_id: number
+    card_id: number | string
     created_at: string
     updated_at: string
 
-    refs_count: number
+    refs_count: number | string
 }

@@ -53,7 +53,7 @@ export const Boost = () => {
                     className={cl(styles.mainCard, 'gradientWrapper')}
                 >
                     <p className={styles.mainCard_title}>{t('your_balance')}</p>
-                    <UserCoins>
+                    <UserCoins golden={false}>
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
                                 <img src={boostImgData.coinIconLg} alt="Coin"/>

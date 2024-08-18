@@ -16,6 +16,7 @@ import {Balance} from "../../../shared/ui/balance/balance";
 import {UserCoins} from "../../../features/user-coins";
 import {useUserStore} from "../../../shared/model/user/store";
 import {Link} from "react-router-dom";
+import {IMineCard} from "../../../shared/model/mine/store-types.ts";
 
 export const MinePage = () => {
     const {t} = useTranslation();
@@ -57,7 +58,11 @@ export const MinePage = () => {
         setExpandedPuzzles(prev => !prev);
     }
 
-    function checkCard(card) {
+    function checkCard(card: IMineCard | null) {
+
+        if (!card) {
+            return {type: ''};
+        }
 
         if ((card.level ?? 0) < 1) {
             if (card.type === 'invite') {
@@ -75,11 +80,18 @@ export const MinePage = () => {
             if (card.type === 'card') {
                 const dependCategory = categories.find(category => category.cards.some(c => c.id == card.type_value));
                 const dependCard = dependCategory?.cards.find(c => c.id == card.type_value);
+
                 if (!userCards?.some(userCard => userCard.card_id == card.type_value && userCard.level == card.depend_level)) {
                     return {
                         type: 'card',
                         description: `${dependCard?.title} ${card.depend_level} lvl`
                     }
+                }
+            }
+
+            if (card.puzzle) {
+                return {
+                    type: 'puzzle'
                 }
             }
         }
@@ -110,7 +122,7 @@ export const MinePage = () => {
                             </Flex>
                         )}
                     </UserCoins>
-                    <UserCoins>
+                    <UserCoins golden={false}>
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
                                 <img src={boostImgData.coinIconLg} alt="Coin"/>
@@ -126,7 +138,7 @@ export const MinePage = () => {
                         height='100px'
                     >
                         <div className={styles.puzzlesList}>
-                            {puzzlesMapped.map((puzzle, index) => {
+                            {puzzlesMapped.map((puzzle) => {
                                 const userPuzzle = userPuzzles.find(p => p.id === puzzle.id);
                                 return (
                                     <Link to={`/puzzles/${puzzle.id}`} key={puzzle.id}>
@@ -152,21 +164,21 @@ export const MinePage = () => {
                 </div>
 
                 <LoaderBlock loading={isLoading}>
-                    <div className={styles.tabs}>
-                        {categories.map((category, index) => {
-                            if (category.cards.length === 0) return null;
+                    {/*<div className={styles.tabs}>*/}
+                    {/*    {categories.map((category) => {*/}
+                    {/*        if (category.cards.length === 0) return null;*/}
 
-                            return (
-                                <motion.div
-                                    key={category.id}
-                                    onClick={() => onTabCategory(category)}
-                                    className={cl(styles.tab, tabCategory?.id === category.id && styles.active)}
-                                >
-                                    {category.title_ru}
-                                </motion.div>
-                            )
-                        })}
-                    </div>
+                    {/*        return (*/}
+                    {/*            <motion.div*/}
+                    {/*                key={category.id}*/}
+                    {/*                onClick={() => onTabCategory(category)}*/}
+                    {/*                className={cl(styles.tab, tabCategory?.id === category.id && styles.active)}*/}
+                    {/*            >*/}
+                    {/*                {category.title_ru}*/}
+                    {/*            </motion.div>*/}
+                    {/*        )*/}
+                    {/*    })}*/}
+                    {/*</div>*/}
 
                     <div className={styles.cardsWrapper}>
                         {tabCategory?.cards.map(card => {
@@ -185,7 +197,7 @@ export const MinePage = () => {
             </div>
 
             <Popup isOpen={selectedCard !== null} onClose={() => setSelectedCard(null)}>
-                <CardPopup card={selectedCard} onSubmit={onCardBuy}/>
+                <CardPopup card={selectedCard} disabled={!!checkCard(selectedCard)?.type} onSubmit={onCardBuy}/>
             </Popup>
 
         </>

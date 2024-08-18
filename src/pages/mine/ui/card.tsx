@@ -35,23 +35,25 @@ export const Card: FC<IProps> = ({card, disabled, onClick}) => {
         );
     }
 
+    const isDisable = disabled?.type && disabled?.type !== 'task';
+
     return (
-        <div className={cl(styles.card, disabled?.type && styles.disabled)} onClick={() => onClick(card)}>
+        <div className={cl(styles.card, isDisable && styles.disabled)} onClick={() => onClick(card)}>
 
             <div className={styles.cardTop}>
                 <div className={styles.cardImg}>
-                    <img src="/img/mine/card-img.png" alt="card img"/>
-                    {disabled?.type &&
+                    <img src={`/img/cards/card-${card.id}.png`} alt={`card-${card.id}`} />
+                    {isDisable &&
                         <div className={styles.lockBackdrop}>
                             <img className={styles.lock} src="/img/puzzles/lock.png" alt="Lock"/>
                         </div>}
                 </div>
                 <div className={styles.cardInfo}>
-                    <h4 className={styles.title}>{card.title_ru}</h4>
+                    <h4 className={styles.title}>{card.title}</h4>
                     <p className={styles.reward}>{t('coins_per_hour')}</p>
                     <div className={styles.cardCost}>
-                        <img src="/img/coin-level.png" alt="coin"/>
-                        <span>+{formatPrice(card.next_profit ?? card.profit)}</span>
+                        <img src="/img/puzzles/new-coin-icon.png" alt="coin"/>
+                        <span>+{formatPrice(card.next_profit ?? card.profit)} {t('coins_per_hour')}</span>
                     </div>
                 </div>
             </div>

@@ -1,1 +1,1 @@
-export {JoinPopup} from './ui/join-popup.tsx';
+export {CardPopup} from './ui/card-popup.tsx';

@@ -189,7 +189,7 @@ export const Levels = () => {
                                                 </p>
                                                 <Flex className={styles.userBalance} alignItems='center'>
                                                     <img src="/img/coin-level.png" alt="Coin"/>
-                                                    <UserCoins>
+                                                    <UserCoins golden={false}>
                                                         {({coins}) => <span>{formatPrice(coins)}</span>}
                                                     </UserCoins>
                                                 </Flex>

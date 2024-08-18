@@ -43,20 +43,20 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                     });
                 }
             } catch (e) {
-                showError()
+                console.log(e)
             } finally {
                 set({isLoading: false});
             }
         },
 
-        init: async (puzzleId, force) => {
+        init: async (puzzleId) => {
+
             set({isLoading: true});
             try {
                 if (!get().puzzles?.length) {
                     await get().fetchPuzzles();
                     const puzzles = get().puzzles;
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error
+
                     if (!puzzles?.length) {
                         showError();
                         return;
@@ -64,15 +64,16 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                 }
 
                 const puzzles = get().puzzles;
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
+
                 const currentPuzzle = puzzles.find(puzzle => puzzle.id == puzzleId);
+
                 set({currentPuzzle});
 
                 const userCurrentPuzzle = await PuzzlesApi.fetchMyPuzzleById(
                     useUserStore.getState().user_id,
-                    currentPuzzle.id
+                    currentPuzzle?.id
                 );
+
                 if (userCurrentPuzzle) {
                     set({
                         userPuzzleLevels: userCurrentPuzzle.puzzle_Levels,
@@ -96,11 +97,14 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
         fetchPuzzles: async () => {
             try {
                 const puzzles = await PuzzlesApi.fetchPuzzles(useUserStore.getState().user_id);
+
                 if (!puzzles?.length) {
                     showError();
                     return;
                 }
 
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 set({puzzles});
             } catch (e) {
                 showError()
@@ -110,8 +114,8 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
         fetchMyPuzzles: async () => {
             try {
                 const puzzles = await PuzzlesApi.fetchMyPuzzles(useUserStore.getState().user_id);
+
                 if (!puzzles?.length) {
-                    showError();
                     return;
                 }
 
@@ -128,7 +132,7 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                     useUserStore.getState().user_id,
                     puzzleLevel
                 );
-                await get().init(true);
+                await get().init(puzzleLevel.puzzle_id);
                 get().setClaimedPuzzleLevel(puzzleLevel);
             } catch (e) {
                 showError()

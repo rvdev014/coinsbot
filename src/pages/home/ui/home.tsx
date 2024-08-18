@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {EnergyInfo} from "./energy-info.tsx";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
-import {formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
+import {formatNumber, formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
 
 import 'react-circular-progressbar/dist/styles.css';
@@ -31,6 +31,7 @@ export const HomePage = () => {
     const nextLevel = useUserStore(state => state.next_level);
     const lastLevel = useUserStore(state => state.last_level);
     const coinsPerTap = useUserStore(state => state.coins_per_tap);
+    const gCoinsPerHour = useUserStore(state => state.g_coins_per_hour);
     const coinsPerHour = useUserStore(state => state.coins_per_hour);
     const energy = useUserStore(state => state.energy);
     const energyLimit = useUserStore(state => state.energy_limit);
@@ -73,6 +74,7 @@ export const HomePage = () => {
 
     function getRemainCoins(coins: number) {
         if (!nextLevel) return 0;
+
         return nextLevel?.coins - coins;
     }
 
@@ -96,10 +98,10 @@ export const HomePage = () => {
                 >
 
                     <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                        <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
+                        <span className={styles.headerInfo_text}>{t('g_coins_per_hour')}</span>
                         <Flex className={styles.headerInfo_info}>
-                            <Image src={coinLevelIcon} alt="Coin"/>
-                            <Text>+{coinsPerTap}</Text>
+                            <Image src={`/img/puzzles/new-coin-lg.png`} alt="Coin"/>
+                            <Text>+{formatNumber(gCoinsPerHour)}</Text>
                         </Flex>
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
                     </div>
@@ -115,7 +117,7 @@ export const HomePage = () => {
                     <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
                         <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
                         <Flex className={styles.headerInfo_info}>
-                            <Text>+{formatPrice(coinsPerHour)}</Text>
+                            <Text>+{formatNumber(coinsPerHour)}</Text>
                         </Flex>
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
                     </div>
