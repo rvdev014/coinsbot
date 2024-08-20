@@ -24,7 +24,7 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                 const user = await MainApi.userPerHour(userId, params);
                 if (user) {
                     await get().setInitialStore({...user}, true);
-                    set({isCollectedPopup: user.collected_coins > 0});
+                    set({isCollectedPopup: user.collected_coins > 500});
                     get().initInterval();
                 }
             } catch (e) {
@@ -69,7 +69,10 @@ export const useUserStore = create<IUserStore>()(subscribeWithSelector((set, get
                     coinsTimeout: setInterval(async () => {
                         const userState = get();
                         const coinsPerSecond = userState.coins_per_hour / 5400;
+                        const gCoinsPerSecond = userState.g_coins_per_hour / 3600;
                         let coins = Math.ceil(userState.coins + coinsPerSecond);
+                        let gCoins = Math.ceil(userState.g_coins + gCoinsPerSecond);
+                        set({g_coins: gCoins});
                         if (coins >= userState.next_level?.coins) {
                             set({coins: userState.next_level?.coins});
                             await get().updateLevel();

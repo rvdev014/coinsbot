@@ -53,10 +53,22 @@
 }
 
 .levelWrapper {
+  position: relative;
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.balanceAbs {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  img {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .balance {

@@ -3,7 +3,6 @@ export interface IPuzzlesStore {
     isInfoPopup: boolean;
     setInfoPopup: (value: boolean) => void;
     loadingLevelId: number;
-    onPuzzleInit: (puzzle: IPuzzle) => Promise<void>;
     init: (puzzleId: number | string | undefined) => void;
     fetchPuzzles: () => Promise<void>;
     fetchMyPuzzles: (puzzle_id?: number) => Promise<void>;

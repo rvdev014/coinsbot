@@ -5,18 +5,19 @@ import {Link} from "react-router-dom";
 import {useUserStore} from "../../../shared/model/user/store.ts";
 import {EnergyInfo} from "./energy-info.tsx";
 import {useExchangeStore} from "../../../shared/model/exchange/store.ts";
-import {formatNumber, formatPrice, hexToRgb} from "../../../shared/utils/other.ts";
+import {formatNumber, hexToRgb} from "../../../shared/utils/other.ts";
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
 
 import 'react-circular-progressbar/dist/styles.css';
 import cl from "classnames";
 import {Balance} from "../../../shared/ui/balance/balance.tsx";
-import {motion} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import {Popup} from "../../../shared/ui/popup/popup.tsx";
 import {PerHourPopup} from "../../../features/per-hour-popup";
 import {useTranslation} from "react-i18next";
 
 import coinLevelIcon from "../../../assets/img/coin-level.png";
+import newCoinIcon from "../../../assets/img/new-coin-lg.png";
 import arrowIcon from "../../../assets/img/arrow.png";
 
 export const HomePage = () => {
@@ -26,6 +27,7 @@ export const HomePage = () => {
     const onTap = useExchangeStore(state => state.onTap);
 
     const isCollectedPopup = useUserStore(state => state.isCollectedPopup);
+    const gCoins = useUserStore(state => state.g_coins);
     const coins = useUserStore(state => state.coins);
     const level = useUserStore(state => state.level);
     const nextLevel = useUserStore(state => state.next_level);
@@ -86,6 +88,12 @@ export const HomePage = () => {
         return nextLevel?.coins === 0 ? 100 : (coins / nextLevel?.coins) * 100;
     }
 
+    const [coinType, setCoinType] = React.useState<'default' | 'gold'>('default');
+
+    function onClickBalance(coinType: 'default' | 'gold') {
+        setCoinType(coinType);
+    }
+
     return (
         <>
 
@@ -98,10 +106,10 @@ export const HomePage = () => {
                 >
 
                     <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                        <span className={styles.headerInfo_text}>{t('g_coins_per_hour')}</span>
+                        <span className={styles.headerInfo_text}>{t('coins_per_tap')}</span>
                         <Flex className={styles.headerInfo_info}>
-                            <Image src={`/img/puzzles/new-coin-lg.png`} alt="Coin"/>
-                            <Text>+{formatNumber(gCoinsPerHour)}</Text>
+                            <Image src={coinLevelIcon} alt="Coin"/>
+                            <Text>+{coinsPerTap}</Text>
                         </Flex>
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
                     </div>
@@ -114,27 +122,86 @@ export const HomePage = () => {
                         <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(0, 122, 255, 0.5)`}}/>
                     </div>
 
-                    <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
-                        <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
-                        <Flex className={styles.headerInfo_info}>
-                            <Text>+{formatNumber(coinsPerHour)}</Text>
-                        </Flex>
-                        <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
-                    </div>
+                    {coinType === 'gold' &&
+                        <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                            <span className={styles.headerInfo_text}>{t('g_coins_per_hour')}</span>
+                            <Flex className={styles.headerInfo_info}>
+                                <Image src={`/img/puzzles/new-coin-lg.png`} alt="Coin"/>
+                                <Text>+{formatNumber(gCoinsPerHour)}</Text>
+                            </Flex>
+                            <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(23, 214, 134, 0.5)`}}/>
+                        </div>}
+
+                    {coinType === 'default' &&
+                        <div className={cl(styles.headerInfo_block, 'gradientWrapper')}>
+                            <span className={styles.headerInfo_text}>{t('coins_per_hour')}</span>
+                            <Flex className={styles.headerInfo_info}>
+                                <Image src={coinLevelIcon} alt="Coin"/>
+                                <Text>+{formatNumber(coinsPerHour)}</Text>
+                            </Flex>
+                            <span className='gradient' style={{boxShadow: `0 0 30px 20px rgba(251, 189, 70, 0.5)`}}/>
+                        </div>}
 
                 </motion.div>
 
                 <div className={styles.mainContent}>
 
                     <div className={styles.levelWrapper}>
-                        <motion.div initial={{x: 20}} animate={{x: 0}} className={styles.balance}>
-                            <Image src={coinLevelIcon} alt="Coin"/>
-                            <Balance
-                                value={coins}
-                                className={styles.balanceNumber}
-                                classNameWrapper={styles.balanceNumberWrapper}
-                            />
-                        </motion.div>
+
+                        {coinType === 'default' &&
+                            <motion.div
+                                layout
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className={styles.balanceAbs}
+                            >
+                                <Image onClick={() => onClickBalance('gold')} src={newCoinIcon} alt="Gold coin"/>
+                            </motion.div>}
+
+                        {coinType === 'gold' &&
+                            <motion.div
+                                layout
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className={styles.balanceAbs}
+                            >
+                                <Image onClick={() => onClickBalance('default')} src={coinLevelIcon} alt="Coin"/>
+                            </motion.div>}
+
+                        {coinType === 'gold' &&
+                            <motion.div
+                                initial={{ opacity: 0, x: -80 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -80 }}
+                                transition={{duration: 0.3}}
+                                className={styles.balance}
+                            >
+                                <Image src={newCoinIcon} alt="Gold coin"/>
+                                <Balance
+                                    value={gCoins}
+                                    className={styles.balanceNumber}
+                                    classNameWrapper={styles.balanceNumberWrapper}
+                                />
+                            </motion.div>}
+
+                        {coinType === 'default' &&
+                            <motion.div
+                                initial={{ opacity: 0, x: -80 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -80 }}
+                                transition={{duration: 0.3}}
+                                className={styles.balance}
+                            >
+                                <Image src={coinLevelIcon} alt="Coin"/>
+                                <Balance
+                                    value={coins}
+                                    className={styles.balanceNumber}
+                                    classNameWrapper={styles.balanceNumberWrapper}
+                                />
+                            </motion.div>}
+
                         <motion.div initial={{x: -20}} animate={{x: 0}}>
                             <Link to='/levels'>
                                 <Flex className={styles.level} alignItems='center'>

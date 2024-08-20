@@ -53,7 +53,7 @@ export const Card: FC<IProps> = ({card, disabled, onClick}) => {
                     <p className={styles.reward}>{t('coins_per_hour')}</p>
                     <div className={styles.cardCost}>
                         <img src="/img/puzzles/new-coin-icon.png" alt="coin"/>
-                        <span>+{formatPrice(card.next_profit ?? card.profit)} {t('coins_per_hour')}</span>
+                        <span>+{formatPrice(card.next_profit ?? card.profit)}</span>
                     </div>
                 </div>
             </div>

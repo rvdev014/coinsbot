@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {IPuzzlesStore} from "./store-types.ts";
+import {IPuzzle, IPuzzlesStore} from "./store-types.ts";
 import {useUserStore} from "../user/store.ts";
 import {showError} from "../../utils/other.ts";
 import {PuzzlesApi} from "../../api/puzzles-api";
@@ -19,36 +19,6 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
     return {
         ...initialStore,
 
-        onPuzzleInit: async (currentPuzzle) => {
-            set({isLoading: true});
-            try {
-                set({
-                    currentPuzzle,
-                    userPuzzleLevels: currentPuzzle.puzzle_Levels
-                })
-
-                const userCurrentPuzzle = await PuzzlesApi.fetchMyPuzzleById(
-                    useUserStore.getState().user_id,
-                    currentPuzzle.id
-                );
-                if (userCurrentPuzzle) {
-                    set({
-                        userPuzzleLevels: userCurrentPuzzle.puzzle_Levels,
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-expect-error
-                        currentPuzzle: {
-                            ...get().currentPuzzle,
-                            referrals_count: userCurrentPuzzle.referrals_count
-                        }
-                    });
-                }
-            } catch (e) {
-                console.log(e)
-            } finally {
-                set({isLoading: false});
-            }
-        },
-
         init: async (puzzleId) => {
 
             set({isLoading: true});
@@ -64,7 +34,6 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
                 }
 
                 const puzzles = get().puzzles;
-
                 const currentPuzzle = puzzles.find(puzzle => puzzle.id == puzzleId);
 
                 set({currentPuzzle});
@@ -128,12 +97,39 @@ export const usePuzzlesStore = create<IPuzzlesStore>((set, get) => {
         onClaimPuzzle: async (puzzleLevel) => {
             set({loadingLevelId: puzzleLevel.id})
             try {
-                await PuzzlesApi.claimPuzzle(
+                const user = await PuzzlesApi.claimPuzzle(
                     useUserStore.getState().user_id,
                     puzzleLevel
                 );
-                await get().init(puzzleLevel.puzzle_id);
+
+                let userPuzzles = get().userPuzzles;
+                if (userPuzzles?.length > 0) {
+                    const userPuzzle = userPuzzles.find(puzzle => puzzle.id === puzzleLevel.puzzle_id);
+                    if (userPuzzle) {
+                        userPuzzles = userPuzzles.map(puzzle => {
+                            if (puzzle.id === puzzleLevel.puzzle_id) {
+                                return {...puzzle, puzzle_Levels: [...puzzle.puzzle_Levels, puzzleLevel]}
+                            }
+                            return puzzle;
+                        });
+                    } else {
+                        userPuzzles = [
+                            ...userPuzzles,
+                            {
+                                ...get().currentPuzzle,
+                                puzzle_Levels: [puzzleLevel]
+                            } as IPuzzle
+                        ];
+                    }
+                }
+
+                set({
+                    userPuzzleLevels: [...get().userPuzzleLevels, puzzleLevel],
+                    userPuzzles
+                })
                 get().setClaimedPuzzleLevel(puzzleLevel);
+
+                await useUserStore.getState().setInitialStore(user);
             } catch (e) {
                 showError()
             } finally {

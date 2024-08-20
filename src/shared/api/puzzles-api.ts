@@ -31,9 +31,11 @@ export const PuzzlesApi = {
         return response.data?.data;
     },
     async claimPuzzle(userId: string|number, puzzleLevel: IPuzzleLevel) {
-        await apiInstance.post(`/user/${userId}/check-puzzle`, {
+        const response = await apiInstance.post<{ data: IUserData }>(`/user/${userId}/check-puzzle`, {
             puzzle_id: puzzleLevel.puzzle_id,
             level: puzzleLevel.level
         });
+
+        return response.data?.data;
     },
 }

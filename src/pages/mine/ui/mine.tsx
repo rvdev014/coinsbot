@@ -114,18 +114,18 @@ export const MinePage = () => {
             <div className={styles.wrapper}>
 
                 <div className={styles.balanceWrapper}>
-                    <UserCoins golden={true}>
-                        {({coins}) => (
-                            <Flex className={styles.balance} alignItems='center'>
-                                <img src='/img/puzzles/new-coin-icon.png' alt="New coin"/>
-                                <Balance value={coins} className={styles.balanceNumber}/>
-                            </Flex>
-                        )}
-                    </UserCoins>
                     <UserCoins golden={false}>
                         {({coins}) => (
                             <Flex className={styles.balance} alignItems='center'>
                                 <img src={boostImgData.coinIconLg} alt="Coin"/>
+                                <Balance value={coins} className={styles.balanceNumber}/>
+                            </Flex>
+                        )}
+                    </UserCoins>
+                    <UserCoins golden={true}>
+                        {({coins}) => (
+                            <Flex className={styles.balance} alignItems='center'>
+                                <img src='/img/puzzles/new-coin-icon.png' alt="New coin"/>
                                 <Balance value={coins} className={styles.balanceNumber}/>
                             </Flex>
                         )}

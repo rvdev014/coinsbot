@@ -39,7 +39,10 @@ export const useMineStore = create<IMineStore>((set, get) => {
                                 const userCard = cardsData.users.find(userCard => userCard.card_id === card.id);
                                 return {
                                     ...card,
-                                    ...userCard
+                                    refs_count: userCard?.refs_count ?? 0,
+                                    level: userCard?.level ?? 0,
+                                    next_price: userCard?.next_price ?? card.price,
+                                    next_profit: userCard?.next_profit ?? card.profit,
                                 }
                             })
                         }
@@ -61,7 +64,7 @@ export const useMineStore = create<IMineStore>((set, get) => {
         },
 
         initPuzzles: async (force) => {
-            if (!force && usePuzzlesStore.getState().puzzles.length) return;
+            if (!force && (usePuzzlesStore.getState().puzzles.length && usePuzzlesStore.getState().userPuzzles.length)) return;
 
             set({isLoadingPuzzles: true});
             try {
