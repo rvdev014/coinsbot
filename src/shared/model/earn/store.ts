@@ -70,13 +70,14 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
         setTasks: (tasks) => {
             const userTasks = useUserStore.getState().tasks;
 
+            const tasksCoupon = tasks.filter(task => task.type === 'coupon');
             const tasksOwner = tasks.filter(task => task.type === 'owner');
             const tasksPartner = tasks.filter(task => task.type === 'partner');
             const tasksInvite = tasks.filter(task => task.type.includes('invite_') && !userTasks.some(item => item.id === task.id));
             const tasksInviteCompleted = tasks.filter(task => task.type.includes('invite_') && userTasks.some(item => item.id === task.id));
 
             // console.log(tasksInvite, userTasks)
-            set({tasks, tasksOwner, tasksPartner, tasksInvite: [...tasksInvite[0] ? [tasksInvite[0]] : [], ...tasksInviteCompleted]});
+            set({tasks, tasksOwner, tasksPartner, tasksCoupon, tasksInvite: [...tasksInvite[0] ? [tasksInvite[0]] : [], ...tasksInviteCompleted]});
         },
 
         changeTasks: () => {
@@ -213,7 +214,7 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             const userBonusDate = useUserStore.getState().bonus_date;
             const userDayBonus = useUserStore.getState().day_bonus;
 
-            let activeDayBonus: IBonus | undefined = undefined;
+            let activeDayBonus: IBonus | undefined;
             if (userDayBonus) {
                 const dayDiff = getDayDiffFromNow(userBonusDate);
                 if (dayDiff < 1) {
@@ -307,12 +308,12 @@ export const useEarnStore = create<IEarnStore>((set, get) => {
             }
         },
 
-        onCompleteTask: async (task: ITask) => {
+        onCompleteTask: async (task: ITask, coupon: string | null | undefined) => {
 
             set({isSubmitLoading: true});
             try {
                 const userId = useUserStore.getState().user_id;
-                const user = await CoinsApi.taskComplete(userId, task.id);
+                const user = await CoinsApi.taskComplete(userId, task.id, coupon);
                 if (user) {
                     await useUserStore.getState().setInitialStore({...user});
                     set({selectedTask: null});

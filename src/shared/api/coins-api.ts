@@ -1,10 +1,12 @@
 import {apiInstance} from "./axios.ts";
-import {ILevelData, ILevelStore} from "../../features/levels/model/store-types.ts";
+import {ILevelData} from "../../features/levels/model/store-types.ts";
 import {ILevel, IUserData} from "../model/user/store-types.ts";
 
 export const CoinsApi = {
-    async taskComplete(userId: string|number, taskId: string|number) {
-        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/task/${taskId}`);
+    async taskComplete(userId: string|number, taskId: string|number, coupon: string | null | undefined) {
+        const response = await apiInstance.post<{data: IUserData}>(`/user/${userId}/task/${taskId}`, coupon ? {
+            coupon,
+        } : {});
         return response.data?.data;
     },
     async updateCoins(userId: string|number, coins: number, energy: number) {

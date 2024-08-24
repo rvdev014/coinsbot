@@ -21,6 +21,7 @@ export const EarnPage = () => {
     const isOpenDaily = useEarnStore(state => state.isOpenDaily);
 
     const tasksOwner = useEarnStore(state => state.tasksOwner);
+    const tasksCoupon = useEarnStore(state => state.tasksCoupon);
     const tasksInvite = useEarnStore(state => state.tasksInvite);
     const tasksPartner = useEarnStore(state => state.tasksPartner);
     const userTasks = useUserStore(state => state.tasks);
@@ -43,14 +44,14 @@ export const EarnPage = () => {
 
     function sortTasksByCondition(arr1: ITask[], arr2: { id: number | string }[]): ITask[] {
         // Фильтруем элементы, которых нет во втором массиве
-        const notInSecondArray = arr1.filter(task1 =>
+        const notInSecondArray = arr1?.filter(task1 =>
             !arr2.some(task2 => task2.id === task1.id)
-        );
+        ) ?? [];
 
         // Фильтруем элементы, которые есть во втором массиве
-        const inSecondArray = arr1.filter(task1 =>
+        const inSecondArray = arr1?.filter(task1 =>
             arr2.some(task2 => task2.id === task1.id)
-        );
+        ) ?? [];
 
         // Объединяем массивы: сначала элементы, которых нет во втором массиве
         return [...notInSecondArray, ...inSecondArray];
@@ -104,7 +105,7 @@ export const EarnPage = () => {
                                     <div className={styles.taskInfo}>
                                         <p className={styles.taskName}>{task.title}</p>
                                         <Flex className={styles.taskPrice} alignItems='center'>
-                                            <img src={earnImgData.coinIcon} alt="Coin"/>
+                                            <img src={task.type === 'coupon' ? earnImgData.gCoinIcon : earnImgData.coinIcon} alt="Coin"/>
                                             <span>{formatPrice(task.coins)}</span>
                                         </Flex>
                                     </div>
@@ -172,6 +173,7 @@ export const EarnPage = () => {
                         animate={{x: 0}}
                         className={styles.tasksWrapper}
                     >
+                        {taskMap(tasksCoupon,  t('promocode'))}
                         {taskMap(tasksOwner,   t('owner_tasks'))}
                         {taskMap(tasksInvite,  t('invite_tasks'))}
                         {taskMap(tasksPartner, t('partner_tasks'))}

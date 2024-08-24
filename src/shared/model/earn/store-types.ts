@@ -1,6 +1,7 @@
 export interface IEarnStore {
     tasks: ITask[];
     tasksOwner: ITask[];
+    tasksCoupon: ITask[];
     tasksInvite: ITask[];
     tasksPartner: ITask[];
     bonuses: IBonus[];
@@ -24,7 +25,7 @@ export interface IEarnStore {
     changeTasks: () => void;
     onClaimClick: () => void;
     onTaskClick: (task: ITask | undefined) => void;
-    onCompleteTask: (task: ITask) => void;
+    onCompleteTask: (task: ITask, coupon: string | null | undefined) => void;
     onDailyClick: () => void;
     onTaskClose: () => void;
     reset: () => void;
@@ -43,7 +44,7 @@ export interface ITask {
     url: string
     countries: string
     channel_id: string | null
-    type: 'owner' | 'partner' | 'other'
+    type: 'owner' | 'partner' | 'other' | 'coupon'
     coins: number
     count: number
     hours: number | null
