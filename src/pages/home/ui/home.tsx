@@ -41,7 +41,8 @@ export const HomePage = () => {
     function tapper(event: React.TouchEvent<HTMLButtonElement>) {
         if (!tapperRef.current || !coinsPerHour || useUserStore.getState().energy < coinsPerTap) return;
 
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         for (const touch of event.changedTouches) {
             const plusOne = document.createElement('span')
             plusOne.innerHTML = `+${coinsPerTap}`;

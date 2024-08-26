@@ -48,10 +48,7 @@ export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export const formatNumber = (num: any) => {
 
     switch (true) {
-        case num <= 1000:
-            num = 0
-            break
-        case num < 1000000:
+        case num > 1000 && num < 1000000:
             num =  num % 1000 === 0 ? (num / 1000).toFixed(0) + 'K' : (num / 1000).toFixed(1) + 'K'
             break
         case num >= 1000000 && num < 1000000000:
