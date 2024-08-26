@@ -25,7 +25,7 @@ export interface IEarnStore {
     changeTasks: () => void;
     onClaimClick: () => void;
     onTaskClick: (task: ITask | undefined) => void;
-    onCompleteTask: (task: ITask, coupon: string | null | undefined) => void;
+    onCompleteTask: (task: ITask, coupon: string | null | undefined | void) => void;
     onDailyClick: () => void;
     onTaskClose: () => void;
     reset: () => void;
